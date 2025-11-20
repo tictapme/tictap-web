@@ -11,7 +11,7 @@ if [ "$1" == "develop" ]; then
 fi
 
 if [ "$1" == "main" ]; then
-  DEFAULT_OLD_URL="static-www-tictap\\.tictap\\.me|develop\\.wp-web\\.pages\\.dev"
+  DEFAULT_OLD_URL="static-www-tictap\\.tictap\\.me|develop\\.wp-web\\.pages\\.dev|staging-www\\.tictap\\.me"
   DEFAULT_NEW_URL="www.tictap.me"
 fi
 
