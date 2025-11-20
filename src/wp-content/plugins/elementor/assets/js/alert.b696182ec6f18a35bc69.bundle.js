@@ -1,4 +1,3 @@
-/*! elementor - v3.27.0 - 13-03-2025 */
 "use strict";
 (self["webpackChunkelementorFrontend"] = self["webpackChunkelementorFrontend"] || []).push([["alert"],{
 

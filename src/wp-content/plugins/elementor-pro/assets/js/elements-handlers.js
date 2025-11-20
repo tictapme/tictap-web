@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.27.0 - 13-03-2025 */
+/*! elementor-pro - v3.33.0 - 11-11-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -183,12 +183,11 @@ class IconsManager {
       }
     }
   }
-  createSvgElement(name, _ref) {
-    let {
-      path,
-      width,
-      height
-    } = _ref;
+  createSvgElement(name, {
+    path,
+    width,
+    height
+  }) {
     const elementName = this.prefix + name,
       elementSelector = '#' + this.prefix + name;
 
@@ -596,9 +595,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
    * @param {string} filterTerm
    * @param {string} defaultFilter
    */
-  removeFilterFromLoopWidget(widgetId, filterId) {
-    let filterTerm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    let defaultFilter = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+  removeFilterFromLoopWidget(widgetId, filterId, filterTerm = '', defaultFilter = '') {
     if (!this.loopWidgetsStore.getWidget(widgetId)) {
       this.loopWidgetsStore.addWidget(widgetId);
       this.refreshLoopWidget(widgetId, filterId);
@@ -633,9 +630,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
    * @param {boolean} refresh
    * @param {string}  multipleFiltersLogicalJoin AND / OR / 'DISABLED' for single filter (default)
    */
-  setFilterDataForLoopWidget(widgetId, filterId, filter) {
-    let refresh = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-    let multipleFiltersLogicalJoin = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'DISABLED';
+  setFilterDataForLoopWidget(widgetId, filterId, filter, refresh = true, multipleFiltersLogicalJoin = 'DISABLED') {
     this.loopWidgetsStore.maybeInitializeWidget(widgetId);
     this.loopWidgetsStore.maybeInitializeFilter(widgetId, filterId);
     const logicalJoin = this.validateMultipleFilterOperator(multipleFiltersLogicalJoin);
@@ -836,10 +831,14 @@ class BaseFilterFrontendModule extends elementorModules.Module {
   fetchUpdatedLoopWidgetMarkup(widgetId, filterId) {
     return fetch(`${elementorProFrontend.config.urls.rest}elementor-pro/v1/refresh-loop`, this.getFetchArgumentsForLoopUpdate(widgetId, filterId));
   }
-  createFragmentFromHTMLString(htmlString) {
-    const template = document.createElement('template');
-    template.innerHTML = htmlString.trim();
-    return template.content;
+  createElementFromHTMLString(widgetContainerHTMLString) {
+    const div = document.createElement('div');
+    if (!widgetContainerHTMLString) {
+      div.classList.add('elementor-widget-container');
+      return div;
+    }
+    div.innerHTML = widgetContainerHTMLString.trim();
+    return div.firstElementChild;
   }
   refreshLoopWidget(widgetId, filterId) {
     this.loopWidgetsStore.consolidateFilters(widgetId);
@@ -863,15 +862,9 @@ class BaseFilterFrontendModule extends elementorModules.Module {
       if (!response?.data && '' !== response?.data) {
         return;
       }
-      const newWidgetFragment = this.createFragmentFromHTMLString(response.data);
-      const newNodes = Array.from(newWidgetFragment.children);
-      newNodes.forEach(newNode => {
-        const selector = newNode.className ? `.${newNode.className.split(' ').join('.')}` : `#${newNode.id}`;
-        const existingNode = widget.querySelector(selector);
-        if (existingNode) {
-          existingNode.parentNode.replaceChild(newNode, existingNode);
-        }
-      });
+      const existingWidgetContainer = widget.querySelector('.elementor-widget-container'),
+        newWidgetContainer = this.createElementFromHTMLString(response.data);
+      widget.replaceChild(newWidgetContainer, existingWidgetContainer);
       this.handleElementHandlers(widget);
       if (ElementorProFrontendConfig.settings.lazy_load_background_images) {
         document.dispatchEvent(new Event('elementor/lazyload/observe'));
@@ -1273,8 +1266,7 @@ class _default extends elementorModules.frontend.Document {
   initTriggers() {
     this.triggers = new _triggers.default(this.getDocumentSettings('triggers'), this);
   }
-  showModal(event) {
-    let avoidMultiple = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  showModal(event, avoidMultiple = false) {
     // eslint-disable-next-line @wordpress/no-unused-vars-before-return
     const settings = this.getDocumentSettings();
     if (!this.isEdit) {
@@ -1835,8 +1827,8 @@ exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/timing/base.js"));
 var _scheduleUtils = _interopRequireDefault(__webpack_require__(/*! ./schedule-utils */ "../modules/popup/assets/js/frontend/timing/schedule-utils.js"));
 class _default extends _base.default {
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     const {
       schedule_timezone: timezone,
       schedule_start_date: startDate,
@@ -2012,9 +2004,7 @@ class TimesUtils {
     }
     return false;
   }
-  shouldDisplayBackwordCompatible() {
-    let impressionCount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    let showsLimit = arguments.length > 1 ? arguments[1] : undefined;
+  shouldDisplayBackwordCompatible(impressionCount = 0, showsLimit) {
     const shouldDisplay = parseInt(impressionCount) < parseInt(showsLimit);
     this.shouldCountOnOpen();
     return shouldDisplay;
@@ -2040,8 +2030,8 @@ exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/timing/base.js"));
 var _timesUtils = _interopRequireDefault(__webpack_require__(/*! ./times-utils.js */ "../modules/popup/assets/js/frontend/timing/times-utils.js"));
 class _default extends _base.default {
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     this.uniqueId = `popup-${this.document.getSettings('id')}-impressions-count`;
     const {
       times_count: countOnOpen,
@@ -2302,8 +2292,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/triggers/base.js"));
 class _default extends _base.default {
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     this.checkClick = this.checkClick.bind(this);
     this.clicksCount = 0;
   }
@@ -2342,8 +2332,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/triggers/base.js"));
 class _default extends _base.default {
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     this.detectExitIntent = this.detectExitIntent.bind(this);
   }
   getName() {
@@ -2380,8 +2370,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/triggers/base.js"));
 class _default extends _base.default {
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     this.restartTimer = this.restartTimer.bind(this);
   }
   getName() {
@@ -2503,8 +2493,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/triggers/base.js"));
 class _default extends _base.default {
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     this.checkScroll = this.checkScroll.bind(this);
     this.lastScrollOffset = 0;
   }
@@ -2673,7 +2663,7 @@ exports["default"] = void 0;
 class _default extends elementorModules.Module {
   constructor() {
     super();
-    elementorFrontend.elementsHandler.attachHandler('table-of-contents', () => Promise.all(/*! import() | table-of-contents */[__webpack_require__.e("vendors-node_modules_dompurify_dist_purify_js"), __webpack_require__.e("table-of-contents")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/table-of-contents */ "../modules/table-of-contents/assets/js/frontend/handlers/table-of-contents.js")));
+    elementorFrontend.elementsHandler.attachHandler('table-of-contents', () => Promise.all(/*! import() | table-of-contents */[__webpack_require__.e("vendors-node_modules_dompurify_dist_purify_cjs_js"), __webpack_require__.e("table-of-contents")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/table-of-contents */ "../modules/table-of-contents/assets/js/frontend/handlers/table-of-contents.js")));
   }
 }
 exports["default"] = _default;

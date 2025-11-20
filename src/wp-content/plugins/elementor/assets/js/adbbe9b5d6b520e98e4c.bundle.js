@@ -1,4 +1,3 @@
-/*! elementor - v3.27.0 - 13-03-2025 */
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["modules_nested-accordion_assets_js_editor_module_js"],{
 
 /***/ "../modules/nested-accordion/assets/js/editor/module.js":

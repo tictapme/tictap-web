@@ -1,4 +1,3 @@
-/*! elementor - v3.27.0 - 13-03-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -697,7 +696,7 @@ var CommandBase = exports["default"] = /*#__PURE__*/function (_CommandInfra) {
     value: function onAfterApply() {
       var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var result = arguments.length > 1 ? arguments[1] : undefined;
-      $e.hooks.runDataAfter(this.command, args, result);
+      return $e.hooks.runDataAfter(this.command, args, result);
     }
   }, {
     key: "onCatchApply",

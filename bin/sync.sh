@@ -1,9 +1,11 @@
 #!/bin/bash
 # Sync entire site or a specific subfolder from remote 'generated' to local 'src'.
 # Usage:
-#   ./bin/sync.sh                     # sync everything (current behavior)
-#   ./bin/sync.sh carpeta [carpeta2 …] # sync one or more subfolders (e.g., blog en/blog contacto)
-#   ./bin/sync.sh --help              # show this help
+#   ./bin/sync.sh                              # sync everything (current behavior)
+#   ./bin/sync.sh carpeta [carpeta2 …]         # sync one or more subfolders (e.g., blog en/blog contacto)
+#   ./bin/sync.sh --exclude=en/                # sync everything except a folder (relative to src/, e.g. src/en)
+#   ./bin/sync.sh --exclude=en/ --exclude=blog # multiple excludes
+#   ./bin/sync.sh --help                       # show this help
 #
 # Notes:
 # - The optional "carpeta" is a path relative to src/ (e.g., blog, en/blog, contacto).
@@ -18,35 +20,78 @@ print_help() {
 Sincroniza todo el sitio o una carpeta concreta desde el remoto a ./src
 
 Uso:
-  ./bin/sync.sh                       # sincroniza todo
-  ./bin/sync.sh carpeta [carpeta2 …]  # sincroniza una o varias carpetas (p.ej. blog en/blog contacto)
-  ./bin/sync.sh --help                # muestra esta ayuda
+  ./bin/sync.sh                                 # sincroniza todo
+  ./bin/sync.sh carpeta [carpeta2 …]            # sincroniza una o varias carpetas (p.ej. blog en/blog contacto)
+  ./bin/sync.sh --exclude=en/                  # excluye una carpeta relativa a src/ (p.ej. en -> src/en)
+  ./bin/sync.sh --exclude=en/ --exclude=blog   # puedes pasar varias exclusiones
+  ./bin/sync.sh --help                          # muestra esta ayuda
 
 Detalles:
 - Las carpetas son relativas a src/ (no uses prefijo ./, los finales / se ignoran).
-- Excluye: .git/, 404.html, bin/, _redirects
+- --exclude acepta rutas relativas a src/ (sin ./ y opcional / final), por ejemplo: en, en/, blog, blog/.
+- Excluye siempre: .git/, 404.html, bin/, _redirects
 - Tras sincronizar, en los .html reemplaza cualquier host https://{sub}.tictap.me -> https://www.tictap.me (cualquier subdominio)
 - En .xml mantiene: staging-www.tictap.me -> www.tictap.me
 - Ejecuta: node bin/fix-sitemaps.js
 EOF
 }
 
-# Help flag
-if [[ "${1-}" == "--help" || "${1-}" == "-h" ]]; then
-  print_help
-  exit 0
-fi
-
 REMOTE_BASE="debian@51.83.111.98:/home/debian/docker-wp/generated"
 LOCAL_BASE="src"
 
-if [ "$#" -eq 0 ]; then
+FOLDERS=()
+EXCLUDE_PATTERNS=()
+
+# Parse arguments: folders and --exclude flags
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    --help|-h)
+      print_help
+      exit 0
+      ;;
+    --exclude=*)
+      EXCLUDE_PATTERNS+=("${1#--exclude=}")
+      shift
+      ;;
+    --exclude)
+      shift
+      if [[ "$#" -eq 0 ]]; then
+        echo "Error: --exclude requiere un valor (p.ej. --exclude=en/)" >&2
+        exit 1
+      fi
+      EXCLUDE_PATTERNS+=("$1")
+      shift
+      ;;
+    *)
+      FOLDERS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+# Base rsync excludes
+RSYNC_EXCLUDES=(
+  "--exclude=.git/"
+  "--exclude=404.html"
+  "--exclude=bin/"
+  "--exclude=_redirects"
+)
+
+# Add user-specified excludes (relative to src/, normalized)
+for RAW_EXC in "${EXCLUDE_PATTERNS[@]}"; do
+  # Normaliza: quita ./ inicial y / final
+  EXC="${RAW_EXC#./}"
+  EXC="${EXC%/}"
+  if [[ -n "$EXC" ]]; then
+    # Forzamos / final para indicar carpeta en rsync
+    RSYNC_EXCLUDES+=("--exclude=${EXC}/")
+  fi
+done
+
+if [ "${#FOLDERS[@]}" -eq 0 ]; then
   # Full sync
   rsync -avz \
-    --exclude='.git/' \
-    --exclude='404.html' \
-    --exclude='bin/' \
-    --exclude='_redirects' \
+    "${RSYNC_EXCLUDES[@]}" \
     "$REMOTE_BASE/" "$LOCAL_BASE/" --delete
 
   TARGET_HTML_DIRS=( "./src/" )
@@ -54,16 +99,13 @@ if [ "$#" -eq 0 ]; then
 else
   TARGET_HTML_DIRS=()
   TARGET_XML_DIRS=()
-  for FOLDER in "$@"; do
+  for FOLDER in "${FOLDERS[@]}"; do
     # Normalize by removing any leading ./ and trailing /
     FOLDER="${FOLDER#./}"
     FOLDER="${FOLDER%/}"
 
     rsync -avz \
-      --exclude='.git/' \
-      --exclude='404.html' \
-      --exclude='bin/' \
-      --exclude='_redirects' \
+      "${RSYNC_EXCLUDES[@]}" \
       "$REMOTE_BASE/$FOLDER/" "$LOCAL_BASE/$FOLDER/" --delete
 
     TARGET_HTML_DIRS+=( "./src/$FOLDER/" )
