@@ -23,9 +23,9 @@ fi
 
 
 echo "\n\n Using branch $1 : replacing $DEFAULT_OLD_URL with $DEFAULT_NEW_URL \n\n"
-read -p "Are you sure you want to continue? (y/n) " -n 1 -r
+read -p "Are you sure you want to continue? (Y/n) " -r
 echo    # move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[ ! $REPLY =~ ^[Yy]?$ ]]
 then
     echo "Exiting..."
     exit 1

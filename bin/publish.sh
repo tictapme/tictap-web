@@ -5,6 +5,14 @@ current_branch=$(git branch | grep \* | cut -d ' ' -f2)
 bin/replace_url.sh $current_branch
 
 git add src/
+
+read -p "Do you want to commit and push? [Y/n] " -r
+echo    # move to a new line
+if [[ ! $REPLY =~ ^[Yy]?$ ]]
+then
+    echo "Exiting..."
+    exit 1
+fi
 git ci -am "Updates static"
 echo "Committed static"
 # set current branch in a variable and then push against it
