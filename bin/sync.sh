@@ -117,7 +117,7 @@ fi
 for TARGET_HTML_DIR in "${TARGET_HTML_DIRS[@]}"; do
   if [ -d "$TARGET_HTML_DIR" ]; then
     # General rule: replace any subdomain host of tictap.me to www.tictap.me (HTTPS only)
-    find "$TARGET_HTML_DIR" -name "*.html" -type f -print0 | xargs -0 sed -E -i 's#https://([^/]+\.)+tictap\.me#https://www.tictap.me#g' || true
+    find "$TARGET_HTML_DIR" -name "*.html" -type f -print0 | xargs -0 sed -E -i 's#https://((staging-www|staging-www-tictap|static-www)\.)+tictap\.me#https://www.tictap.me#g' || true
   fi
 done
 
