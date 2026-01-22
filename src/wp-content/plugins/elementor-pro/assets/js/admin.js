@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.34.0 - 22-12-2025 */
+/*! elementor-pro - v3.34.0 - 20-01-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1253,10 +1253,12 @@ module.exports = function () {
   this.mailChimp = new ApiValidations('mailchimp_api_key');
   this.mailerLite = new ApiValidations('mailerlite_api_key');
   this.activeCcampaign = new ApiValidations('activecampaign_api_key', 'activecampaign_api_url');
-  jQuery('.e-notice--cta.e-notice--dismissible[data-notice_id="site_mailer_forms_submissions_notice"] a.e-button--cta').on('click', function () {
+  document.querySelector('.e-notice--cta.e-notice--dismissible[data-notice_id="site_mailer_forms_submissions_notice"] a.e-button--cta')?.addEventListener('click', function () {
+    const $notice = $(this).closest('.e-notice');
+    const source = $notice.data('source') || 'sm-submission-install';
     elementorCommon.ajax.addRequest('elementor_site_mailer_campaign', {
       data: {
-        source: 'sm-submission-install'
+        source
       }
     });
   });

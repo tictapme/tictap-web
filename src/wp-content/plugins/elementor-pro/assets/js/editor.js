@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.34.0 - 22-12-2025 */
+/*! elementor-pro - v3.34.0 - 20-01-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1172,14 +1172,20 @@ module.exports = elementorModules.editor.utils.Module.extend({
     elementor.config.user.dismissed_editor_notices.push(this.eventName);
   },
   onAction(event) {
-    const {
-      action_url: actionURL = null
-    } = JSON.parse(event.target.closest('button').dataset.settings);
+    let actionURL = null;
+    let source = 'sm-form-install';
+    try {
+      const settings = JSON.parse(event.target.closest('button').dataset.settings);
+      actionURL = settings.action_url || null;
+      source = settings.source || 'sm-form-install';
+    } catch (error) {
+      // Do nothing.
+    }
     if (actionURL) {
       window.open(actionURL, '_blank');
     }
     this.ajaxRequest('elementor_site_mailer_campaign', {
-      source: 'sm-form-install'
+      source
     });
     this.ensureNoPromoControlInSession();
   },
