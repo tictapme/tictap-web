@@ -75,6 +75,7 @@ RSYNC_EXCLUDES=(
   "--exclude=404.html"
   "--exclude=bin/"
   "--exclude=_redirects"
+  "--exclude=ai.md"
 )
 
 # Add user-specified excludes (relative to src/, normalized)
