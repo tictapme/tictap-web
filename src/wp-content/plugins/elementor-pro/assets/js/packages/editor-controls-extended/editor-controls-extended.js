@@ -179,7 +179,8 @@ function disableFoldingFirstRow(editor) {
 const CssEditor = ({
   value,
   onChange,
-  syntaxRuleOptions
+  syntaxRuleOptions,
+  readOnly = false
 }) => {
   const theme = (0,_elementor_ui__WEBPACK_IMPORTED_MODULE_2__.useTheme)();
   const containerRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
@@ -264,7 +265,8 @@ const CssEditor = ({
       },
       lineDecorationsWidth: 2,
       wordWrap: 'on',
-      scrollBeyondLastLine: false
+      scrollBeyondLastLine: false,
+      readOnly
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_resize_handle__WEBPACK_IMPORTED_MODULE_7__.ResizeHandleComponent, {
     onResize: handleResize,
