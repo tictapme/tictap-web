@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.34.0 - 26-01-2026 */
+/*! elementor-pro - v3.34.0 - 29-01-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1359,7 +1359,9 @@ module.exports = function (key, fieldID) {
 
 module.exports = function () {
   var EditButton = __webpack_require__(/*! ./admin/edit-button */ "../modules/library/assets/js/admin/edit-button.js");
+  var ShortcodeTextarea = __webpack_require__(/*! ./admin/shortcode-textarea */ "../modules/library/assets/js/admin/shortcode-textarea.js");
   this.editButton = new EditButton();
+  this.shortcodeTextarea = new ShortcodeTextarea();
 };
 
 /***/ }),
@@ -1391,6 +1393,39 @@ module.exports = function () {
     });
   };
   self.init();
+};
+
+/***/ }),
+
+/***/ "../modules/library/assets/js/admin/shortcode-textarea.js":
+/*!****************************************************************!*\
+  !*** ../modules/library/assets/js/admin/shortcode-textarea.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function () {
+  const resizeAllTextareas = () => {
+    const textareas = document.querySelectorAll('.elementor-shortcode-textarea');
+    textareas.forEach(textarea => {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 5 + 'px';
+    });
+  };
+  const init = () => {
+    resizeAllTextareas();
+    window.addEventListener('resize', () => {
+      resizeAllTextareas();
+    });
+    document.addEventListener('click', event => {
+      if (event.target.matches('button.toggle-row')) {
+        resizeAllTextareas();
+      }
+    });
+  };
+  init();
 };
 
 /***/ }),
