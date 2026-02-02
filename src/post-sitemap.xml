@@ -295,17 +295,17 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/guia-para-elegir-la-mejor-herramienta-de-gestion-documental/</loc>
-		<lastmod>2025-03-04T05:31:17+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2021/02/Herramienta-de-gestion-documental.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/blog/descubre-que-informacion-deben-incluir-los-manuales-de-instrucciones/</loc>
 		<lastmod>2026-01-29T15:35:48+00:00</lastmod>
 		<image:image>
 			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/ManualdeInstrucciones.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/guia-para-elegir-la-mejor-herramienta-de-gestion-documental/</loc>
+		<lastmod>2026-01-30T13:46:05+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2021/02/Herramienta-de-gestion-documental.jpg</image:loc>
 		</image:image>
 	</url>
 </urlset>
