@@ -204,13 +204,6 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/documentacion-obligatoria-de-tus-maquinas/</loc>
-		<lastmod>2025-02-12T12:03:21+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2024/08/Nuevo-reglamento-europeo.png</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/casos-de-exito/gestion-extintores-damm-tictap/</loc>
 		<lastmod>2025-02-15T17:51:14+00:00</lastmod>
 		<image:image>
@@ -232,13 +225,6 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/que-debe-incorporar-la-declaracion-ue-de-conformidad/</loc>
-		<lastmod>2025-02-16T20:10:35+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/Documentation.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/casos-de-exito/unificacion-y-aumento-de-eficiencia-en-mantenimiento-para-delgado-instalaciones/</loc>
 		<lastmod>2025-02-16T20:34:43+00:00</lastmod>
 		<image:image>
@@ -253,24 +239,10 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/como-la-digitalizacion-transforma-fabricacion-remanufactura/</loc>
-		<lastmod>2025-02-17T14:28:38+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2025/02/Digitalizacion-en-fabricacion-y-remanufactura.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/casos-de-exito/delgado-instal%c2%b7lacions-efficient-facility-maintenance/</loc>
 		<lastmod>2025-02-17T21:58:46+00:00</lastmod>
 		<image:image>
 			<image:loc>https://www.tictap.me/wp-content/uploads/2023/07/Imatge_petita-DELGADO.png</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://www.tictap.me/blog/documentacion-tecnica-tienen-que-tener-tus-maquinas/</loc>
-		<lastmod>2025-02-17T22:01:26+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/rellenando-documentos.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
@@ -288,24 +260,66 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/trazabilidad-digital-industria-tictap/</loc>
-		<lastmod>2025-02-21T20:45:43+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2025/02/Imagen-de-WhatsApp-2025-02-12-a-las-11.40.16_80c51bb4-1.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/blog/descubre-que-informacion-deben-incluir-los-manuales-de-instrucciones/</loc>
-		<lastmod>2026-01-29T15:35:48+00:00</lastmod>
+		<lastmod>2026-02-02T16:06:14+00:00</lastmod>
 		<image:image>
 			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/ManualdeInstrucciones.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
 		<loc>https://www.tictap.me/blog/guia-para-elegir-la-mejor-herramienta-de-gestion-documental/</loc>
-		<lastmod>2026-01-30T13:46:05+00:00</lastmod>
+		<lastmod>2026-02-02T16:58:45+00:00</lastmod>
 		<image:image>
 			<image:loc>https://www.tictap.me/wp-content/uploads/2021/02/Herramienta-de-gestion-documental.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/trazabilidad-digital-industria-tictap/</loc>
+		<lastmod>2026-02-02T17:00:18+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2025/02/Imagen-de-WhatsApp-2025-02-12-a-las-11.40.16_80c51bb4-1.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/como-la-digitalizacion-transforma-fabricacion-remanufactura/</loc>
+		<lastmod>2026-02-02T17:23:58+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2025/02/Digitalizacion-en-fabricacion-y-remanufactura.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/documentacion-obligatoria-de-tus-maquinas/</loc>
+		<lastmod>2026-02-02T17:26:46+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2024/08/Nuevo-reglamento-europeo.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/que-debe-incorporar-la-declaracion-ue-de-conformidad/</loc>
+		<lastmod>2026-02-02T17:29:46+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/Documentation.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/documentacion-tecnica-tienen-que-tener-tus-maquinas/</loc>
+		<lastmod>2026-02-02T17:32:44+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/rellenando-documentos.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/tipos-de-mantenimientos/</loc>
+		<lastmod>2026-02-03T16:07:10+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/Recurso-1-low.webp</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/que-es-la-gestion-de-activos-empresariales-eam/</loc>
+		<lastmod>2026-02-03T16:23:13+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/Recurso-3-low.webp</image:loc>
 		</image:image>
 	</url>
 </urlset>

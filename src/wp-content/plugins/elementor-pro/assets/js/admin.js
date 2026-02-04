@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.34.0 - 29-01-2026 */
+/*! elementor-pro - v3.35.0 - 02-02-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1259,13 +1259,6 @@ module.exports = function () {
     elementorCommon.ajax.addRequest('elementor_site_mailer_campaign', {
       data: {
         source
-      }
-    });
-  });
-  document.querySelector('.e-notice--cta.e-notice--dismissible[data-notice_id="send_app_forms_submissions_notice"] a.e-button--cta')?.addEventListener('click', function () {
-    elementorCommon.ajax.addRequest('elementor_send_app_campaign', {
-      data: {
-        source: 'snd-submission-install'
       }
     });
   });

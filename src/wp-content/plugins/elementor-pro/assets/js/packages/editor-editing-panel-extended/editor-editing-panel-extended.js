@@ -211,7 +211,10 @@ async function init() {
   if (await (0,_elementor_editor_controls_extended__WEBPACK_IMPORTED_MODULE_1__.licenseApi)('atomic-custom-css')) {
     (0,_elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_2__.injectIntoStyleTab)({
       id: 'custom-css',
-      component: _components_custom_css_section__WEBPACK_IMPORTED_MODULE_4__.CustomCssStyleSection
+      component: _components_custom_css_section__WEBPACK_IMPORTED_MODULE_4__.CustomCssStyleSection,
+      options: {
+        overwrite: true
+      }
     });
   }
   _elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_2__.controlsRegistry.register('display-conditions', _elementor_editor_controls_extended__WEBPACK_IMPORTED_MODULE_1__.DisplayConditionsControl, 'two-columns', _elementor_editor_controls_extended__WEBPACK_IMPORTED_MODULE_1__.displayConditionsPropTypeUtil);
