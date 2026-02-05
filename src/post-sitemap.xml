@@ -102,7 +102,7 @@
 		<loc>https://www.tictap.me/blog/descubre-que-informacion-deben-incluir-los-manuales-de-instrucciones/</loc>
 		<lastmod>2024-04-08T08:44:08+00:00</lastmod>
 		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/ManualdeInstrucciones.jpg</image:loc>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2022/06/manual.png</image:loc>
 		</image:image>
 	</url>
 	<url>
@@ -260,13 +260,6 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/descubre-que-informacion-deben-incluir-los-manuales-de-instrucciones/</loc>
-		<lastmod>2026-02-02T16:06:14+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2023/06/ManualdeInstrucciones.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/blog/guia-para-elegir-la-mejor-herramienta-de-gestion-documental/</loc>
 		<lastmod>2026-02-02T16:58:45+00:00</lastmod>
 		<image:image>
@@ -309,17 +302,24 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/tipos-de-mantenimientos/</loc>
-		<lastmod>2026-02-03T16:07:10+00:00</lastmod>
+		<loc>https://www.tictap.me/blog/que-es-la-gestion-de-activos-empresariales-eam/</loc>
+		<lastmod>2026-02-04T12:58:07+00:00</lastmod>
 		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/Recurso-1-low.webp</image:loc>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/gestion-de-activos.webp</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/que-es-la-gestion-de-activos-empresariales-eam/</loc>
-		<lastmod>2026-02-03T16:23:13+00:00</lastmod>
+		<loc>https://www.tictap.me/blog/descubre-que-informacion-deben-incluir-los-manuales-de-instrucciones/</loc>
+		<lastmod>2026-02-04T15:05:21+00:00</lastmod>
 		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/Recurso-3-low.webp</image:loc>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2022/06/manual.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/tipos-de-mantenimientos/</loc>
+		<lastmod>2026-02-04T15:41:46+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/mantenimiento-e1770219437559.webp</image:loc>
 		</image:image>
 	</url>
 </urlset>
