@@ -1605,13 +1605,17 @@ span.font-variations-count {
 }
 .e-site-editor-conditions__add-button {
   margin-block-start: 2.75rem;
-  background-color: var(--e-site-editor-add-button-background-color);
-  color: #ffffff;
+  background-color: var(--e-one-palette-primary-main, var(--e-site-editor-add-button-background-color));
+  border-color: var(--e-one-palette-primary-main, var(--e-site-editor-add-button-background-color));
+  color: var(--e-one-palette-primary-contrast-text, var(--e-one-palette-primary-contrastText, #ffffff));
   text-transform: uppercase;
+  text-decoration: none;
 }
-.e-site-editor-conditions__add-button:hover {
-  background-color: var(--e-site-editor-add-button-color-hover-background-color);
-  color: #ffffff;
+.e-site-editor-conditions__add-button:hover, .e-site-editor-conditions__add-button:focus {
+  background-color: var(--e-one-palette-primary-dark, var(--e-site-editor-add-button-color-hover-background-color));
+  border-color: var(--e-one-palette-primary-dark, var(--e-site-editor-add-button-color-hover-background-color));
+  color: var(--e-one-palette-primary-contrast-text, var(--e-one-palette-primary-contrastText, #ffffff));
+  text-decoration: none;
 }
 .e-site-editor-conditions__footer {
   display: flex;

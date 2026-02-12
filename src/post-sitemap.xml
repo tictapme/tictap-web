@@ -295,13 +295,6 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://www.tictap.me/blog/que-es-la-gestion-de-activos-empresariales-eam/</loc>
-		<lastmod>2026-02-04T12:58:07+00:00</lastmod>
-		<image:image>
-			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/gestion-de-activos.webp</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://www.tictap.me/blog/descubre-que-informacion-deben-incluir-los-manuales-de-instrucciones/</loc>
 		<lastmod>2026-02-04T15:05:21+00:00</lastmod>
 		<image:image>
@@ -348,6 +341,27 @@
 		<lastmod>2026-02-09T17:51:32+00:00</lastmod>
 		<image:image>
 			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/Gemini_Generated_Image_qql4dwqql4dwqql4export-1.webp</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/eam-vs-cmms-cual-necesita-tu-empresa/</loc>
+		<lastmod>2026-02-12T08:08:40+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/EAM-vs-CMMS-%C2%BFCual-necesita-tu-empresa.webp</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/que-es-la-gestion-de-activos-empresariales-eam/</loc>
+		<lastmod>2026-02-12T08:38:31+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/gestion-de-activos.webp</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://www.tictap.me/blog/trazabilidad-en-la-cadena-de-suministro-de-materias-primas-a-consumidor-final/</loc>
+		<lastmod>2026-02-12T08:57:13+00:00</lastmod>
+		<image:image>
+			<image:loc>https://www.tictap.me/wp-content/uploads/2026/02/Trazabilidad-en-la-cadena-de-suministro-de-materias-primas-a-consumidor-final-scaled.webp</image:loc>
 		</image:image>
 	</url>
 </urlset>
