@@ -1,0 +1,185 @@
+body {
+    margin: 0px !important;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: auto;
+}
+
+.container-center {
+    background-color: white;
+    max-width: 1140px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    gap: 20px;
+}
+
+.div-1, .div-2, .div-3 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.div-1, .div-3 {
+    gap: 20px;
+    padding-top: 40px;
+    height: 450px;
+    overflow: visible;
+}
+
+/* --- CTA Styles --- */
+.cta {
+    padding: 20px;
+    border-radius: 20px;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 300ms ease;
+}
+
+.cta:hover {
+    background-color: #E8F4FF;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.cta .h3-svg {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.cta.cta-reverse .h3-svg {
+    flex-direction: row-reverse;
+    justify-content: start;
+    gap: 30px;
+}
+
+.icono {
+    height: 60px !important;
+    width: 60px !important;
+}
+
+.cta h3 {
+    font-size: 24px;
+    color: #00202E;
+    line-height: 1.2em;
+    margin: 0px;
+    text-decoration: none !important;
+    font-family: "Varela Round", sans-serif;
+}
+
+.cta p {
+    font-size: 18px;
+    color: #00202E;
+    line-height: 1.2em;
+    margin: 0px;
+    text-decoration: none;
+    font-family: lato;
+    opacity: 1;
+    max-height: 200px;
+    transition: all 300ms ease;
+}
+
+.img-hover {
+    align-self: center;
+    display: block;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 300ms ease;
+    width: 100%;
+    object-fit: cover;
+}
+
+.cta:hover .img-hover {
+    opacity: 1;
+    max-height: 100px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* --- Misc --- */
+a {
+    text-decoration: none !important;
+}
+
+a:focus {
+    outline: none;
+}
+
+/*------------------------------------------- div2 -------------------------------------------------*/
+.div-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.h2-center {
+    text-align: center;
+    font-family: "Varela Round", sans-serif;
+    font-size: 32px;
+    margin: 0px;
+    color: #00202E;
+}
+
+.link-logo-plataforma {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 300ms ease;
+}
+
+.link-logo-plataforma:hover {
+    scale: 1.1;
+}
+
+.logo-plataforma {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-center {
+    width: 70%;
+    height: 80%;
+}
+
+.boton {
+    padding: 12px 25px 12px 25px;
+    background-color: #00B0FF;
+    border-radius: 200px;
+    color: white;
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    transition: 200ms ease;
+    border: 1px solid #00B0FF;
+    font-weight: 500;
+}
+
+.boton:hover {
+    scale: 1.1;
+    background-color: transparent;
+    color: #00B0FF;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}

@@ -20,7 +20,7 @@ h3.theplus-posts-not-found{font-size:14px;background:#8072fc;padding:10px;text-a
 /*listing*/
 
 /*Hiding elements*/
-@media (min-width:1025px){.elementor-element.elementor-element-edit-mode.elementor-hidden-desktop{opacity:.5}}@media (max-width:1024px) and (min-width:768px){.elementor-element.elementor-element-edit-mode.elementor-hidden-tablet{opacity:.5}}@media (max-width:767px){.elementor-element.elementor-element-edit-mode.elementor-hidden-phone{opacity:.5}}
+@media (min-width:1025px){.elementor-element.elementor-element-edit-mode.elementor-hidden-desktop{opacity:.5}}@media (max-width:1024px) and (min-width:768px){.elementor-element.elementor-element-edit-mode.elementor-hidden-tablet{opacity:.5}}@media (max-width:767px){.elementor-element.elementor-element-edit-mode.elementor-hidden-mobile{opacity:.5}}
 /*Hiding elements*/
 
 @media (max-width:767px){.list-isotope-metro:not(.plus-smart-gallery) .post-inner-loop .grid-item{width:33.33%!important;height:250px!important}.post-inner-loop.tp-row{margin-right:-10px;margin-left:-10px}}@media (max-width:660px){.list-isotope-metro:not(.plus-smart-gallery) .post-inner-loop .grid-item{width:50%!important;height:300px!important}}@media (max-width:480px){.list-isotope-metro:not(.plus-smart-gallery) .post-inner-loop .grid-item{width:100%!important;height:420px!important}}@media (max-width:375px){.list-isotope-metro:not(.plus-smart-gallery) .post-inner-loop .grid-item{height:300px!important}}

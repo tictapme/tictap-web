@@ -11,7 +11,7 @@ if [ "$1" == "develop" ]; then
 fi
 
 if [ "$1" == "main" ]; then
-  DEFAULT_OLD_URL="static-www-tictap\\.tictap\\.me|develop\\.wp-web\\.pages\\.dev"
+  DEFAULT_OLD_URL="static-www-tictap\\.tictap\\.me|develop\\.wp-web\\.pages\\.dev|staging-www\\.tictap\\.me"
   DEFAULT_NEW_URL="www.tictap.me"
 fi
 
@@ -23,9 +23,9 @@ fi
 
 
 echo "\n\n Using branch $1 : replacing $DEFAULT_OLD_URL with $DEFAULT_NEW_URL \n\n"
-read -p "Are you sure you want to continue? (y/n) " -n 1 -r
+read -p "Are you sure you want to continue? (Y/n) " -r
 echo    # move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[ ! $REPLY =~ ^[Yy]?$ ]]
 then
     echo "Exiting..."
     exit 1
@@ -49,7 +49,7 @@ fi
 find "$SRC_DIR" -type f | while read -r file; do
   # Use sed to replace the URL and save changes in place
   sed -i -E "s/$OLD_URL/$NEW_URL/g" "$file"
-  echo "Processed $file \n"
+  echo "Replaced $file \n"
 done
 
 echo "Replaced URLs from $OLD_URL to $NEW_URL in $SRC_DIR"
