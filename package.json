@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preview": "node bin/preview.js",
+    "preview:src": "node bin/preview.js src",
     "wrangler": "wrangler",
     "webpack": "weppack"
   },
