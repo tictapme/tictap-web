@@ -11,7 +11,7 @@
 # - The optional "carpeta" is a path relative to src/ (e.g., blog, en/blog, contacto).
 # - Excludes: .git/, 404.html, bin/, _redirects
 # - After syncing, staging links are replaced with production in .html/.xml within the affected path.
-# - Finally, node bin/fix-sitemaps.js is executed.
+# - Finally, sitemap and SEO cleanup scripts are executed.
 
 set -euo pipefail
 
@@ -33,6 +33,7 @@ Detalles:
 - Tras sincronizar, en los .html reemplaza cualquier host https://{sub}.tictap.me -> https://www.tictap.me (cualquier subdominio)
 - En .xml mantiene: staging-www.tictap.me -> www.tictap.me
 - Ejecuta: node bin/fix-sitemaps.js
+- Ejecuta: node bin/optimize-seo.js
 EOF
 }
 
@@ -129,5 +130,8 @@ for TARGET_XML_DIR in "${TARGET_XML_DIRS[@]}"; do
   fi
 done
 
-# Adds Absolute urls for sitemaps
+# Adds absolute URLs for sitemaps
 node bin/fix-sitemaps.js
+
+# Normalizes canonical signals, noindex rules and sitemap references
+node bin/optimize-seo.js
