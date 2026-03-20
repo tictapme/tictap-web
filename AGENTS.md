@@ -2,7 +2,7 @@
 
 ## Qué es este proyecto
 
-Este repositorio contiene una versión estática de la web de TicTAP generada desde WordPress.
+Este repositorio contiene lo que fue una versión estática de la web de TicTAP generada desde WordPress.
 No hay renderizado dinámico en producción: Cloudflare Pages publica exactamente los archivos que hay en el directorio publicado.
 
 Asunción operativa importante:
