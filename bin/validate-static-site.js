@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const { resolveSiteContext } = require('./site-host');
 
 const ROOT_DIR = path.join(__dirname, '..');
 const SRC_DIR = path.join(ROOT_DIR, 'src');
-const PROD_HOST = 'https://www.tictap.me';
-const LEGACY_HOST_PATTERN = /(develop\.wp-web\.pages\.dev|staging-www\.tictap\.me|static-www\.tictap\.me|staging-www-tictap\.tictap\.me)/i;
+const { host: TARGET_HOST, nonTargetHosts } = resolveSiteContext();
 const TEXT_EXTENSIONS = new Set(['.css', '.html', '.js', '.json', '.map', '.md', '.svg', '.txt', '.xml', '.xsl']);
 const VALID_STATUS_CODES = new Set(['200', '301', '302', '303', '307', '308']);
 const REQUIRED_SRC_FILES = ['_headers', '_redirects', 'robots.txt', 'sitemap.xml', 'sitemap_index.xml', 'page-sitemap.xml', 'post-sitemap.xml'];
@@ -64,7 +64,7 @@ function validateNoLegacyHosts() {
 
   for (const filePath of files) {
     const content = fs.readFileSync(filePath, 'utf8');
-    if (LEGACY_HOST_PATTERN.test(content)) {
+    if (containsNonTargetHost(content)) {
       errors.push(`Legacy host found in ${path.relative(ROOT_DIR, filePath)}`);
     }
   }
@@ -77,15 +77,15 @@ function validateRobotsTxt() {
   }
 
   const content = fs.readFileSync(robotsPath, 'utf8');
-  if (!content.includes(`Sitemap: ${PROD_HOST}/sitemap_index.xml`)) {
-    errors.push('robots.txt must point to the production sitemap index');
+  if (!content.includes(`Sitemap: ${TARGET_HOST}/sitemap_index.xml`)) {
+    errors.push(`robots.txt must point to the sitemap index for ${TARGET_HOST}`);
   }
 }
 
 function validateSitemaps() {
   const sitemapIndexPath = path.join(SRC_DIR, 'sitemap_index.xml');
   const sitemapAliasPath = path.join(SRC_DIR, 'sitemap.xml');
-  const expectedSitemapLocs = [`${PROD_HOST}/page-sitemap.xml`, `${PROD_HOST}/post-sitemap.xml`];
+  const expectedSitemapLocs = [`${TARGET_HOST}/page-sitemap.xml`, `${TARGET_HOST}/post-sitemap.xml`];
 
   for (const filePath of [sitemapIndexPath, sitemapAliasPath]) {
     if (!fs.existsSync(filePath)) {
@@ -127,10 +127,14 @@ function validateRedirects() {
     if (!VALID_STATUS_CODES.has(statusCode)) {
       errors.push(`Redirect rule ${index + 1} in src/_redirects uses unsupported status code ${statusCode}`);
     }
-    if (LEGACY_HOST_PATTERN.test(destination)) {
+    if (containsNonTargetHost(destination)) {
       errors.push(`Redirect rule ${index + 1} in src/_redirects points to a legacy host`);
     }
   }
+}
+
+function containsNonTargetHost(content) {
+  return nonTargetHosts.some((host) => content.includes(host) || content.includes(host.replace(/^https?:\/\//, '')));
 }
 
 function getFilesRecursive(dirPath, predicate) {

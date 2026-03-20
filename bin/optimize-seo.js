@@ -1,14 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { resolveSiteContext } = require('./site-host');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
-const PROD_HOST = 'https://www.tictap.me';
-const LEGACY_HOSTS = [
-  'https://develop.wp-web.pages.dev',
-  'https://staging-www.tictap.me',
-  'https://static-www.tictap.me',
-  'https://staging-www-tictap.tictap.me',
-];
+const { host: TARGET_HOST, nonTargetHosts: LEGACY_HOSTS } = resolveSiteContext();
 const TEXT_EXTENSIONS = new Set(['.css', '.html', '.js', '.json', '.map', '.md', '.svg', '.txt', '.xml', '.xsl']);
 
 const NOINDEX_ROUTE_PATTERNS = [
@@ -91,26 +86,26 @@ function optimizeXmlSitemaps() {
 }
 
 function writeRobotsTxt() {
-  const robotsTxt = ['User-agent: *', 'Disallow:', '', `Sitemap: ${PROD_HOST}/sitemap_index.xml`, ''].join('\n');
+  const robotsTxt = ['User-agent: *', 'Disallow:', '', `Sitemap: ${TARGET_HOST}/sitemap_index.xml`, ''].join('\n');
   fs.writeFileSync(path.join(SRC_DIR, 'robots.txt'), robotsTxt);
 }
 
 function normalizeHosts(content) {
   return LEGACY_HOSTS.reduce((current, host) => {
     const escapedHost = host.replace(/\//g, '\\/');
-    const escapedProdHost = PROD_HOST.replace(/\//g, '\\/');
+    const escapedProdHost = TARGET_HOST.replace(/\//g, '\\/');
     const encodedHost = encodeURIComponent(host);
-    const encodedProdHost = encodeURIComponent(PROD_HOST);
+    const encodedProdHost = encodeURIComponent(TARGET_HOST);
     const malformedHost = host.replace('https://', 'https:/');
     const hostName = host.replace(/^https?:\/\//, '');
 
     return current
       .split(host)
-      .join(PROD_HOST)
+      .join(TARGET_HOST)
       .split(malformedHost)
-      .join(PROD_HOST)
+      .join(TARGET_HOST)
       .split(hostName)
-      .join(PROD_HOST.replace(/^https?:\/\//, ''))
+      .join(TARGET_HOST.replace(/^https?:\/\//, ''))
       .split(escapedHost)
       .join(escapedProdHost)
       .split(encodedHost)
@@ -211,7 +206,7 @@ function dedupeAndFilterEntries(entries) {
       continue;
     }
 
-    const normalizedLoc = `${PROD_HOST}${url.pathname}`;
+    const normalizedLoc = `${TARGET_HOST}${url.pathname}`;
     const normalizedXml = normalizeHosts(entry.xml).replace(entry.loc, normalizedLoc);
     const current = {
       loc: normalizedLoc,
@@ -229,7 +224,7 @@ function dedupeAndFilterEntries(entries) {
 }
 
 function buildUrlSetXml(entries) {
-  const header = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://www.tictap.me/main-sitemap.xsl"?>';
+  const header = `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="${TARGET_HOST}/main-sitemap.xsl"?>`;
   const openTag = '<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
   const body = entries.map((entry) => `\t${entry.xml.replace(/\n/g, '\n\t')}`).join('\n');
   const closeTag = '</urlset>';
@@ -239,7 +234,7 @@ function buildUrlSetXml(entries) {
 }
 
 function buildSitemapIndexXml() {
-  const header = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://www.tictap.me/main-sitemap.xsl"?>';
+  const header = `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="${TARGET_HOST}/main-sitemap.xsl"?>`;
   const openTag = '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
   const body = SITEMAP_FILES.filter((fileName) => fs.existsSync(path.join(SRC_DIR, fileName)))
     .map((fileName) => {
@@ -248,7 +243,7 @@ function buildSitemapIndexXml() {
 
       return [
         '\t<sitemap>',
-        `\t\t<loc>${PROD_HOST}/${fileName}</loc>`,
+        `\t\t<loc>${TARGET_HOST}/${fileName}</loc>`,
         `\t\t<lastmod>${lastmod}</lastmod>`,
         '\t</sitemap>',
       ].join('\n');
