@@ -1,0 +1,41 @@
+/*
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Content-Type-Options: nosniff
+
+/robots.txt
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sitemap.xml
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sitemap_index.xml
+  Cache-Control: public, max-age=0, must-revalidate
+
+/page-sitemap.xml
+  Cache-Control: public, max-age=0, must-revalidate
+
+/post-sitemap.xml
+  Cache-Control: public, max-age=0, must-revalidate
+
+/main-sitemap.xsl
+  Cache-Control: public, max-age=0, must-revalidate
+
+/404.html
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/404/*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/wp-content/uploads/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/wp-content/plugins/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/wp-content/themes/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/wp-includes/*
+  Cache-Control: public, max-age=31536000, immutable
