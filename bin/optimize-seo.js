@@ -9,6 +9,7 @@ const LEGACY_HOSTS = [
   'https://static-www.tictap.me',
   'https://staging-www-tictap.tictap.me',
 ];
+const TEXT_EXTENSIONS = new Set(['.css', '.html', '.js', '.json', '.map', '.md', '.svg', '.txt', '.xml', '.xsl']);
 
 const NOINDEX_ROUTE_PATTERNS = [
   /^\/404\/$/,
@@ -32,9 +33,28 @@ const NOINDEX_ROUTE_PATTERNS = [
 
 const SITEMAP_FILES = ['page-sitemap.xml', 'post-sitemap.xml'];
 
+normalizeTextAssets();
 optimizeHtml();
 optimizeXmlSitemaps();
 writeRobotsTxt();
+
+function normalizeTextAssets() {
+  const textFiles = getFilesRecursive(SRC_DIR, (filePath) => {
+    const baseName = path.basename(filePath);
+    const ext = path.extname(filePath).toLowerCase();
+
+    return TEXT_EXTENSIONS.has(ext) || baseName === '_redirects' || baseName === '_headers';
+  });
+
+  for (const filePath of textFiles) {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const updated = normalizeHosts(content);
+
+    if (updated !== content) {
+      fs.writeFileSync(filePath, updated);
+    }
+  }
+}
 
 function optimizeHtml() {
   const htmlFiles = getFilesRecursive(SRC_DIR, (filePath) => filePath.endsWith('.html'));
@@ -81,10 +101,16 @@ function normalizeHosts(content) {
     const escapedProdHost = PROD_HOST.replace(/\//g, '\\/');
     const encodedHost = encodeURIComponent(host);
     const encodedProdHost = encodeURIComponent(PROD_HOST);
+    const malformedHost = host.replace('https://', 'https:/');
+    const hostName = host.replace(/^https?:\/\//, '');
 
     return current
       .split(host)
       .join(PROD_HOST)
+      .split(malformedHost)
+      .join(PROD_HOST)
+      .split(hostName)
+      .join(PROD_HOST.replace(/^https?:\/\//, ''))
       .split(escapedHost)
       .join(escapedProdHost)
       .split(encodedHost)

@@ -6,6 +6,9 @@
   "scripts": {
     "preview": "node bin/preview.js",
     "preview:src": "node bin/preview.js src",
+    "normalize:pages": "node bin/normalize-pages-config.js",
+    "optimize:seo": "node bin/optimize-seo.js",
+    "validate:static": "node bin/validate-static-site.js",
     "wrangler": "wrangler",
     "webpack": "weppack"
   },
