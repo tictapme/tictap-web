@@ -1,247 +1,247 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://static-www-tictap.tictap.me/main-sitemap.xsl"?>
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://develop.wp-web.pages.dev/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://static-www-tictap.tictap.me/</loc>
-		<lastmod>2026-03-19T12:23:20+00:00</lastmod>
+		<loc>https://develop.wp-web.pages.dev/</loc>
+		<lastmod>2026-03-20T11:53:06+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/en/legal-notice-3/</loc>
+		<loc>https://develop.wp-web.pages.dev/en/legal-notice-3/</loc>
 		<lastmod>2022-03-08T12:33:03+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-instalaciones-y-mantenimiento/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-instalaciones-y-mantenimiento/</loc>
 		<lastmod>2022-04-11T07:55:36+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-de-immuebles/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-de-immuebles/</loc>
 		<lastmod>2022-04-19T08:52:30+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/venta-al-por-menor/</loc>
+		<loc>https://develop.wp-web.pages.dev/venta-al-por-menor/</loc>
 		<lastmod>2022-04-19T09:09:45+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/venta-al-por-menor/</loc>
+		<loc>https://develop.wp-web.pages.dev/venta-al-por-menor/</loc>
 		<lastmod>2022-04-19T09:53:55+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-instalaciones-y-mantenimiento/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-instalaciones-y-mantenimiento/</loc>
 		<lastmod>2022-04-19T09:55:20+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/vcards/</loc>
+		<loc>https://develop.wp-web.pages.dev/vcards/</loc>
 		<lastmod>2022-04-19T09:57:44+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/vcards/</loc>
+		<loc>https://develop.wp-web.pages.dev/vcards/</loc>
 		<lastmod>2022-04-25T08:42:51+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/politica-cookies/</loc>
+		<loc>https://develop.wp-web.pages.dev/politica-cookies/</loc>
 		<lastmod>2022-12-19T13:48:43+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/aviso-legal/</loc>
+		<loc>https://develop.wp-web.pages.dev/aviso-legal/</loc>
 		<lastmod>2022-12-19T14:21:17+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/politica-cookies/</loc>
+		<loc>https://develop.wp-web.pages.dev/politica-cookies/</loc>
 		<lastmod>2022-12-27T08:58:28+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-de-immuebles/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-de-immuebles/</loc>
 		<lastmod>2023-05-29T11:43:38+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/aviso-legal/</loc>
+		<loc>https://develop.wp-web.pages.dev/aviso-legal/</loc>
 		<lastmod>2023-10-25T07:35:41+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/?page_id=29742</loc>
+		<loc>https://develop.wp-web.pages.dev/?page_id=29742</loc>
 		<lastmod>2024-03-26T11:55:19+00:00</lastmod>
 		<image:image>
-			<image:loc>https://static-www-tictap.tictap.me/wp-content/uploads/2025/12/big_hero.png</image:loc>
+			<image:loc>https://develop.wp-web.pages.dev/wp-content/uploads/2025/12/big_hero.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/terminos-y-condiciones/</loc>
+		<loc>https://develop.wp-web.pages.dev/terminos-y-condiciones/</loc>
 		<lastmod>2024-09-18T07:59:00+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/politica-de-privacidad/</loc>
+		<loc>https://develop.wp-web.pages.dev/politica-de-privacidad/</loc>
 		<lastmod>2024-09-18T08:16:30+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/politica-de-privacidad/</loc>
+		<loc>https://develop.wp-web.pages.dev/politica-de-privacidad/</loc>
 		<lastmod>2024-09-18T08:23:04+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/en/cookie-policy/</loc>
+		<loc>https://develop.wp-web.pages.dev/en/cookie-policy/</loc>
 		<lastmod>2024-09-18T08:26:05+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/en/terms-and-conditions/</loc>
+		<loc>https://develop.wp-web.pages.dev/en/terms-and-conditions/</loc>
 		<lastmod>2024-09-18T08:32:49+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/industry-nueva-normativa-eu-maquinas-y-documentacion/</loc>
+		<loc>https://develop.wp-web.pages.dev/industry-nueva-normativa-eu-maquinas-y-documentacion/</loc>
 		<lastmod>2024-09-27T08:31:03+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/industry-nueva-normativa-eu-maquinas-y-documentacion/</loc>
+		<loc>https://develop.wp-web.pages.dev/industry-nueva-normativa-eu-maquinas-y-documentacion/</loc>
 		<lastmod>2024-09-27T09:41:31+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/casos-de-exito/</loc>
+		<loc>https://develop.wp-web.pages.dev/casos-de-exito/</loc>
 		<lastmod>2025-02-12T06:16:09+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/quienes-somos/</loc>
+		<loc>https://develop.wp-web.pages.dev/quienes-somos/</loc>
 		<lastmod>2025-03-12T17:30:07+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/en/free-demo-tictap-industry/</loc>
+		<loc>https://develop.wp-web.pages.dev/en/free-demo-tictap-industry/</loc>
 		<lastmod>2025-03-13T12:51:07+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-inteligente-activos-flotas-y-maquinaria-sin-app/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-inteligente-activos-flotas-y-maquinaria-sin-app/</loc>
 		<lastmod>2025-11-13T15:37:02+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/convierte-tus-instalaciones-en-activos-inteligentes-con-tictap/</loc>
+		<loc>https://develop.wp-web.pages.dev/convierte-tus-instalaciones-en-activos-inteligentes-con-tictap/</loc>
 		<lastmod>2025-11-20T14:15:26+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/stock/</loc>
+		<loc>https://develop.wp-web.pages.dev/stock/</loc>
 		<lastmod>2025-12-10T13:50:41+00:00</lastmod>
 		<image:image>
-			<image:loc>https://static-www-tictap.tictap.me/wp-content/uploads/2025/12/big_hero.png</image:loc>
+			<image:loc>https://develop.wp-web.pages.dev/wp-content/uploads/2025/12/big_hero.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/tool-maintenance/</loc>
+		<loc>https://develop.wp-web.pages.dev/tool-maintenance/</loc>
 		<lastmod>2025-12-12T16:54:20+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-equipos-contra-incendios/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-equipos-contra-incendios/</loc>
 		<lastmod>2025-12-15T14:52:48+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/quienes-somos/</loc>
+		<loc>https://develop.wp-web.pages.dev/quienes-somos/</loc>
 		<lastmod>2025-12-16T11:37:16+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-de-coshh/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-de-coshh/</loc>
 		<lastmod>2026-01-05T08:25:51+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-tareas-de-limpieza/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-tareas-de-limpieza/</loc>
 		<lastmod>2026-01-05T10:06:49+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/mantenimiento-de-flotas/</loc>
+		<loc>https://develop.wp-web.pages.dev/mantenimiento-de-flotas/</loc>
 		<lastmod>2026-01-07T09:30:18+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/mantenimiento-de-flotas/</loc>
+		<loc>https://develop.wp-web.pages.dev/mantenimiento-de-flotas/</loc>
 		<lastmod>2026-01-07T10:27:43+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-tareas-de-limpieza/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-tareas-de-limpieza/</loc>
 		<lastmod>2026-01-09T16:41:32+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/asset-passport/</loc>
+		<loc>https://develop.wp-web.pages.dev/asset-passport/</loc>
 		<lastmod>2026-01-09T16:47:07+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/mantenimiento-de-herramientas/</loc>
+		<loc>https://develop.wp-web.pages.dev/mantenimiento-de-herramientas/</loc>
 		<lastmod>2026-01-09T16:50:35+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-equipos-contra-incendios/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-equipos-contra-incendios/</loc>
 		<lastmod>2026-01-09T16:53:51+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/tictap-academy/</loc>
+		<loc>https://develop.wp-web.pages.dev/tictap-academy/</loc>
 		<lastmod>2026-01-16T17:12:43+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-de-coshh/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-de-coshh/</loc>
 		<lastmod>2026-01-20T11:42:23+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/precios/</loc>
+		<loc>https://develop.wp-web.pages.dev/precios/</loc>
 		<lastmod>2026-01-23T16:03:14+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/precios/</loc>
+		<loc>https://develop.wp-web.pages.dev/precios/</loc>
 		<lastmod>2026-01-23T16:11:00+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/mantenimiento-de-herramientas/</loc>
+		<loc>https://develop.wp-web.pages.dev/mantenimiento-de-herramientas/</loc>
 		<lastmod>2026-01-23T17:04:26+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/stock/</loc>
+		<loc>https://develop.wp-web.pages.dev/stock/</loc>
 		<lastmod>2026-01-23T17:10:19+00:00</lastmod>
 		<image:image>
-			<image:loc>https://static-www-tictap.tictap.me/wp-content/uploads/2025/12/big_hero.png</image:loc>
+			<image:loc>https://develop.wp-web.pages.dev/wp-content/uploads/2025/12/big_hero.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/asset-passport/</loc>
+		<loc>https://develop.wp-web.pages.dev/asset-passport/</loc>
 		<lastmod>2026-01-26T13:43:12+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-equipo-proteccion-personal/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-equipo-proteccion-personal/</loc>
 		<lastmod>2026-01-28T13:47:59+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-equipo-proteccion-personal/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-equipo-proteccion-personal/</loc>
 		<lastmod>2026-01-28T14:29:15+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/</loc>
-		<lastmod>2026-01-29T12:56:21+00:00</lastmod>
-	</url>
-	<url>
-		<loc>https://static-www-tictap.tictap.me/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/</loc>
+		<loc>https://develop.wp-web.pages.dev/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/</loc>
 		<lastmod>2026-01-30T09:13:57+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/</loc>
+		<loc>https://develop.wp-web.pages.dev/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/</loc>
 		<lastmod>2026-01-30T09:18:30+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-de-tu-instalacion/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-de-tu-instalacion/</loc>
 		<lastmod>2026-01-30T15:48:43+00:00</lastmod>
 		<image:image>
-			<image:loc>https://static-www-tictap.tictap.me/wp-content/uploads/2024/04/TicTAP-Equipment-management-1.png</image:loc>
+			<image:loc>https://develop.wp-web.pages.dev/wp-content/uploads/2024/04/TicTAP-Equipment-management-1.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/gestion-de-tu-instalacion/</loc>
+		<loc>https://develop.wp-web.pages.dev/gestion-de-tu-instalacion/</loc>
 		<lastmod>2026-01-30T16:49:58+00:00</lastmod>
 		<image:image>
-			<image:loc>https://static-www-tictap.tictap.me/wp-content/uploads/2024/04/TicTAP-Equipment-management-1.png</image:loc>
+			<image:loc>https://develop.wp-web.pages.dev/wp-content/uploads/2024/04/TicTAP-Equipment-management-1.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/railway/</loc>
+		<loc>https://develop.wp-web.pages.dev/railway/</loc>
 		<lastmod>2026-02-09T16:13:10+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/railway/</loc>
+		<loc>https://develop.wp-web.pages.dev/railway/</loc>
 		<lastmod>2026-02-09T17:51:06+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/contacto/</loc>
+		<loc>https://develop.wp-web.pages.dev/contacto/</loc>
 		<lastmod>2026-02-13T09:32:04+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://static-www-tictap.tictap.me/contacto/</loc>
+		<loc>https://develop.wp-web.pages.dev/contacto/</loc>
 		<lastmod>2026-02-13T11:55:34+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://develop.wp-web.pages.dev/</loc>
+		<lastmod>2026-03-20T11:53:42+00:00</lastmod>
 	</url>
 </urlset>
 <!-- XML Sitemap generated by Yoast SEO -->
