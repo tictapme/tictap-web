@@ -1,14 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const { resolveSiteContext } = require('./site-host');
+const { resolvePublishContext } = require('./site-host');
 
 const ROOT_DIR = path.join(__dirname, '..');
 const SRC_DIR = path.join(ROOT_DIR, 'src');
-const { host: TARGET_HOST, nonTargetHosts } = resolveSiteContext();
+const { host: TARGET_HOST, nonTargetHosts } = resolvePublishContext();
 const TEXT_EXTENSIONS = new Set(['.css', '.html', '.js', '.json', '.map', '.md', '.svg', '.txt', '.xml', '.xsl']);
 const VALID_STATUS_CODES = new Set(['200', '301', '302', '303', '307', '308']);
 const REQUIRED_SRC_FILES = ['_headers', '_redirects', 'robots.txt', 'sitemap.xml', 'sitemap_index.xml', 'page-sitemap.xml', 'post-sitemap.xml'];
 const ROOT_SYNC_FILES = ['_headers', '_redirects'];
+const MAX_REPORTED_MATCHES_PER_FILE = 3;
 
 const errors = [];
 
@@ -64,8 +65,13 @@ function validateNoLegacyHosts() {
 
   for (const filePath of files) {
     const content = fs.readFileSync(filePath, 'utf8');
-    if (containsNonTargetHost(content)) {
-      errors.push(`Legacy host found in ${path.relative(ROOT_DIR, filePath)}`);
+    const matches = findNonTargetHostMatches(content);
+    if (matches.length > 0) {
+      const formattedMatches = matches
+        .slice(0, MAX_REPORTED_MATCHES_PER_FILE)
+        .map((match) => `${match.host} (line ${match.line})`)
+        .join(', ');
+      errors.push(`Legacy host found in ${path.relative(ROOT_DIR, filePath)}: ${formattedMatches}`);
     }
   }
 }
@@ -135,6 +141,26 @@ function validateRedirects() {
 
 function containsNonTargetHost(content) {
   return nonTargetHosts.some((host) => content.includes(host) || content.includes(host.replace(/^https?:\/\//, '')));
+}
+
+function findNonTargetHostMatches(content) {
+  const matches = [];
+  const lines = content.split(/\r?\n/);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    for (const host of nonTargetHosts) {
+      const hostName = host.replace(/^https?:\/\//, '');
+      if (line.includes(host) || line.includes(hostName)) {
+        matches.push({
+          host,
+          line: index + 1,
+        });
+      }
+    }
+  }
+
+  return matches;
 }
 
 function getFilesRecursive(dirPath, predicate) {

@@ -22,6 +22,17 @@ function resolveSiteContext() {
   };
 }
 
+function resolvePublishContext() {
+  const host = PROD_HOST;
+  const nonTargetHosts = KNOWN_HOSTS.filter((candidate) => candidate !== host);
+
+  return {
+    branch: 'production-static-export',
+    host,
+    nonTargetHosts,
+  };
+}
+
 function resolveBranchName() {
   const fromEnv = firstNonEmpty([
     process.env.SITE_BRANCH,
@@ -65,6 +76,7 @@ module.exports = {
   DEVELOP_HOST,
   KNOWN_HOSTS,
   PROD_HOST,
+  resolvePublishContext,
   resolveBranchName,
   resolveHostForBranch,
   resolveSiteContext,

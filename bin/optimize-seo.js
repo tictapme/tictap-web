@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { resolveSiteContext } = require('./site-host');
+const { resolvePublishContext } = require('./site-host');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
-const { host: TARGET_HOST, nonTargetHosts: LEGACY_HOSTS } = resolveSiteContext();
+const { host: TARGET_HOST, nonTargetHosts: LEGACY_HOSTS } = resolvePublishContext();
 const TEXT_EXTENSIONS = new Set(['.css', '.html', '.js', '.json', '.map', '.md', '.svg', '.txt', '.xml', '.xsl']);
 
 const NOINDEX_ROUTE_PATTERNS = [
