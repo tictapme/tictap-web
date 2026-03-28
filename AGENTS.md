@@ -45,6 +45,13 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 4. Ejecutar `node bin/validate-static-site.js`.
 5. Revisar el diff de `src/_redirects`, `src/_headers`, `robots.txt` y sitemaps antes de hacer commit.
 
+## Flujo para artículos generados desde marketing
+
+- los artículos nuevos deben entrar en `src/blog/<slug>/index.html`
+- el HTML debe seguir el patrón de los artículos existentes: SEO en `<head>`, `article` en el cuerpo, CTAs reutilizando `blog-center-flex` y `boton-blog`
+- antes de considerar cerrado un artículo generado, previsualizarlo con `npm run preview` o `npm run preview:src`
+- cuando el contenido esté aprobado, validar el sitio estático y solo después preparar el `push` a `main`
+
 También existe un hook de git en `.githooks/pre-commit` para bloquear commits si falla la validación.
 
 ## Scripts relevantes
