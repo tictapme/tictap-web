@@ -2,7 +2,7 @@
 
 ## Qué es este proyecto
 
-Este repositorio contiene lo que fue una versión estática de la web de TicTAP generada desde WordPress.
+Este repositorio contiene lo que fue una versión estática de la web de TicTAP generada desde un CMS anterior.
 No hay renderizado dinámico en producción: Cloudflare Pages publica exactamente los archivos que hay en el directorio publicado.
 
 Asunción operativa importante:
@@ -27,7 +27,7 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 - `_redirects`: archivo efectivo de redirecciones para Cloudflare Pages.
 - `_headers`: archivo efectivo de cabeceras HTTP para Cloudflare Pages.
 - `robots.txt`, `sitemap.xml`, `sitemap_index.xml`, `page-sitemap.xml`, `post-sitemap.xml`: señales SEO que se sirven en producción.
-- `wp-content/`, `wp-includes/`: assets exportados desde WordPress.
+- `wp-content/`, `wp-includes/`: assets exportados del CMS anterior.
 
 ## Reglas de mantenimiento
 
@@ -72,6 +72,6 @@ También existe un hook de git en `.githooks/pre-commit` para bloquear commits s
 
 ## Qué no asumir
 
-- no asumir comportamiento de WordPress en runtime
+- no asumir comportamiento del CMS anterior en runtime
 - no asumir plugins de SEO activos en producción
 - no asumir que un archivo en la raíz del repo se publicará si no existe también en `src/`
