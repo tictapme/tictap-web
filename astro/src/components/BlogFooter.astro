@@ -1,0 +1,14 @@
+---
+const {
+  footerText = 'Artículo preparado para revisión local dentro del flujo estático de TicTAP.',
+  footerCtaText = 'Hablar con TicTAP',
+  footerCtaUrl = 'https://www.tictap.me/contacto',
+} = Astro.props;
+---
+
+<footer class="blog-footer">
+  <p>{footerText}</p>
+  <a class="blog-button" href={footerCtaUrl} target="_blank" rel="noopener noreferrer">
+    {footerCtaText}
+  </a>
+</footer>

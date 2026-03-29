@@ -2,7 +2,8 @@
 
 ## Qué es este proyecto
 
-Este repositorio contiene lo que fue una versión estática de la web de TicTAP generada desde un CMS anterior.
+Este repositorio contiene la web estática de TicTAP.
+La mayor parte del sitio sigue siendo un export estático heredado, pero los artículos del blog ya se están generando con Astro para centralizar header, footer, hero y contenido.
 No hay renderizado dinámico en producción: Cloudflare Pages publica exactamente los archivos que hay en el directorio publicado.
 
 Asunción operativa importante:
@@ -15,6 +16,7 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 ### Raíz del repositorio
 
 - `src/`: salida estática publicada por Cloudflare Pages. Debe considerarse la fuente real de producción.
+- `astro/`: fuente de Astro para el blog y sus layouts compartidos.
 - `bin/`: scripts de mantenimiento del export estático, limpieza SEO, validación y utilidades de preview/sync.
 - `_redirects`: copia sincronizada del mapa de redirecciones publicado.
 - `_headers`: copia sincronizada de cabeceras para Cloudflare Pages.
@@ -47,16 +49,18 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 
 ## Flujo para artículos generados desde marketing
 
-- los artículos nuevos deben entrar en `src/blog/<slug>/index.html`
-- el HTML debe seguir el patrón de los artículos existentes: SEO en `<head>`, `article` en el cuerpo, CTAs reutilizando `blog-center-flex` y `boton-blog`
-- antes de considerar cerrado un artículo generado, previsualizarlo con `npm run preview` o `npm run preview:src`
+- los artículos nuevos deben entrar en `astro/src/content/blog/<slug>.md` y materializarse en `src/blog/<slug>/index.html`
+- el renderizador de entrada es `bin/render-blog-article.js`, que convierte el paquete de marketing en contenido Astro
+- el layout debe centralizar header, hero, article body y footer en `astro/src/layouts/BlogArticleLayout.astro`
+- antes de considerar cerrado un artículo generado, previsualizarlo con `npm run preview` para construir Astro, sincronizar `dist/` a `src/` y servir el resultado
 - cuando el contenido esté aprobado, validar el sitio estático y solo después preparar el `push` a `main`
 
 También existe un hook de git en `.githooks/pre-commit` para bloquear commits si falla la validación.
 
 ## Scripts relevantes
 
-- `npm run preview`: sirve localmente el sitio estático.
+- `npm run preview`: construye Astro, sincroniza el resultado en `src/` y sirve localmente el sitio estático.
+- `npm run astro:build`: construye el contenido de Astro a `dist/`.
 - `npm run optimize:seo`: reescribe señales SEO y URLs legacy al dominio de producción.
 - `npm run normalize:pages`: normaliza `_redirects` y sincroniza `_headers`/`_redirects` entre raíz y `src/`.
 - `npm run validate:static`: valida SEO técnico y configuración de Cloudflare Pages.

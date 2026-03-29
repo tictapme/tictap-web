@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BlogHeader from '../../components/BlogHeader.astro';
+import BlogFooter from '../../components/BlogFooter.astro';
+import '../../styles/blog.css';
+
+const posts = (await getCollection('blog')).sort((a, b) => {
+  return new Date(b.data.publishedTime).getTime() - new Date(a.data.publishedTime).getTime();
+});
+---
+
+<!doctype html>
+<html lang="es-ES">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog Archives - TicTAP</title>
+    <meta name="description" content="Entradas del blog de TicTAP sobre mantenimiento, trazabilidad y operaciones." />
+    <link rel="canonical" href="https://www.tictap.me/blog/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Varela+Round&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="blog-page">
+      <div class="blog-shell">
+        <BlogHeader />
+
+        <section class="blog-hero" aria-labelledby="blog-archive-title">
+          <div class="blog-hero__copy">
+            <span class="blog-eyebrow">Blog TicTAP</span>
+            <h1 id="blog-archive-title">Blog Archives</h1>
+            <p class="blog-deck">Entradas sobre mantenimiento, trazabilidad, digitalización y operaciones industriales.</p>
+          </div>
+
+          <aside class="blog-hero__aside" aria-label="Resumen del blog">
+            <div class="aside-card">
+              <h2>Qué encontrarás</h2>
+              <ul>
+                <li>Artículos sobre mantenimiento y operación.</li>
+                <li>Casos de uso de QR, NFC e IA aplicada al terreno.</li>
+                <li>Contenido pensado para equipos industriales y facility.</li>
+              </ul>
+            </div>
+
+            <div class="aside-card">
+              <h2>Cómo se publica</h2>
+              <p>Todo artículo nuevo sale del mismo layout Astro, así que el header, el footer y la estructura del hero se actualizan una sola vez.</p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="blog-article" aria-label="Listado de artículos">
+          <div class="blog-grid">
+            {posts.map((post) => (
+              <a class="blog-card" href={`/blog/${post.slug}/`}>
+                <span class="blog-card__meta">{post.data.category}</span>
+                <h2>{post.data.title}</h2>
+                <p>{post.data.deck ?? post.data.metaDescription}</p>
+                <span class="blog-card__footer">
+                  {post.data.readingTime} · {new Date(post.data.publishedTime).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <BlogFooter
+          footerText="La biblioteca del blog se actualiza desde una sola plantilla Astro."
+          footerCtaText="Contactar con TicTAP"
+          footerCtaUrl="https://www.tictap.me/contacto"
+        />
+      </div>
+    </div>
+  </body>
+</html>
