@@ -6,6 +6,7 @@ const path = require('path');
 const repoRoot = path.resolve(__dirname, '..');
 const sourceDir = path.join(repoRoot, 'dist');
 const targetDir = path.join(repoRoot, 'src');
+const targetAstroDir = path.join(targetDir, '_astro');
 
 function copyTree(source, target) {
   if (!fs.existsSync(source)) {
@@ -24,6 +25,10 @@ function copyTree(source, target) {
 
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.copyFileSync(source, target);
+}
+
+if (fs.existsSync(targetAstroDir)) {
+  fs.rmSync(targetAstroDir, { recursive: true, force: true });
 }
 
 copyTree(sourceDir, targetDir);
