@@ -1,8 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const legacyRoot = path.join(process.cwd(), 'astro', 'legacy-sources');
 const sourceRoot = path.join(process.cwd(), 'src');
+const repoRoot = process.cwd();
+const gitSourceCache = new Map<string, string | null>();
 
 function readFile(relativePath: string) {
   return fs.readFileSync(path.join(legacyRoot, relativePath), 'utf8');
@@ -11,9 +14,29 @@ function readFile(relativePath: string) {
 function readSourceFile(relativePath: string) {
   const legacyPath = path.join(legacyRoot, relativePath);
   const sourcePath = path.join(sourceRoot, relativePath);
+  const gitRelativePath = path.posix.join('src', relativePath.replace(/\\/g, '/'));
 
   if (fs.existsSync(legacyPath)) {
     return fs.readFileSync(legacyPath, 'utf8');
+  }
+
+  if (gitSourceCache.has(gitRelativePath)) {
+    const cached = gitSourceCache.get(gitRelativePath);
+    if (cached !== null) {
+      return cached;
+    }
+  } else {
+    try {
+      const committedHtml = execFileSync('git', ['show', `HEAD:${gitRelativePath}`], {
+        cwd: repoRoot,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      });
+      gitSourceCache.set(gitRelativePath, committedHtml);
+      return committedHtml;
+    } catch {
+      gitSourceCache.set(gitRelativePath, null);
+    }
   }
 
   return fs.readFileSync(sourcePath, 'utf8');
@@ -25,6 +48,15 @@ function rewriteToLocal(html: string) {
     .replace(/https?:\/\/127\.0\.0\.1:\d+/g, '')
     .replace(/(href|src)=["']\/\/fonts\.googleapis\.com/gi, '$1="https://fonts.googleapis.com')
     .replace(/(href|src)=["']\/\/fonts\.gstatic\.com/gi, '$1="https://fonts.gstatic.com');
+}
+
+function decodeHtmlEntities(value: string) {
+  return value
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
 }
 
 function mustMatch(html: string, pattern: RegExp, label: string) {
@@ -53,6 +85,8 @@ function stripCommonCssAssetTags(html: string) {
     /<link[^>]+href=["'][^"']*elementor-pro\/assets\/css\/widget-mega-menu\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*elementor-pro\/assets\/css\/widget-nav-menu\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*elementor-pro\/assets\/css\/modules\/sticky\.min\.css[^>]*>\s*/gi,
+    /<link[^>]+href=["'][^"']*elementor-pro\/assets\/css\/widget-post-info\.min\.css[^>]*>\s*/gi,
+    /<link[^>]+href=["'][^"']*elementor\/assets\/css\/widget-icon-list\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*elementor\/assets\/lib\/animations\/styles\/fadeIn\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*elementor\/assets\/lib\/animations\/styles\/e-animation-shrink\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*elementor\/assets\/lib\/animations\/styles\/e-animation-grow\.min\.css[^>]*>\s*/gi,
@@ -171,7 +205,7 @@ export function loadLegacyPage(relativePath: string) {
   const bodyClass = mustMatch(normalized, /<body[^>]+class=["']([^"']+)["']/i, 'body classes');
   const contentHtml = mustMatch(normalized, /(<div id="content" class="site-content">[\s\S]*?)<footer data-elementor-type="footer"/i, 'content');
   const afterFooterHtml = mustMatch(normalized, /<\/footer>([\s\S]*?)<\/body>/i, 'after footer');
-  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const headExtraHtml = sanitizeHeadExtraHtml(headInner);
 
   return {
@@ -297,7 +331,7 @@ export function loadSourcePage(relativePath: string) {
 
   const bodyAttributes = bodyMatch[1] || '';
   const bodyInnerHtml = bodyMatch[2];
-  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
   const bodyItemTypeMatch = bodyAttributes.match(/itemtype=["']([^"']+)["']/i);
@@ -321,7 +355,7 @@ export function loadSourceStructuredPage(relativePath: string) {
   const bodyClass = mustMatch(normalized, /<body[^>]+class=["']([^"']+)["']/i, 'body classes');
   const contentHtml = mustMatch(normalized, /(<div id="content" class="site-content">[\s\S]*?)<footer data-elementor-type="footer"/i, 'content');
   const afterFooterHtml = mustMatch(normalized, /<\/footer>([\s\S]*?)<\/body>/i, 'after footer');
-  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyItemTypeMatch = normalized.match(/<body[^>]+itemtype=["']([^"']+)["']/i);
 
@@ -348,7 +382,7 @@ export function loadSourceStructuredElementorShellPage(relativePath: string) {
 
   const bodyAttributes = bodyMatch[1] || '';
   const bodyInnerHtml = bodyMatch[2];
-  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
   const bodyItemTypeMatch = bodyAttributes.match(/itemtype=["']([^"']+)["']/i);
@@ -398,7 +432,7 @@ export function loadSourceRedirectPage(relativePath: string) {
 
   const bodyAttributes = bodyMatch[1] || '';
   const bodyInnerHtml = bodyMatch[2];
-  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
   const targetMatch =
@@ -415,7 +449,7 @@ export function loadSourceRedirectPage(relativePath: string) {
     title,
     lang: langMatch?.[1] || 'es-ES',
     bodyClass: bodyClassMatch?.[1] || '',
-    headExtraHtml: stripBaseHeadTags(headInner)
+    headExtraHtml: stripAstroInjectedHeadHtml(stripBaseHeadTags(headInner))
       .replace(/<meta[^>]+http-equiv=["']refresh["'][^>]*>\s*/i, ''),
     bodyInnerHtml,
     targetUrl,
