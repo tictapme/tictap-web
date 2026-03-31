@@ -2,8 +2,14 @@
 import GenericPageLayout from '../layouts/GenericPageLayout.astro';
 import CaseStudyArchiveLayout from '../layouts/CaseStudyArchiveLayout.astro';
 import CaseStudySingleLayout from '../layouts/CaseStudySingleLayout.astro';
+import LegacyCaseStudyElementorLayout from '../layouts/LegacyCaseStudyElementorLayout.astro';
 import RawLegacyLayout from '../layouts/RawLegacyLayout.astro';
-import { listManagedLegacyRoutes, loadSourcePage, loadSourceStructuredPage } from '../lib/legacy-page';
+import {
+  listManagedLegacyRoutes,
+  loadSourcePage,
+  loadSourceStructuredElementorShellPage,
+  loadSourceStructuredPage,
+} from '../lib/legacy-page';
 
 export async function getStaticPaths() {
   return listManagedLegacyRoutes()
@@ -28,6 +34,10 @@ const isStructuredCaseStudySingle =
   isCaseStudySingleRoute &&
   /\bsingle-post\b/.test(rawPage.bodyClass) &&
   /\bast-blog-single-style-1\b/.test(rawPage.bodyClass);
+const isLegacyElementorCaseStudySingle =
+  isCaseStudySingleRoute &&
+  /data-elementor-type=["']header["'][^>]+data-elementor-id=["']9610["']/i.test(rawPage.bodyInnerHtml) &&
+  /data-elementor-type=["']footer["'][^>]+data-elementor-id=["']10152["']/i.test(rawPage.bodyInnerHtml);
 const isGenericPage =
   /\bpage-template-default\b/.test(rawPage.bodyClass) &&
   /\bpage-id-\d+\b/.test(rawPage.bodyClass) &&
@@ -39,6 +49,7 @@ const isGenericPage =
 
 const isStructuredCaseStudy = isCaseStudyArchive || isStructuredCaseStudySingle;
 let page = rawPage;
+let legacyElementorPage = null;
 
 if (isGenericPage || isStructuredCaseStudy) {
   try {
@@ -48,6 +59,10 @@ if (isGenericPage || isStructuredCaseStudy) {
       throw error;
     }
   }
+}
+
+if (isLegacyElementorCaseStudySingle) {
+  legacyElementorPage = loadSourceStructuredElementorShellPage(relativePath);
 }
 
 const canRenderStructuredCaseStudy = page !== rawPage && isStructuredCaseStudy;
@@ -73,6 +88,19 @@ const canRenderStructuredCaseStudy = page !== rawPage && isStructuredCaseStudy;
       headExtraHtml={page.headExtraHtml}
       afterBodyHtml={page.afterFooterHtml}
       contentHtml={page.contentHtml}
+    />
+  ) : legacyElementorPage ? (
+    <LegacyCaseStudyElementorLayout
+      title={legacyElementorPage.title}
+      lang={legacyElementorPage.lang}
+      headExtraHtml={legacyElementorPage.headExtraHtml}
+      bodyClass={legacyElementorPage.bodyClass}
+      bodyItemType={legacyElementorPage.bodyItemType}
+      bodyItemscope={legacyElementorPage.bodyItemscope}
+      headerHtml={legacyElementorPage.headerHtml}
+      contentHtml={legacyElementorPage.contentHtml}
+      footerHtml={legacyElementorPage.footerHtml}
+      afterFooterHtml={legacyElementorPage.afterFooterHtml}
     />
   ) : isGenericPage ? (
     <GenericPageLayout

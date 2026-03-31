@@ -243,3 +243,56 @@ export function loadSourceStructuredPage(relativePath: string) {
     afterFooterHtml,
   };
 }
+
+export function loadSourceStructuredElementorShellPage(relativePath: string) {
+  const rawHtml = readSourceFile(relativePath);
+  const normalized = rewriteToLocal(rawHtml);
+  const headInner = mustMatch(normalized, /<head[^>]*>([\s\S]*?)<\/head>/i, 'head');
+  const bodyMatch = normalized.match(/<body([^>]*)>([\s\S]*?)<\/body>/i);
+
+  if (!bodyMatch) {
+    throw new Error(`Could not extract body for ${relativePath}`);
+  }
+
+  const bodyAttributes = bodyMatch[1] || '';
+  const bodyInnerHtml = bodyMatch[2];
+  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
+  const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
+  const bodyItemTypeMatch = bodyAttributes.match(/itemtype=["']([^"']+)["']/i);
+  const hasBodyItemscope = /\sitemscope(?:=["'][^"']*["'])?/i.test(bodyAttributes);
+  const headerMatch = bodyInnerHtml.match(/(<(header|div)[^>]+data-elementor-type=["']header["'][\s\S]*?<\/\2>)/i);
+  const footerMatch = bodyInnerHtml.match(/(<(footer|div)[^>]+data-elementor-type=["']footer["'][\s\S]*?<\/\2>)/i);
+
+  if (!headerMatch || !footerMatch) {
+    throw new Error(`Could not extract Elementor shell for ${relativePath}`);
+  }
+
+  const headerHtml = headerMatch[1];
+  const footerHtml = footerMatch[1];
+  const headerIndex = bodyInnerHtml.indexOf(headerHtml);
+  const footerIndex = bodyInnerHtml.indexOf(footerHtml, headerIndex + headerHtml.length);
+
+  if (headerIndex === -1 || footerIndex === -1) {
+    throw new Error(`Could not locate shell boundaries for ${relativePath}`);
+  }
+
+  const contentHtml = bodyInnerHtml.slice(headerIndex + headerHtml.length, footerIndex);
+  const afterFooterHtml = bodyInnerHtml.slice(footerIndex + footerHtml.length);
+
+  return {
+    title,
+    lang: langMatch?.[1] || 'es-ES',
+    bodyClass: bodyClassMatch?.[1] || '',
+    bodyItemType: bodyItemTypeMatch?.[1] || '',
+    bodyItemscope: hasBodyItemscope,
+    headExtraHtml: headInner
+      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
+      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
+      .replace(/<title>[\s\S]*?<\/title>\s*/i, ''),
+    headerHtml,
+    contentHtml,
+    footerHtml,
+    afterFooterHtml,
+  };
+}
