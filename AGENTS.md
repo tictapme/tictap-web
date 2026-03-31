@@ -16,7 +16,7 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 ### Raíz del repositorio
 
 - `src/`: salida estática publicada por Cloudflare Pages. Debe considerarse la fuente real de producción.
-- `astro/`: fuente de Astro para el blog y sus layouts compartidos.
+- `astro/`: fuente de Astro para el blog, los layouts compartidos y el renderizado progresivo del resto del export legacy.
 - `bin/`: scripts de mantenimiento del export estático, limpieza SEO, validación y utilidades de preview/sync.
 - `_redirects`: copia sincronizada del mapa de redirecciones publicado.
 - `_headers`: copia sincronizada de cabeceras para Cloudflare Pages.
@@ -58,6 +58,13 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 - cuando el contenido esté aprobado, validar el sitio estático y solo después preparar el `push` a `main`
 
 También existe un hook de git en `.githooks/pre-commit` para bloquear commits si falla la validación.
+
+## Estado actual de migración a Astro
+
+- El blog ya está gestionado por layouts Astro compartidos.
+- El resto del sitio ya entra en el build de Astro mediante rutas genéricas que reemiten el HTML legacy desde `src/`.
+- Eso permite que todo el sitio pase por un único pipeline de build, preview y sync, aunque no todas las páginas estén todavía refactorizadas a layouts semánticos compartidos.
+- La siguiente fase de la migración consiste en ir sustituyendo páginas legacy raw por layouts Astro específicos por tipo de plantilla.
 
 ## Scripts relevantes
 

@@ -22,3 +22,13 @@ Host mapping:
 - `develop` -> `https://develop.wp-web.pages.dev`
 
 You can override automatic detection with `SITE_BRANCH=<branch>` or `SITE_HOST=<full-host>`.
+
+## Astro migration
+
+- The blog is already rendered through Astro layouts and content collections.
+- The rest of the legacy static export is now also routed through Astro build pages before being synced back into `src/`.
+- Current migration mode:
+  - blog pages: shared Astro layouts
+  - non-blog pages: Astro catch-all rendering of the existing legacy HTML
+
+This keeps one build pipeline for the whole site while the remaining legacy templates are progressively replaced with reusable Astro layouts.

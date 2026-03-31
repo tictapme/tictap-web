@@ -1,6 +1,6 @@
 # Astro Migration Report
 
-Generated: 2026-03-31T06:25:31.207Z
+Generated: 2026-03-31T10:20:13.367Z
 
 Total pages scanned: 214
 
@@ -141,47 +141,47 @@ Total pages scanned: 214
 
 ## Most used CSS assets
 
-- `/css` | used in 211 pages | local: `missing`
-- `/wp-content/plugins/elementor/assets/css/frontend.min.css` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/css/frontend.min.css`
-- `/wp-content/plugins/elementor/assets/css/widget-heading.min.css` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/css/widget-heading.min.css`
-- `/wp-content/plugins/elementor/assets/css/widget-image.min.css` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/css/widget-image.min.css`
-- `/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css`
-- `/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css`
-- `/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css` | used in 208 pages | local: `src/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css`
-- `/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css` | used in 208 pages | local: `src/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css`
-- `/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css` | used in 208 pages | local: `src/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css`
-- `/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css` | used in 208 pages | local: `src/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css`
-- `/wp-content/themes/astra/assets/css/minified/style-flex.min.css` | used in 208 pages | local: `src/wp-content/themes/astra/assets/css/minified/style-flex.min.css`
-- `/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css` | used in 206 pages | local: `src/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css`
-- `/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css` | used in 206 pages | local: `src/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css`
-- `/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css` | used in 206 pages | local: `src/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css`
-- `/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css` | used in 204 pages | local: `src/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css`
-- `/wp-content/plugins/elementor-pro/assets/css/widget-mega-menu.min.css` | used in 198 pages | local: `src/wp-content/plugins/elementor-pro/assets/css/widget-mega-menu.min.css`
-- `/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.min.css` | used in 198 pages | local: `src/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.min.css`
+- `/css` | used in 212 pages | local: `missing`
+- `/wp-content/plugins/elementor/assets/css/frontend.min.css` | used in 207 pages | local: `src/wp-content/plugins/elementor/assets/css/frontend.min.css`
+- `/wp-content/plugins/elementor/assets/css/widget-heading.min.css` | used in 207 pages | local: `src/wp-content/plugins/elementor/assets/css/widget-heading.min.css`
+- `/wp-content/plugins/elementor/assets/css/widget-image.min.css` | used in 207 pages | local: `src/wp-content/plugins/elementor/assets/css/widget-image.min.css`
+- `/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css` | used in 207 pages | local: `src/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css`
+- `/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css` | used in 207 pages | local: `src/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css`
+- `/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css` | used in 207 pages | local: `src/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css`
+- `/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css` | used in 207 pages | local: `src/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css`
+- `/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css` | used in 207 pages | local: `src/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css`
+- `/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css` | used in 207 pages | local: `src/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css`
+- `/wp-content/themes/astra/assets/css/minified/style-flex.min.css` | used in 207 pages | local: `src/wp-content/themes/astra/assets/css/minified/style-flex.min.css`
+- `/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css` | used in 205 pages | local: `src/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css`
+- `/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css` | used in 205 pages | local: `src/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css`
+- `/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css` | used in 205 pages | local: `src/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css`
+- `/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css` | used in 203 pages | local: `src/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css`
+- `/wp-content/plugins/elementor-pro/assets/css/widget-mega-menu.min.css` | used in 197 pages | local: `src/wp-content/plugins/elementor-pro/assets/css/widget-mega-menu.min.css`
+- `/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.min.css` | used in 197 pages | local: `src/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.min.css`
 - `/wp-content/uploads/elementor/google-fonts/css/lato.css` | used in 197 pages | local: `src/wp-content/uploads/elementor/google-fonts/css/lato.css`
 - `/wp-content/uploads/elementor/google-fonts/css/varelaround.css` | used in 197 pages | local: `src/wp-content/uploads/elementor/google-fonts/css/varelaround.css`
-- `/wp-content/plugins/elementor-pro/assets/css/modules/sticky.min.css` | used in 179 pages | local: `src/wp-content/plugins/elementor-pro/assets/css/modules/sticky.min.css`
+- `/wp-content/plugins/elementor-pro/assets/css/modules/sticky.min.css` | used in 178 pages | local: `src/wp-content/plugins/elementor-pro/assets/css/modules/sticky.min.css`
 
 ## Most used JS assets
 
-- `/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js` | used in 208 pages | local: `src/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js`
-- `/wp-content/plugins/elementor-pro/assets/js/frontend.min.js` | used in 208 pages | local: `src/wp-content/plugins/elementor-pro/assets/js/frontend.min.js`
-- `/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js` | used in 208 pages | local: `src/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js`
-- `/wp-content/plugins/elementor/assets/js/frontend-modules.min.js` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/js/frontend-modules.min.js`
-- `/wp-content/plugins/elementor/assets/js/frontend.min.js` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/js/frontend.min.js`
-- `/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js` | used in 208 pages | local: `src/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js`
-- `/wp-content/themes/astra/assets/js/minified/style.min.js` | used in 208 pages | local: `src/wp-content/themes/astra/assets/js/minified/style.min.js`
-- `/wp-includes/js/dist/hooks.min.js` | used in 208 pages | local: `src/wp-includes/js/dist/hooks.min.js`
-- `/wp-includes/js/dist/i18n.min.js` | used in 208 pages | local: `src/wp-includes/js/dist/i18n.min.js`
-- `/wp-includes/js/jquery/jquery-migrate.min.js` | used in 208 pages | local: `src/wp-includes/js/jquery/jquery-migrate.min.js`
-- `/wp-includes/js/jquery/jquery.min.js` | used in 208 pages | local: `src/wp-includes/js/jquery/jquery.min.js`
-- `/wp-includes/js/jquery/jquery.ui.touch-punch.js` | used in 208 pages | local: `src/wp-includes/js/jquery/jquery.ui.touch-punch.js`
-- `/wp-includes/js/jquery/ui/core.min.js` | used in 208 pages | local: `src/wp-includes/js/jquery/ui/core.min.js`
-- `/wp-includes/js/jquery/ui/draggable.min.js` | used in 208 pages | local: `src/wp-includes/js/jquery/ui/draggable.min.js`
-- `/wp-includes/js/jquery/ui/mouse.min.js` | used in 208 pages | local: `src/wp-includes/js/jquery/ui/mouse.min.js`
-- `/wp-includes/js/jquery/ui/slider.min.js` | used in 208 pages | local: `src/wp-includes/js/jquery/ui/slider.min.js`
+- `/wp-content/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js` | used in 210 pages | local: `src/wp-content/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js`
+- `/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js` | used in 209 pages | local: `src/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js`
+- `/wp-content/plugins/elementor-pro/assets/js/frontend.min.js` | used in 209 pages | local: `src/wp-content/plugins/elementor-pro/assets/js/frontend.min.js`
+- `/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js` | used in 209 pages | local: `src/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js`
+- `/wp-content/plugins/elementor/assets/js/frontend-modules.min.js` | used in 209 pages | local: `src/wp-content/plugins/elementor/assets/js/frontend-modules.min.js`
+- `/wp-content/plugins/elementor/assets/js/frontend.min.js` | used in 209 pages | local: `src/wp-content/plugins/elementor/assets/js/frontend.min.js`
+- `/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js` | used in 209 pages | local: `src/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js`
+- `/wp-content/themes/astra/assets/js/minified/style.min.js` | used in 209 pages | local: `src/wp-content/themes/astra/assets/js/minified/style.min.js`
+- `/wp-includes/js/dist/hooks.min.js` | used in 209 pages | local: `src/wp-includes/js/dist/hooks.min.js`
+- `/wp-includes/js/dist/i18n.min.js` | used in 209 pages | local: `src/wp-includes/js/dist/i18n.min.js`
+- `/wp-includes/js/jquery/jquery.ui.touch-punch.js` | used in 209 pages | local: `src/wp-includes/js/jquery/jquery.ui.touch-punch.js`
+- `/wp-includes/js/jquery/ui/core.min.js` | used in 209 pages | local: `src/wp-includes/js/jquery/ui/core.min.js`
+- `/wp-includes/js/jquery/ui/draggable.min.js` | used in 209 pages | local: `src/wp-includes/js/jquery/ui/draggable.min.js`
+- `/wp-includes/js/jquery/ui/mouse.min.js` | used in 209 pages | local: `src/wp-includes/js/jquery/ui/mouse.min.js`
+- `/wp-includes/js/jquery/ui/slider.min.js` | used in 209 pages | local: `src/wp-includes/js/jquery/ui/slider.min.js`
+- `/wp-content/plugins/cookie-law-info/lite/frontend/js/script.min.js` | used in 208 pages | local: `src/wp-content/plugins/cookie-law-info/lite/frontend/js/script.min.js`
 - `/gtag/js` | used in 207 pages | local: `missing`
-- `/wp-content/plugins/cookie-law-info/lite/frontend/js/script.min.js` | used in 207 pages | local: `src/wp-content/plugins/cookie-law-info/lite/frontend/js/script.min.js`
-- `/wp-content/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js` | used in 207 pages | local: `src/wp-content/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js`
-- `/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js` | used in 206 pages | local: `src/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js`
+- `/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js` | used in 207 pages | local: `src/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js`
+- `/wp-includes/js/jquery/jquery-migrate.min.js` | used in 207 pages | local: `src/wp-includes/js/jquery/jquery-migrate.min.js`
+- `/wp-includes/js/jquery/jquery.min.js` | used in 207 pages | local: `src/wp-includes/js/jquery/jquery.min.js`
 

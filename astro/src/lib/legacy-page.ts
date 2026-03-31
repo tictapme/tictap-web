@@ -2,9 +2,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const legacyRoot = path.join(process.cwd(), 'astro', 'legacy-sources');
+const sourceRoot = path.join(process.cwd(), 'src');
 
 function readFile(relativePath: string) {
   return fs.readFileSync(path.join(legacyRoot, relativePath), 'utf8');
+}
+
+function readSourceFile(relativePath: string) {
+  return fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
 }
 
 function rewriteToLocal(html: string) {
@@ -106,5 +111,91 @@ export function loadLegacyShell(relativePath: string) {
   return {
     headerHtml,
     footerHtml,
+  };
+}
+
+function normalizeRoute(relativePath: string) {
+  if (relativePath === 'index.html') {
+    return '/';
+  }
+
+  return `/${relativePath.replace(/\/index\.html$/i, '').replace(/^\/+/, '')}/`;
+}
+
+function shouldSkipManagedRoute(route: string) {
+  if (route === '/blog/') {
+    return true;
+  }
+
+  if (/^\/blog\/[^/]+\/$/i.test(route)) {
+    return true;
+  }
+
+  return false;
+}
+
+function walkIndexPages(rootDir: string, currentDir = ''): string[] {
+  const absoluteDir = path.join(rootDir, currentDir);
+  const entries = fs.readdirSync(absoluteDir, { withFileTypes: true });
+  const pages: string[] = [];
+
+  for (const entry of entries) {
+    if (entry.name.startsWith('.')) {
+      continue;
+    }
+
+    const nextRelative = path.join(currentDir, entry.name);
+
+    if (entry.isDirectory()) {
+      pages.push(...walkIndexPages(rootDir, nextRelative));
+      continue;
+    }
+
+    if (entry.isFile() && entry.name === 'index.html') {
+      pages.push(nextRelative.replace(/\\/g, '/'));
+    }
+  }
+
+  return pages;
+}
+
+export function listManagedLegacyRoutes() {
+  return walkIndexPages(sourceRoot)
+    .map((relativePath) => ({
+      relativePath,
+      route: normalizeRoute(relativePath),
+    }))
+    .filter(({ route }) => !shouldSkipManagedRoute(route));
+}
+
+export function loadSourcePage(relativePath: string) {
+  const rawHtml = readSourceFile(relativePath);
+  const normalized = rewriteToLocal(rawHtml);
+  const headInner = mustMatch(normalized, /<head[^>]*>([\s\S]*?)<\/head>/i, 'head');
+  const bodyMatch = normalized.match(/<body([^>]*)>([\s\S]*?)<\/body>/i);
+
+  if (!bodyMatch) {
+    throw new Error(`Could not extract body for ${relativePath}`);
+  }
+
+  const bodyAttributes = bodyMatch[1] || '';
+  const bodyInnerHtml = bodyMatch[2];
+  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
+  const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
+  const bodyItemTypeMatch = bodyAttributes.match(/itemtype=["']([^"']+)["']/i);
+  const hasBodyItemscope = /\sitemscope(?:=["'][^"']*["'])?/i.test(bodyAttributes);
+
+  return {
+    title,
+    lang: langMatch?.[1] || 'es-ES',
+    bodyClass: bodyClassMatch?.[1] || '',
+    bodyItemType: bodyItemTypeMatch?.[1] || '',
+    bodyItemscope: hasBodyItemscope,
+    headExtraHtml: headInner
+      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
+      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
+      .replace(/<title>[\s\S]*?<\/title>\s*/i, ''),
+    bodyInnerHtml,
   };
 }
