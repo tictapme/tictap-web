@@ -1,5 +1,7 @@
 ---
 import GenericPageLayout from '../layouts/GenericPageLayout.astro';
+import CaseStudyArchiveLayout from '../layouts/CaseStudyArchiveLayout.astro';
+import CaseStudySingleLayout from '../layouts/CaseStudySingleLayout.astro';
 import RawLegacyLayout from '../layouts/RawLegacyLayout.astro';
 import { listManagedLegacyRoutes, loadSourcePage, loadSourceStructuredPage } from '../lib/legacy-page';
 
@@ -18,6 +20,14 @@ export async function getStaticPaths() {
 
 const { relativePath } = Astro.props;
 const rawPage = loadSourcePage(relativePath);
+const isCaseStudyArchive =
+  /^casos-de-exito\/index\.html$/i.test(relativePath) || /^en\/sucess-stories\/index\.html$/i.test(relativePath);
+const isCaseStudySingleRoute =
+  /^casos-de-exito\/.+\/index\.html$/i.test(relativePath) || /^en\/sucess-stories\/.+\/index\.html$/i.test(relativePath);
+const isStructuredCaseStudySingle =
+  isCaseStudySingleRoute &&
+  /\bsingle-post\b/.test(rawPage.bodyClass) &&
+  /\bast-blog-single-style-1\b/.test(rawPage.bodyClass);
 const isGenericPage =
   /\bpage-template-default\b/.test(rawPage.bodyClass) &&
   /\bpage-id-\d+\b/.test(rawPage.bodyClass) &&
@@ -27,11 +37,44 @@ const isGenericPage =
   !/^\/?(en\/)?author\//i.test(relativePath) &&
   !/^\/?(en\/)?tag\//i.test(relativePath);
 
-const page = isGenericPage ? loadSourceStructuredPage(relativePath) : rawPage;
+const isStructuredCaseStudy = isCaseStudyArchive || isStructuredCaseStudySingle;
+let page = rawPage;
+
+if (isGenericPage || isStructuredCaseStudy) {
+  try {
+    page = loadSourceStructuredPage(relativePath);
+  } catch (error) {
+    if (isGenericPage) {
+      throw error;
+    }
+  }
+}
+
+const canRenderStructuredCaseStudy = page !== rawPage && isStructuredCaseStudy;
 ---
 
 {
-  isGenericPage ? (
+  canRenderStructuredCaseStudy && isCaseStudyArchive ? (
+    <CaseStudyArchiveLayout
+      title={page.title}
+      lang={page.lang}
+      bodyClass={page.bodyClass}
+      bodyItemType={page.bodyItemType}
+      headExtraHtml={page.headExtraHtml}
+      afterBodyHtml={page.afterFooterHtml}
+      contentHtml={page.contentHtml}
+    />
+  ) : canRenderStructuredCaseStudy && isStructuredCaseStudySingle ? (
+    <CaseStudySingleLayout
+      title={page.title}
+      lang={page.lang}
+      bodyClass={page.bodyClass}
+      bodyItemType={page.bodyItemType}
+      headExtraHtml={page.headExtraHtml}
+      afterBodyHtml={page.afterFooterHtml}
+      contentHtml={page.contentHtml}
+    />
+  ) : isGenericPage ? (
     <GenericPageLayout
       title={page.title}
       lang={page.lang}
