@@ -77,7 +77,7 @@ function sanitizeHeadExtraHtml(html: string) {
 function sanitizeAfterFooterHtml(html: string) {
   const seenScriptSrcs = new Set<string>();
 
-  return html
+  const dedupedHtml = html
     .replace(/<script\b([^>]*)src=["']([^"']+)["']([^>]*)><\/script>\s*/gi, (match, beforeSrc, src, afterSrc) => {
       const normalizedSrc = src.replace(/\?ver=[^"'&]+/i, '');
       if (seenScriptSrcs.has(normalizedSrc)) {
@@ -89,6 +89,69 @@ function sanitizeAfterFooterHtml(html: string) {
     })
     .replace(/^\s*(?:<\/div>\s*)+/i, '')
     .trim();
+
+  return reorderInlineScriptConfigs(dedupedHtml);
+}
+
+function moveInlineScriptBefore(html: string, inlineScriptId: string, targetScriptId: string) {
+  const inlinePattern = new RegExp(
+    `<script\\b[^>]*id=["']${inlineScriptId}["'][^>]*>[\\s\\S]*?<\\/script>\\s*`,
+    'i',
+  );
+  const inlineMatch = html.match(inlinePattern);
+
+  if (!inlineMatch) {
+    return html;
+  }
+
+  const inlineScript = inlineMatch[0].trim();
+  const withoutInline = html.replace(inlinePattern, '');
+  const targetPattern = new RegExp(
+    `(<script\\b(?=[^>]*id=["']${targetScriptId}["'])(?=[^>]*src=["'][^"']+["'])[^>]*><\\/script>)`,
+    'i',
+  );
+
+  if (!targetPattern.test(withoutInline)) {
+    return html;
+  }
+
+  return withoutInline.replace(targetPattern, `${inlineScript}\n$1`);
+}
+
+function moveInlineScriptAfter(html: string, inlineScriptId: string, targetScriptId: string) {
+  const inlinePattern = new RegExp(
+    `<script\\b[^>]*id=["']${inlineScriptId}["'][^>]*>[\\s\\S]*?<\\/script>\\s*`,
+    'i',
+  );
+  const inlineMatch = html.match(inlinePattern);
+
+  if (!inlineMatch) {
+    return html;
+  }
+
+  const inlineScript = inlineMatch[0].trim();
+  const withoutInline = html.replace(inlinePattern, '');
+  const targetPattern = new RegExp(
+    `(<script\\b(?=[^>]*id=["']${targetScriptId}["'])(?=[^>]*src=["'][^"']+["'])[^>]*><\\/script>)`,
+    'i',
+  );
+
+  if (!targetPattern.test(withoutInline)) {
+    return html;
+  }
+
+  return withoutInline.replace(targetPattern, `$1\n${inlineScript}`);
+}
+
+function reorderInlineScriptConfigs(html: string) {
+  let reordered = html;
+
+  reordered = moveInlineScriptBefore(reordered, 'astra-theme-js-js-extra', 'astra-theme-js');
+  reordered = moveInlineScriptBefore(reordered, 'elementor-frontend-js-before', 'elementor-frontend-js');
+  reordered = moveInlineScriptBefore(reordered, 'elementor-pro-frontend-js-before', 'elementor-pro-frontend-js');
+  reordered = moveInlineScriptAfter(reordered, 'wp-i18n-js-after', 'wp-i18n-js');
+
+  return reordered;
 }
 
 export function loadLegacyPage(relativePath: string) {

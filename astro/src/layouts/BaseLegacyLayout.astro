@@ -34,6 +34,29 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
+    <style>
+      .elementor-location-header {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative;
+        z-index: 1000;
+      }
+
+      .elementor-location-header .elementor-element-6f0aaa9,
+      .elementor-location-header .elementor-element-9e15b9a,
+      .elementor-location-header .elementor-element-947f5f9 {
+        z-index: 1001;
+      }
+
+      #content,
+      .site-content,
+      .content-area,
+      .site-main {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
     <Fragment set:html={headExtraHtml} />
   </head>
   <body itemtype={bodyItemType} itemscope="itemscope" class={bodyClass}>
