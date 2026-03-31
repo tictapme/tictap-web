@@ -1,76 +1,126 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogHeader from '../../components/BlogHeader.astro';
-import BlogFooter from '../../components/BlogFooter.astro';
-import '../../styles/blog.css';
+import BaseLegacyLayout from '../../layouts/BaseLegacyLayout.astro';
+import { loadLegacyPage } from '../../lib/legacy-page';
 
-const posts = (await getCollection('blog')).sort((a, b) => {
-  return new Date(b.data.publishedTime).getTime() - new Date(a.data.publishedTime).getTime();
-});
----
+const page = loadLegacyPage('blog/index.html');
+const generatedPosts = (await getCollection('blog')).sort(
+  (left, right) => new Date(right.data.publishedTime).getTime() - new Date(left.data.publishedTime).getTime(),
+);
 
-<!doctype html>
-<html lang="es-ES">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blog Archives - TicTAP</title>
-    <meta name="description" content="Entradas del blog de TicTAP sobre mantenimiento, trazabilidad y operaciones." />
-    <link rel="canonical" href="https://www.tictap.me/blog/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Varela+Round&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="blog-page">
-      <div class="blog-shell">
-        <BlogHeader />
+function normalizePath(value) {
+  try {
+    const url = new URL(value, 'https://www.tictap.me');
+    return url.pathname.replace(/\/+$/, '') || '/';
+  } catch {
+    return String(value || '').replace(/^https?:\/\/[^/]+/i, '').replace(/\/+$/, '') || '/';
+  }
+}
 
-        <section class="blog-hero" aria-labelledby="blog-archive-title">
-          <div class="blog-hero__copy">
-            <span class="blog-eyebrow">Blog TicTAP</span>
-            <h1 id="blog-archive-title">Blog Archives</h1>
-            <p class="blog-deck">Entradas sobre mantenimiento, trazabilidad, digitalización y operaciones industriales.</p>
-          </div>
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
-          <aside class="blog-hero__aside" aria-label="Resumen del blog">
-            <div class="aside-card">
-              <h2>Qué encontrarás</h2>
-              <ul>
-                <li>Artículos sobre mantenimiento y operación.</li>
-                <li>Casos de uso de QR, NFC e IA aplicada al terreno.</li>
-                <li>Contenido pensado para equipos industriales y facility.</li>
-              </ul>
-            </div>
+function formatLegacyDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
 
-            <div class="aside-card">
-              <h2>Cómo se publica</h2>
-              <p>Todo artículo nuevo sale del mismo layout Astro, así que el header, el footer y la estructura del hero se actualizan una sola vez.</p>
-            </div>
-          </aside>
-        </section>
+  const months = [
+    'enero',
+    'febrero',
+    'marzo',
+    'abril',
+    'mayo',
+    'junio',
+    'julio',
+    'agosto',
+    'septiembre',
+    'octubre',
+    'noviembre',
+    'diciembre',
+  ];
 
-        <section class="blog-article" aria-label="Listado de artículos">
-          <div class="blog-grid">
-            {posts.map((post) => (
-              <a class="blog-card" href={`/blog/${post.slug}/`}>
-                <span class="blog-card__meta">{post.data.category}</span>
-                <h2>{post.data.title}</h2>
-                <p>{post.data.deck ?? post.data.metaDescription}</p>
-                <span class="blog-card__footer">
-                  {post.data.readingTime} · {new Date(post.data.publishedTime).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
+  return `${date.getUTCDate()} ${months[date.getUTCMonth()]}, ${date.getUTCFullYear()}`;
+}
 
-        <BlogFooter
-          footerText="La biblioteca del blog se actualiza desde una sola plantilla Astro."
-          footerCtaText="Contactar con TicTAP"
-          footerCtaUrl="https://www.tictap.me/contacto"
-        />
+function extractLegacyArticles(contentHtml, widgetId) {
+  const pattern = new RegExp(
+    `(<div class="elementor-element elementor-element-${widgetId}[\\s\\S]*?<div class="elementor-posts-container elementor-posts elementor-posts--skin-cards elementor-grid" role="list">)([\\s\\S]*?)(</div>\\s*<div class="e-load-more-anchor"|</div>\\s*</div>\\s*</div>\\s*<div class="elementor-element elementor-element-3eb33a95)`,
+  );
+  const match = contentHtml.match(pattern);
+
+  if (!match) {
+    throw new Error(`Could not extract archive widget ${widgetId}`);
+  }
+
+  const articles = match[2].match(/<article class="elementor-post[\s\S]*?<\/article>/g) ?? [];
+
+  return {
+    pattern,
+    prefix: match[1],
+    suffix: match[3],
+    articles,
+  };
+}
+
+function extractLegacyHref(articleHtml) {
+  const match = articleHtml.match(/<a class="elementor-post__thumbnail__link" href="([^"]+)"/i);
+  return match ? normalizePath(match[1]) : '';
+}
+
+function buildGeneratedArticleCard(post) {
+  const href = normalizePath(post.data.publicUrl || `/blog/${post.slug}/`);
+  const title = escapeHtml(post.data.title);
+  const category = escapeHtml(post.data.category);
+  const image = escapeHtml(post.data.ogImage);
+  const imageWidth = String(post.data.ogImageWidth || 700);
+  const imageHeight = String(post.data.ogImageHeight || 391);
+  const dateLabel = escapeHtml(formatLegacyDate(post.data.publishedTime));
+
+  return `
+<article class="elementor-post elementor-grid-item post-generated post type-post status-publish format-standard has-post-thumbnail hentry category-blog ast-grid-common-col ast-full-width" role="listitem">
+  <div class="elementor-post__card">
+    <a class="elementor-post__thumbnail__link" href="${href}" tabindex="-1"><div class="elementor-post__thumbnail"><img fetchpriority="high" width="${imageWidth}" height="${imageHeight}" src="${image}" alt="${title}" decoding="async" sizes="(max-width: 700px) 100vw, 700px"></div></a>
+    <div class="elementor-post__badge">${category}</div>
+    <div class="elementor-post__text">
+      <h2 class="elementor-post__title">
+        <a href="${href}">
+          ${title}
+        </a>
+      </h2>
+      <div class="elementor-post__read-more-wrapper">
+        <a class="elementor-post__read-more" href="${href}" aria-label="Más información sobre ${title}" tabindex="-1">
+          Ver más »
+        </a>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</article>`.trim();
+}
+
+const mainArchive = extractLegacyArticles(page.contentHtml, '88896a4');
+const generatedPaths = new Set(
+  generatedPosts.map((post) => normalizePath(post.data.publicUrl || `/blog/${post.slug}/`)),
+);
+const legacyArticles = mainArchive.articles.filter((articleHtml) => !generatedPaths.has(extractLegacyHref(articleHtml)));
+const renderedArticles = [...generatedPosts.map(buildGeneratedArticleCard), ...legacyArticles].join('\n');
+const contentHtml = page.contentHtml.replace(mainArchive.pattern, `$1${renderedArticles}$3`);
+---
+
+<BaseLegacyLayout
+  title={page.title}
+  bodyClass={page.bodyClass}
+  headExtraHtml={page.headExtraHtml}
+  afterBodyHtml={page.afterFooterHtml}
+  cssBundles={['base-css', 'header-css', 'blog-archive-css']}
+  jsBundles={['base-js', 'header-js']}
+>
+  <Fragment set:html={contentHtml} />
+</BaseLegacyLayout>

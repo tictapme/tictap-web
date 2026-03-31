@@ -52,7 +52,9 @@ Eso implica que cualquier error en SEO técnico, redirecciones, `robots.txt`, si
 - los artículos nuevos deben entrar en `astro/src/content/blog/<slug>.md` y materializarse en `src/blog/<slug>/index.html`
 - el renderizador de entrada es `bin/render-blog-article.js`, que convierte el paquete de marketing en contenido Astro
 - el layout debe centralizar header, hero, article body y footer en `astro/src/layouts/BlogArticleLayout.astro`
+- el índice `/blog/` debe renderizarse desde Astro usando la colección `astro/src/content/blog/` y debe mostrar el artículo nuevo como la primera tarjeta del archive
 - antes de considerar cerrado un artículo generado, previsualizarlo con `npm run preview` para construir Astro, sincronizar `dist/` a `src/` y servir el resultado
+- validar no solo la página del artículo, sino también que `/blog/` enlaza al nuevo post
 - cuando el contenido esté aprobado, validar el sitio estático y solo después preparar el `push` a `main`
 
 También existe un hook de git en `.githooks/pre-commit` para bloquear commits si falla la validación.

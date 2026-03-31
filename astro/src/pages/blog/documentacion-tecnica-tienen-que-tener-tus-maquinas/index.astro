@@ -1,0 +1,15 @@
+---
+import BaseLegacyLayout from '../../../layouts/BaseLegacyLayout.astro';
+import { loadLegacyPage } from '../../../lib/legacy-page';
+
+const page = loadLegacyPage('blog/documentacion-tecnica-tienen-que-tener-tus-maquinas/index.html');
+---
+
+<BaseLegacyLayout
+  title={page.title}
+  bodyClass={page.bodyClass}
+  headExtraHtml={page.headExtraHtml}
+  afterBodyHtml={page.afterFooterHtml}
+>
+  <Fragment set:html={page.contentHtml} />
+</BaseLegacyLayout>
