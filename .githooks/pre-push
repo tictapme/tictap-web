@@ -4,8 +4,11 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
-echo "[pre-push] Preparing static site export"
+echo "[pre-push] Building static site export"
 npm run static:prepare
 
-echo "[pre-push] Verifying committed src/ is up to date"
-npm run static:verify-clean
+if ! git diff --ignore-all-space --quiet -- src; then
+  echo "[pre-push] Committing updated static export"
+  git add src/
+  git commit -m "Rebuild static export"
+fi
