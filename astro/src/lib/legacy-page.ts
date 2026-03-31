@@ -296,3 +296,42 @@ export function loadSourceStructuredElementorShellPage(relativePath: string) {
     afterFooterHtml,
   };
 }
+
+export function loadSourceRedirectPage(relativePath: string) {
+  const rawHtml = readSourceFile(relativePath);
+  const normalized = rewriteToLocal(rawHtml);
+  const headInner = mustMatch(normalized, /<head[^>]*>([\s\S]*?)<\/head>/i, 'head');
+  const bodyMatch = normalized.match(/<body([^>]*)>([\s\S]*?)<\/body>/i);
+
+  if (!bodyMatch) {
+    throw new Error(`Could not extract body for ${relativePath}`);
+  }
+
+  const bodyAttributes = bodyMatch[1] || '';
+  const bodyInnerHtml = bodyMatch[2];
+  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
+  const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
+  const targetMatch =
+    normalized.match(/<meta[^>]+http-equiv=["']refresh["'][^>]+content=["'][^"']*url=([^"']+)["']/i) ||
+    normalized.match(/window\.location\s*=\s*["']([^"']+)["']/i);
+
+  if (!targetMatch) {
+    throw new Error(`Could not extract redirect target for ${relativePath}`);
+  }
+
+  const targetUrl = targetMatch[1];
+
+  return {
+    title,
+    lang: langMatch?.[1] || 'es-ES',
+    bodyClass: bodyClassMatch?.[1] || '',
+    headExtraHtml: headInner
+      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
+      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
+      .replace(/<title>[\s\S]*?<\/title>\s*/i, '')
+      .replace(/<meta[^>]+http-equiv=["']refresh["'][^>]*>\s*/i, ''),
+    bodyInnerHtml,
+    targetUrl,
+  };
+}
