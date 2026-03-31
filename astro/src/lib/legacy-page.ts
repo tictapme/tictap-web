@@ -30,6 +30,7 @@ function mustMatch(html: string, pattern: RegExp, label: string) {
 
 function stripCommonAssetTags(html: string) {
   const commonAssetPatterns = [
+    /<link[^>]+href=["'][^"']*wp-includes\/css\/dist\/block-library\/style\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*wp-content\/themes\/astra\/assets\/css\/minified\/style-flex\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*sitepress-multilingual-cms\/templates\/language-switchers\/legacy-list-horizontal\/style\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*sitepress-multilingual-cms\/templates\/language-switchers\/menu-item\/style\.min\.css[^>]*>\s*/gi,
@@ -52,6 +53,7 @@ function stripCommonAssetTags(html: string) {
     /<link[^>]+href=["'][^"']*wp-content\/uploads\/elementor\/google-fonts\/css\/varelaround\.css[^>]*>\s*/gi,
     /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/jquery\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/jquery-migrate\.min\.js[^>]*><\/script>\s*/gi,
+    /<script[^>]+src=["'][^"']*elementor\/assets\/lib\/font-awesome\/js\/v4-shims\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*themes\/astra\/assets\/js\/minified\/style\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/ui\/core\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/ui\/mouse\.min\.js[^>]*><\/script>\s*/gi,
@@ -61,6 +63,7 @@ function stripCommonAssetTags(html: string) {
     /<script[^>]+src=["'][^"']*elementor\/assets\/js\/webpack\.runtime\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*elementor\/assets\/js\/frontend-modules\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*elementor\/assets\/js\/frontend\.min\.js[^>]*><\/script>\s*/gi,
+    /<script[^>]+src=["'][^"']*wp-includes\/js\/imagesloaded\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*elementor-pro\/assets\/lib\/smartmenus\/jquery\.smartmenus\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*elementor-pro\/assets\/lib\/sticky\/jquery\.sticky\.min\.js[^>]*><\/script>\s*/gi,
     /<script[^>]+src=["'][^"']*elementor-pro\/assets\/js\/webpack-pro\.runtime\.min\.js[^>]*><\/script>\s*/gi,
@@ -73,6 +76,23 @@ function stripCommonAssetTags(html: string) {
   return commonAssetPatterns.reduce((current, pattern) => current.replace(pattern, ''), html);
 }
 
+function stripBaseHeadTags(html: string) {
+  return html
+    .replace(/<meta charset=["'][^"']+["']>\s*/gi, '')
+    .replace(/<meta name=["']viewport["'][^>]*>\s*/gi, '')
+    .replace(/<title>[\s\S]*?<\/title>\s*/gi, '');
+}
+
+function sanitizeHeadExtraHtml(html: string) {
+  return stripBaseHeadTags(stripCommonAssetTags(html)).trim();
+}
+
+function sanitizeAfterFooterHtml(html: string) {
+  return stripCommonAssetTags(html)
+    .replace(/^\s*(?:<\/div>\s*)+/i, '')
+    .trim();
+}
+
 export function loadLegacyPage(relativePath: string) {
   const rawHtml = readFile(relativePath);
   const normalized = rewriteToLocal(rawHtml);
@@ -81,9 +101,7 @@ export function loadLegacyPage(relativePath: string) {
   const contentHtml = mustMatch(normalized, /(<div id="content" class="site-content">[\s\S]*?)<footer data-elementor-type="footer"/i, 'content');
   const afterFooterHtml = mustMatch(normalized, /<\/footer>([\s\S]*?)<\/body>/i, 'after footer');
   const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
-  const headExtraHtml = stripCommonAssetTags(headInner)
-    .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
-    .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '');
+  const headExtraHtml = sanitizeHeadExtraHtml(headInner);
 
   return {
     title,
@@ -220,10 +238,7 @@ export function loadSourcePage(relativePath: string) {
     bodyClass: bodyClassMatch?.[1] || '',
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
-    headExtraHtml: headInner
-      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
-      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
-      .replace(/<title>[\s\S]*?<\/title>\s*/i, ''),
+    headExtraHtml: sanitizeHeadExtraHtml(headInner),
     bodyInnerHtml,
   };
 }
@@ -244,11 +259,9 @@ export function loadSourceStructuredPage(relativePath: string) {
     lang: langMatch?.[1] || 'es-ES',
     bodyClass,
     bodyItemType: bodyItemTypeMatch?.[1] || 'https://schema.org/WebPage',
-    headExtraHtml: stripCommonAssetTags(headInner)
-      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
-      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, ''),
+    headExtraHtml: sanitizeHeadExtraHtml(headInner),
     contentHtml,
-    afterFooterHtml,
+    afterFooterHtml: sanitizeAfterFooterHtml(afterFooterHtml),
   };
 }
 
@@ -294,14 +307,11 @@ export function loadSourceStructuredElementorShellPage(relativePath: string) {
     bodyClass: bodyClassMatch?.[1] || '',
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
-    headExtraHtml: headInner
-      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
-      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
-      .replace(/<title>[\s\S]*?<\/title>\s*/i, ''),
+    headExtraHtml: sanitizeHeadExtraHtml(headInner),
     headerHtml,
     contentHtml,
     footerHtml,
-    afterFooterHtml,
+    afterFooterHtml: sanitizeAfterFooterHtml(afterFooterHtml),
   };
 }
 
@@ -334,10 +344,7 @@ export function loadSourceRedirectPage(relativePath: string) {
     title,
     lang: langMatch?.[1] || 'es-ES',
     bodyClass: bodyClassMatch?.[1] || '',
-    headExtraHtml: headInner
-      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
-      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
-      .replace(/<title>[\s\S]*?<\/title>\s*/i, '')
+    headExtraHtml: stripBaseHeadTags(headInner)
       .replace(/<meta[^>]+http-equiv=["']refresh["'][^>]*>\s*/i, ''),
     bodyInnerHtml,
     targetUrl,
