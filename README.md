@@ -32,3 +32,14 @@ You can override automatic detection with `SITE_BRANCH=<branch>` or `SITE_HOST=<
   - non-blog pages: Astro catch-all rendering of the existing legacy HTML
 
 This keeps one build pipeline for the whole site while the remaining legacy templates are progressively replaced with reusable Astro layouts.
+
+## Pre-push workflow
+
+- `npm run static:prepare` runs the publication pipeline in order:
+  - Astro build
+  - sync `dist/` back into `src/`
+  - SEO normalization
+  - static validation
+- `npm run static:verify-clean` fails if `src/` changed and those generated files have not been committed yet.
+- `npm run hooks:install` enables the versioned git hooks in `.githooks/`.
+- `.githooks/pre-push` runs both steps before every push and blocks the push if the export in `src/` is stale.

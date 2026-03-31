@@ -70,9 +70,18 @@ También existe un hook de git en `.githooks/pre-commit` para bloquear commits s
 
 - `npm run preview`: construye Astro, sincroniza el resultado en `src/` y sirve localmente el sitio estático.
 - `npm run astro:build`: construye el contenido de Astro a `dist/`.
+- `npm run static:prepare`: ejecuta el pipeline completo previo a publicar (`astro:build`, sync a `src/`, `optimize-seo`, `validate-static`).
+- `npm run static:verify-clean`: falla si `src/` ha quedado modificado tras `static:prepare` y todavía no está commiteado.
+- `npm run hooks:install`: configura `core.hooksPath=.githooks` para activar los hooks versionados del repo.
 - `npm run optimize:seo`: reescribe señales SEO y URLs legacy al dominio de producción.
 - `npm run normalize:pages`: normaliza `_redirects` y sincroniza `_headers`/`_redirects` entre raíz y `src/`.
 - `npm run validate:static`: valida SEO técnico y configuración de Cloudflare Pages.
+
+## Pre-push
+
+- `.githooks/pre-push` ejecuta `npm run static:prepare` antes de cada `git push`.
+- Si ese pipeline modifica `src/`, el hook bloquea el push y obliga a commitear el export actualizado.
+- Ese comportamiento es intencional: un `pre-push` puede validar y bloquear, pero no puede meter cambios nuevos dentro del commit que ya se iba a empujar.
 
 ## Criterios de redirecciones y caché
 

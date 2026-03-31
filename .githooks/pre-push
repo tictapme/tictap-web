@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-node bin/validate-static-site.js
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+echo "[pre-push] Preparing static site export"
+npm run static:prepare
+
+echo "[pre-push] Verifying committed src/ is up to date"
+npm run static:verify-clean
