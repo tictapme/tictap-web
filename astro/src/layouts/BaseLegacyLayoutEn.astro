@@ -1,0 +1,49 @@
+---
+import HeaderEn from '../components/header/HeaderEn.astro';
+import FooterEn from '../components/footer/FooterEn.astro';
+import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
+import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
+
+type Props = {
+  title: string;
+  bodyClass: string;
+  lang?: string;
+  headExtraHtml?: string;
+  afterBodyHtml?: string;
+  bodyItemType?: string;
+  cssBundles?: LegacyBundleName[];
+  jsBundles?: LegacyBundleName[];
+};
+
+const {
+  title,
+  bodyClass,
+  lang = 'en-US',
+  headExtraHtml = '',
+  afterBodyHtml = '',
+  bodyItemType = 'https://schema.org/WebPage',
+  cssBundles = [],
+  jsBundles = [],
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
+    <Fragment set:html={headExtraHtml} />
+  </head>
+  <body itemtype={bodyItemType} itemscope="itemscope" class={bodyClass}>
+    <a class="skip-link screen-reader-text" href="#content" title="Skip to content">Skip to content</a>
+    <div class="hfeed site" id="page">
+      <HeaderEn />
+      <slot />
+      <FooterEn />
+    </div>
+    {jsBundles.length > 0 && <LegacyAssetBundle bundleNames={jsBundles} />}
+    <Fragment set:html={afterBodyHtml} />
+  </body>
+</html>

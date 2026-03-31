@@ -114,6 +114,26 @@ export function loadLegacyShell(relativePath: string) {
   };
 }
 
+export function loadSourceShell(relativePath: string) {
+  const rawHtml = readSourceFile(relativePath);
+  const normalized = rewriteToLocal(rawHtml);
+  const headerHtml = mustMatch(
+    normalized,
+    /(<header[^>]+data-elementor-type=["']header["'][\s\S]*?<\/header>)/i,
+    'header',
+  );
+  const footerHtml = mustMatch(
+    normalized,
+    /(<footer[^>]+data-elementor-type=["']footer["'][\s\S]*?<\/footer>)/i,
+    'footer',
+  );
+
+  return {
+    headerHtml,
+    footerHtml,
+  };
+}
+
 function normalizeRoute(relativePath: string) {
   if (relativePath === 'index.html') {
     return '/';
@@ -197,5 +217,29 @@ export function loadSourcePage(relativePath: string) {
       .replace(/<meta name=["']viewport["'][^>]*>\s*/i, '')
       .replace(/<title>[\s\S]*?<\/title>\s*/i, ''),
     bodyInnerHtml,
+  };
+}
+
+export function loadSourceStructuredPage(relativePath: string) {
+  const rawHtml = readSourceFile(relativePath);
+  const normalized = rewriteToLocal(rawHtml);
+  const headInner = mustMatch(normalized, /<head[^>]*>([\s\S]*?)<\/head>/i, 'head');
+  const bodyClass = mustMatch(normalized, /<body[^>]+class=["']([^"']+)["']/i, 'body classes');
+  const contentHtml = mustMatch(normalized, /(<div id="content" class="site-content">[\s\S]*?)<footer data-elementor-type="footer"/i, 'content');
+  const afterFooterHtml = mustMatch(normalized, /<\/footer>([\s\S]*?)<\/body>/i, 'after footer');
+  const title = mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim();
+  const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
+  const bodyItemTypeMatch = normalized.match(/<body[^>]+itemtype=["']([^"']+)["']/i);
+
+  return {
+    title,
+    lang: langMatch?.[1] || 'es-ES',
+    bodyClass,
+    bodyItemType: bodyItemTypeMatch?.[1] || 'https://schema.org/WebPage',
+    headExtraHtml: stripCommonAssetTags(headInner)
+      .replace(/<meta charset=["'][^"']+["']>\s*/i, '')
+      .replace(/<meta name=["']viewport["'][^>]*>\s*/i, ''),
+    contentHtml,
+    afterFooterHtml,
   };
 }

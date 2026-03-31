@@ -1,6 +1,7 @@
 ---
+import GenericPageLayout from '../layouts/GenericPageLayout.astro';
 import RawLegacyLayout from '../layouts/RawLegacyLayout.astro';
-import { listManagedLegacyRoutes, loadSourcePage } from '../lib/legacy-page';
+import { listManagedLegacyRoutes, loadSourcePage, loadSourceStructuredPage } from '../lib/legacy-page';
 
 export async function getStaticPaths() {
   return listManagedLegacyRoutes()
@@ -16,15 +17,39 @@ export async function getStaticPaths() {
 }
 
 const { relativePath } = Astro.props;
-const page = loadSourcePage(relativePath);
+const rawPage = loadSourcePage(relativePath);
+const isGenericPage =
+  /\bpage-template-default\b/.test(rawPage.bodyClass) &&
+  /\bpage-id-\d+\b/.test(rawPage.bodyClass) &&
+  !/^\/?(en\/)?blog\//i.test(relativePath) &&
+  !/^\/?(en\/)?casos-de-exito\//i.test(relativePath) &&
+  !/^\/?(en\/)?sucess-stories\//i.test(relativePath) &&
+  !/^\/?(en\/)?author\//i.test(relativePath) &&
+  !/^\/?(en\/)?tag\//i.test(relativePath);
+
+const page = isGenericPage ? loadSourceStructuredPage(relativePath) : rawPage;
 ---
 
-<RawLegacyLayout
-  title={page.title}
-  lang={page.lang}
-  headExtraHtml={page.headExtraHtml}
-  bodyClass={page.bodyClass}
-  bodyItemType={page.bodyItemType}
-  bodyItemscope={page.bodyItemscope}
-  bodyInnerHtml={page.bodyInnerHtml}
-/>
+{
+  isGenericPage ? (
+    <GenericPageLayout
+      title={page.title}
+      lang={page.lang}
+      bodyClass={page.bodyClass}
+      bodyItemType={page.bodyItemType}
+      headExtraHtml={page.headExtraHtml}
+      afterBodyHtml={page.afterFooterHtml}
+      contentHtml={page.contentHtml}
+    />
+  ) : (
+    <RawLegacyLayout
+      title={page.title}
+      lang={page.lang}
+      headExtraHtml={page.headExtraHtml}
+      bodyClass={page.bodyClass}
+      bodyItemType={page.bodyItemType}
+      bodyItemscope={page.bodyItemscope}
+      bodyInnerHtml={page.bodyInnerHtml}
+    />
+  )
+}

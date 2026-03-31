@@ -1,0 +1,7 @@
+---
+import { loadSourceShell } from '../../lib/legacy-page';
+
+const { footerHtml } = loadSourceShell('en/contact/index.html');
+---
+
+<Fragment set:html={footerHtml} />

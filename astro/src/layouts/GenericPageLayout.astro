@@ -1,0 +1,40 @@
+---
+import BaseLegacyLayout from './BaseLegacyLayout.astro';
+import BaseLegacyLayoutEn from './BaseLegacyLayoutEn.astro';
+
+type Props = {
+  title: string;
+  lang?: string;
+  bodyClass: string;
+  bodyItemType?: string;
+  headExtraHtml?: string;
+  afterBodyHtml?: string;
+  contentHtml: string;
+};
+
+const {
+  title,
+  lang = 'es-ES',
+  bodyClass,
+  bodyItemType = 'https://schema.org/WebPage',
+  headExtraHtml = '',
+  afterBodyHtml = '',
+  contentHtml,
+} = Astro.props as Props;
+
+const isEnglish = lang.toLowerCase().startsWith('en');
+const Layout = isEnglish ? BaseLegacyLayoutEn : BaseLegacyLayout;
+---
+
+<Layout
+  title={title}
+  lang={lang}
+  bodyClass={bodyClass}
+  bodyItemType={bodyItemType}
+  headExtraHtml={headExtraHtml}
+  afterBodyHtml={afterBodyHtml}
+  cssBundles={['base-css', 'header-css']}
+  jsBundles={['base-js', 'header-js']}
+>
+  <Fragment set:html={contentHtml} />
+</Layout>
