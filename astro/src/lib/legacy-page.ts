@@ -28,8 +28,8 @@ function mustMatch(html: string, pattern: RegExp, label: string) {
   return match[1];
 }
 
-function stripCommonAssetTags(html: string) {
-  const commonAssetPatterns = [
+function stripCommonCssAssetTags(html: string) {
+  const commonCssAssetPatterns = [
     /<link[^>]+href=["'][^"']*wp-includes\/css\/dist\/block-library\/style\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*wp-content\/themes\/astra\/assets\/css\/minified\/style-flex\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*sitepress-multilingual-cms\/templates\/language-switchers\/legacy-list-horizontal\/style\.min\.css[^>]*>\s*/gi,
@@ -51,29 +51,9 @@ function stripCommonAssetTags(html: string) {
     /<link[^>]+href=["'][^"']*elementor\/assets\/lib\/animations\/styles\/e-animation-grow\.min\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*wp-content\/uploads\/elementor\/google-fonts\/css\/lato\.css[^>]*>\s*/gi,
     /<link[^>]+href=["'][^"']*wp-content\/uploads\/elementor\/google-fonts\/css\/varelaround\.css[^>]*>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/jquery\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/jquery-migrate\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor\/assets\/lib\/font-awesome\/js\/v4-shims\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*themes\/astra\/assets\/js\/minified\/style\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/ui\/core\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/ui\/mouse\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/ui\/slider\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/ui\/draggable\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/jquery\/jquery\.ui\.touch-punch\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor\/assets\/js\/webpack\.runtime\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor\/assets\/js\/frontend-modules\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor\/assets\/js\/frontend\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/imagesloaded\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor-pro\/assets\/lib\/smartmenus\/jquery\.smartmenus\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor-pro\/assets\/lib\/sticky\/jquery\.sticky\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor-pro\/assets\/js\/webpack-pro\.runtime\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/dist\/hooks\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*wp-includes\/js\/dist\/i18n\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor-pro\/assets\/js\/frontend\.min\.js[^>]*><\/script>\s*/gi,
-    /<script[^>]+src=["'][^"']*elementor-pro\/assets\/js\/elements-handlers\.min\.js[^>]*><\/script>\s*/gi,
   ];
 
-  return commonAssetPatterns.reduce((current, pattern) => current.replace(pattern, ''), html);
+  return commonCssAssetPatterns.reduce((current, pattern) => current.replace(pattern, ''), html);
 }
 
 function stripBaseHeadTags(html: string) {
@@ -84,11 +64,22 @@ function stripBaseHeadTags(html: string) {
 }
 
 function sanitizeHeadExtraHtml(html: string) {
-  return stripBaseHeadTags(stripCommonAssetTags(html)).trim();
+  return stripBaseHeadTags(stripCommonCssAssetTags(html)).trim();
 }
 
 function sanitizeAfterFooterHtml(html: string) {
-  return stripCommonAssetTags(html)
+  const seenScriptSrcs = new Set<string>();
+
+  return html
+    .replace(/<script\b([^>]*)src=["']([^"']+)["']([^>]*)><\/script>\s*/gi, (match, beforeSrc, src, afterSrc) => {
+      const normalizedSrc = src.replace(/\?ver=[^"'&]+/i, '');
+      if (seenScriptSrcs.has(normalizedSrc)) {
+        return '';
+      }
+
+      seenScriptSrcs.add(normalizedSrc);
+      return `<script${beforeSrc}src="${src}"${afterSrc}></script>`;
+    })
     .replace(/^\s*(?:<\/div>\s*)+/i, '')
     .trim();
 }
