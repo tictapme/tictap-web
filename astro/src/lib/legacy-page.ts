@@ -67,6 +67,55 @@ function mustMatch(html: string, pattern: RegExp, label: string) {
   return match[1];
 }
 
+export function extractInlineConfigScripts(html: string): { configHtml: string; remainingHtml: string } {
+  const configScriptIds = [
+    'astra-theme-js-js-extra',
+    'elementor-frontend-js-before',
+    'elementor-pro-frontend-js-before',
+  ];
+
+  let configHtml = '';
+  let remainingHtml = html;
+
+  for (const id of configScriptIds) {
+    const pattern = new RegExp(`<script\\b[^>]*id=["']${id}["'][^>]*>[\\s\\S]*?<\\/script>\\s*`, 'i');
+    const match = remainingHtml.match(pattern);
+    if (match) {
+      configHtml += match[0];
+      remainingHtml = remainingHtml.replace(pattern, '');
+    }
+  }
+
+  return { configHtml, remainingHtml };
+}
+
+export function stripBundleJsAssets(html: string) {
+  const bundleJsPatterns = [
+    /<script\b[^>]*src=["'][^"']*jquery\/jquery\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*jquery\/jquery-migrate\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*font-awesome\/js\/v4-shims\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*astra\/assets\/js\/minified\/style\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*jquery\/ui\/core\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*jquery\/ui\/mouse\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*jquery\/ui\/slider\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*jquery\/ui\/draggable\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*jquery\.ui\.touch-punch\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*elementor\/assets\/js\/webpack\.runtime\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*elementor\/assets\/js\/frontend-modules\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*elementor\/assets\/js\/frontend\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*imagesloaded\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*elementor-pro\/assets\/js\/webpack-pro\.runtime\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*js\/dist\/hooks\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*js\/dist\/i18n\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*elementor-pro\/assets\/js\/frontend\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*elementor-pro\/assets\/js\/elements-handlers\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*smartmenus\/jquery\.smartmenus\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+    /<script\b[^>]*src=["'][^"']*sticky\/jquery\.sticky\.min\.js[^"']*["'][^>]*><\/script>\s*/gi,
+  ];
+
+  return bundleJsPatterns.reduce((current, pattern) => current.replace(pattern, ''), html);
+}
+
 function stripCommonCssAssetTags(html: string) {
   const commonCssAssetPatterns = [
     /<link[^>]+href=["'][^"']*wp-includes\/css\/dist\/block-library\/style\.min\.css[^>]*>\s*/gi,
@@ -271,6 +320,10 @@ function shouldSkipManagedRoute(route: string) {
   }
 
   if (/^\/blog\/[^/]+\/$/i.test(route)) {
+    return true;
+  }
+
+  if (/^\/en\/blog\/[^/]+\/$/i.test(route)) {
     return true;
   }
 

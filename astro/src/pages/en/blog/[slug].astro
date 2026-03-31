@@ -1,0 +1,33 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLegacyLayoutEn from '../../../layouts/BaseLegacyLayoutEn.astro';
+import { loadSourceStructuredPage, stripBundleJsAssets, extractInlineConfigScripts } from '../../../lib/legacy-page';
+
+export async function getStaticPaths() {
+  const blogDir = path.join(process.cwd(), 'src', 'en', 'blog');
+  const entries = fs.readdirSync(blogDir, { withFileTypes: true });
+  return entries
+    .filter((e) => e.isDirectory() && e.name !== 'page')
+    .map((e) => ({ params: { slug: e.name } }));
+}
+
+const { slug } = Astro.params;
+const page = loadSourceStructuredPage(`en/blog/${slug}/index.html`);
+const strippedAfterBody = stripBundleJsAssets(page.afterFooterHtml);
+const { configHtml, remainingHtml: afterBodyHtml } = extractInlineConfigScripts(strippedAfterBody);
+const headExtraHtml = page.headExtraHtml + configHtml;
+---
+
+<BaseLegacyLayoutEn
+  title={page.title}
+  lang={page.lang}
+  bodyClass={page.bodyClass}
+  bodyItemType={page.bodyItemType}
+  headExtraHtml={headExtraHtml}
+  afterBodyHtml={afterBodyHtml}
+  cssBundles={['base-css', 'header-css', 'blog-single-css']}
+  jsBundles={['base-js', 'header-js']}
+>
+  <Fragment set:html={page.contentHtml} />
+</BaseLegacyLayoutEn>
