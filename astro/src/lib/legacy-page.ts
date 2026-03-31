@@ -70,8 +70,18 @@ function stripBaseHeadTags(html: string) {
     .replace(/<title>[\s\S]*?<\/title>\s*/gi, '');
 }
 
+function stripAstroInjectedHeadHtml(html: string) {
+  return html
+    .replace(
+      /\.elementor-location-header\[data-astro-cid-[^\]]+\][\s\S]*?\.site-main\[data-astro-cid-[^\]]+\]\{position:relative;z-index:1\}/gis,
+      '',
+    )
+    .replace(/<style>\s*<\/style>\s*/gis, '')
+    .replace(/\sdata-astro-cid-[a-z0-9]+(?:=(?:"[^"]*"|'[^']*'))?/gi, '');
+}
+
 function sanitizeHeadExtraHtml(html: string) {
-  return stripBaseHeadTags(stripCommonCssAssetTags(html)).trim();
+  return stripAstroInjectedHeadHtml(stripBaseHeadTags(stripCommonCssAssetTags(html))).trim();
 }
 
 function sanitizeAfterFooterHtml(html: string) {
@@ -299,7 +309,7 @@ export function loadSourcePage(relativePath: string) {
     bodyClass: bodyClassMatch?.[1] || '',
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
-    headExtraHtml: stripBaseHeadTags(headInner),
+    headExtraHtml: stripAstroInjectedHeadHtml(stripBaseHeadTags(headInner)).trim(),
     bodyInnerHtml,
   };
 }
