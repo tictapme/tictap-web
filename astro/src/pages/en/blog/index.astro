@@ -1,0 +1,17 @@
+---
+import BaseLegacyLayoutEn from '../../../layouts/BaseLegacyLayoutEn.astro';
+import { loadSourceStructuredPage } from '../../../lib/legacy-page';
+
+const page = loadSourceStructuredPage('en/blog/index.html');
+---
+
+<BaseLegacyLayoutEn
+  title={page.title}
+  bodyClass={page.bodyClass}
+  bodyItemType={page.bodyItemType}
+  headExtraHtml={page.headExtraHtml}
+  afterBodyHtml={page.afterFooterHtml}
+  cssBundles={['base-css', 'header-css', 'blog-archive-css']}
+>
+  <Fragment set:html={page.contentHtml} />
+</BaseLegacyLayoutEn>
