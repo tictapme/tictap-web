@@ -1,4 +1,7 @@
 ---
+import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
+import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
+
 type Props = {
   title: string;
   lang?: string;
@@ -7,6 +10,8 @@ type Props = {
   bodyItemType?: string;
   bodyItemscope?: boolean;
   bodyInnerHtml: string;
+  cssBundles?: LegacyBundleName[];
+  jsBundles?: LegacyBundleName[];
 };
 
 const {
@@ -17,6 +22,8 @@ const {
   bodyItemType = '',
   bodyItemscope = false,
   bodyInnerHtml,
+  cssBundles = [],
+  jsBundles = [],
 } = Astro.props as Props;
 ---
 
@@ -26,7 +33,11 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
     <Fragment set:html={headExtraHtml} />
   </head>
-  <body class={bodyClass} itemtype={bodyItemType || undefined} itemscope={bodyItemscope} set:html={bodyInnerHtml} />
+  <body class={bodyClass} itemtype={bodyItemType || undefined} itemscope={bodyItemscope}>
+    <Fragment set:html={bodyInnerHtml} />
+    {jsBundles.length > 0 && <LegacyAssetBundle bundleNames={jsBundles} />}
+  </body>
 </html>

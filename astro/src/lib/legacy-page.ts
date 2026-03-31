@@ -9,7 +9,14 @@ function readFile(relativePath: string) {
 }
 
 function readSourceFile(relativePath: string) {
-  return fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
+  const legacyPath = path.join(legacyRoot, relativePath);
+  const sourcePath = path.join(sourceRoot, relativePath);
+
+  if (fs.existsSync(legacyPath)) {
+    return fs.readFileSync(legacyPath, 'utf8');
+  }
+
+  return fs.readFileSync(sourcePath, 'utf8');
 }
 
 function rewriteToLocal(html: string) {
@@ -229,7 +236,7 @@ export function loadSourcePage(relativePath: string) {
     bodyClass: bodyClassMatch?.[1] || '',
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
-    headExtraHtml: sanitizeHeadExtraHtml(headInner),
+    headExtraHtml: stripBaseHeadTags(headInner),
     bodyInnerHtml,
   };
 }

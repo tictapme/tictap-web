@@ -11,6 +11,7 @@ export type LegacyBundleName =
   | 'base-js'
   | 'header-css'
   | 'header-js'
+  | 'home-css'
   | 'blog-single-css'
   | 'blog-archive-css'
   | 'cookie-js'
@@ -67,6 +68,12 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
   'header-js': [
     js('/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js', 'smartmenus-js'),
     js('/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js', 'e-sticky-js'),
+  ],
+  'home-css': [
+    css('/wp-content/plugins/the-plus-addons-for-elementor-page-builder/assets/css/main/plus-extra-adv/plus-extra-adv.min.css', 'theplus-plus-extra-adv-css'),
+    css('/wp-content/plugins/the-plus-addons-for-elementor-page-builder/assets/css/main/heading-animation/tp-heading-animation.css', 'theplus-heading-animation-css'),
+    css('/wp-content/plugins/the-plus-addons-for-elementor-page-builder/assets/css/main/heading-animation/heading-animation-style-6.css', 'theplus-heading-animation-style-6-css'),
+    css('/wp-content/plugins/elementor/assets/css/widget-image-box.min.css', 'elementor-widget-image-box-css'),
   ],
   'blog-single-css': [
     css('/wp-content/plugins/elementor-pro/assets/css/widget-post-info.min.css', 'elementor-pro-widget-post-info-css'),
