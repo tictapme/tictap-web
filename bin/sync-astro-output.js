@@ -7,6 +7,7 @@ const repoRoot = path.resolve(__dirname, '..');
 const sourceDir = path.join(repoRoot, 'dist');
 const targetDir = path.join(repoRoot, 'src');
 const targetAstroDir = path.join(targetDir, '_astro');
+const prunedRouteDirs = ['author', 'tag', path.join('en', 'author'), path.join('en', 'tag')];
 
 function copyTree(source, target) {
   if (!fs.existsSync(source)) {
@@ -27,9 +28,18 @@ function copyTree(source, target) {
   fs.copyFileSync(source, target);
 }
 
+function removeTree(target) {
+  if (fs.existsSync(target)) {
+    fs.rmSync(target, { recursive: true, force: true });
+  }
+}
+
 if (fs.existsSync(targetAstroDir)) {
   fs.rmSync(targetAstroDir, { recursive: true, force: true });
 }
 
 copyTree(sourceDir, targetDir);
+for (const relativeDir of prunedRouteDirs) {
+  removeTree(path.join(targetDir, relativeDir));
+}
 console.log(`Astro output synced from ${path.relative(repoRoot, sourceDir)} to ${path.relative(repoRoot, targetDir)}`);

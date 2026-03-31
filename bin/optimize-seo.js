@@ -57,12 +57,39 @@ function optimizeHtml() {
   for (const filePath of htmlFiles) {
     let html = fs.readFileSync(filePath, 'utf8');
     const route = routeFromFile(filePath);
-    const updated = setRobotsDirective(normalizeHosts(html), shouldNoindex(route));
+    const updated = setRobotsDirective(rewriteUnwantedArchiveLinks(normalizeHosts(html)), shouldNoindex(route));
 
     if (updated !== html) {
       fs.writeFileSync(filePath, updated);
     }
   }
+}
+
+function rewriteUnwantedArchiveLinks(html) {
+  return html.replace(/<a\b[^>]*href="([^"]+)"[^>]*>[\s\S]*?<\/a>/gi, (anchor, href) => {
+    const rewrittenHref = rewriteUnwantedArchiveHref(href);
+
+    if (rewrittenHref === href) {
+      return anchor;
+    }
+
+    return anchor
+      .replace(`href="${href}"`, `href="${rewrittenHref}"`)
+      .replace(/\srel="author"/gi, '')
+      .replace(/\stitle="(?:View all posts by|Ver todas las entradas de)[^"]*"/gi, '');
+  });
+}
+
+function rewriteUnwantedArchiveHref(href) {
+  if (/^\/en\/author\/.+/i.test(href) || /^\/en\/tag\/.+/i.test(href)) {
+    return '/en/blog/';
+  }
+
+  if (/^\/author\/.+/i.test(href) || /^\/tag\/.+/i.test(href)) {
+    return '/blog/';
+  }
+
+  return href;
 }
 
 function optimizeXmlSitemaps() {

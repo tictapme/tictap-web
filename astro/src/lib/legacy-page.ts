@@ -151,6 +151,14 @@ function shouldSkipManagedRoute(route: string) {
     return true;
   }
 
+  if (/^\/(?:en\/)?author\/.+/i.test(route)) {
+    return true;
+  }
+
+  if (/^\/(?:en\/)?tag\/.+/i.test(route)) {
+    return true;
+  }
+
   return false;
 }
 

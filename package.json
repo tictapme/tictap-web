@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "preview": "npm run astro:build && node bin/sync-astro-output.js && node bin/preview.js src",
+    "preview": "npm run astro:build && node bin/sync-astro-output.js && node bin/optimize-seo.js && node bin/preview.js src",
     "preview:src": "node bin/preview.js src",
     "astro:build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "analyze:astro-migration": "node bin/analyze-astro-migration.js",
