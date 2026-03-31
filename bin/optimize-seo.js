@@ -66,30 +66,42 @@ function optimizeHtml() {
 }
 
 function rewriteUnwantedArchiveLinks(html) {
-  return html.replace(/<a\b[^>]*href="([^"]+)"[^>]*>[\s\S]*?<\/a>/gi, (anchor, href) => {
-    const rewrittenHref = rewriteUnwantedArchiveHref(href);
+  return rewriteUnwantedArchiveSchemaUrls(
+    html.replace(/<a\b[^>]*href="([^"]+)"[^>]*>[\s\S]*?<\/a>/gi, (anchor, href) => {
+      const rewrittenHref = rewriteUnwantedArchiveHref(href);
 
-    if (rewrittenHref === href) {
-      return anchor;
-    }
+      if (rewrittenHref === href) {
+        return anchor;
+      }
 
-    return anchor
-      .replace(`href="${href}"`, `href="${rewrittenHref}"`)
-      .replace(/\srel="author"/gi, '')
-      .replace(/\stitle="(?:View all posts by|Ver todas las entradas de)[^"]*"/gi, '');
-  });
+      return anchor
+        .replace(`href="${href}"`, `href="${rewrittenHref}"`)
+        .replace(/\srel="author"/gi, '')
+        .replace(/\stitle="(?:View all posts by|Ver todas las entradas de)[^"]*"/gi, '');
+    }),
+  );
 }
 
 function rewriteUnwantedArchiveHref(href) {
-  if (/^\/en\/author\/.+/i.test(href) || /^\/en\/tag\/.+/i.test(href)) {
+  const normalizedHref = href.replace(/^https?:\/\/www\.tictap\.me/i, '');
+
+  if (/^\/en\/author\/.+/i.test(normalizedHref) || /^\/en\/tag\/.+/i.test(normalizedHref)) {
     return '/en/blog/';
   }
 
-  if (/^\/author\/.+/i.test(href) || /^\/tag\/.+/i.test(href)) {
+  if (/^\/author\/.+/i.test(normalizedHref) || /^\/tag\/.+/i.test(normalizedHref)) {
     return '/blog/';
   }
 
   return href;
+}
+
+function rewriteUnwantedArchiveSchemaUrls(html) {
+  return html
+    .replace(/"url":"https?:\/\/www\.tictap\.me\/en\/author\/[^"]+"/gi, '"url":"https://www.tictap.me/en/blog/"')
+    .replace(/"url":"https?:\/\/www\.tictap\.me\/author\/[^"]+"/gi, '"url":"https://www.tictap.me/blog/"')
+    .replace(/"url":"\/en\/author\/[^"]+"/gi, '"url":"/en/blog/"')
+    .replace(/"url":"\/author\/[^"]+"/gi, '"url":"/blog/"');
 }
 
 function optimizeXmlSitemaps() {
