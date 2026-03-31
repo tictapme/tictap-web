@@ -5,7 +5,7 @@ metaDescription: "Descubre cómo la IA y un note taker reducen el tiempo de regi
 publicUrl: "https://www.tictap.me/blog/ia-en-mantenimiento-note-taker/"
 publishedTime: "2026-03-29T09:00:00+00:00"
 modifiedTime: "2026-03-29T09:00:00+00:00"
-ogImage: "https://www.tictap.me/wp-content/uploads/2026/02/mantenimiento-e1770219437559.webp"
+ogImage: "https://www.tictap.me/wp-content/uploads/2026/03/notetaker.webp"
 ogImageWidth: 1024
 ogImageHeight: 620
 author: "TicTAP"

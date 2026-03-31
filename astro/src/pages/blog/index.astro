@@ -112,12 +112,19 @@ const generatedPaths = new Set(
 const legacyArticles = mainArchive.articles.filter((articleHtml) => !generatedPaths.has(extractLegacyHref(articleHtml)));
 const renderedArticles = [...generatedPosts.map(buildGeneratedArticleCard), ...legacyArticles].join('\n');
 const contentHtml = page.contentHtml.replace(mainArchive.pattern, `$1${renderedArticles}$3`);
+const headExtraHtml = `${page.headExtraHtml}
+<style>
+.elementor-8333 .elementor-element.elementor-element-88896a4 .elementor-post__text {
+  padding: 0 13px;
+  margin-top: 20px;
+}
+</style>`;
 ---
 
 <BaseLegacyLayout
   title={page.title}
   bodyClass={page.bodyClass}
-  headExtraHtml={page.headExtraHtml}
+  headExtraHtml={headExtraHtml}
   afterBodyHtml={page.afterFooterHtml}
   cssBundles={['base-css', 'header-css', 'blog-archive-css']}
   jsBundles={['base-js', 'header-js']}
