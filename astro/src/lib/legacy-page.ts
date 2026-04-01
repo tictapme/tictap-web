@@ -67,6 +67,31 @@ function mustMatch(html: string, pattern: RegExp, label: string) {
   return match[1];
 }
 
+const shellCssCache = new Map<string, string>();
+
+export function loadShellCss(lang: 'es' | 'en'): string {
+  if (shellCssCache.has(lang)) return shellCssCache.get(lang)!;
+
+  const headerId = lang === 'es' ? '9642' : '10265';
+  const refPath = lang === 'es' ? 'blog/index.html' : 'en/blog/index.html';
+
+  try {
+    const rawHtml = readSourceFile(refPath);
+    const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+    const styleBlocks = [...headInner.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]);
+    const block = styleBlocks.find((s) => s.includes(`.elementor-${headerId} `)) ?? '';
+    const rules = [...block.matchAll(new RegExp(`\\.elementor-${headerId}[^{}]*\\{[^{}]*\\}`, 'g'))].map(
+      (m) => m[0],
+    );
+    const css = rules.join('');
+    shellCssCache.set(lang, css);
+    return css;
+  } catch {
+    shellCssCache.set(lang, '');
+    return '';
+  }
+}
+
 export function extractInlineConfigScripts(html: string): { configHtml: string; remainingHtml: string } {
   const configScriptIds = [
     'astra-theme-js-js-extra',

@@ -3,6 +3,9 @@ import HeaderEs from '../components/header/HeaderEs.astro';
 import FooterEs from '../components/footer/FooterEs.astro';
 import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
 import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
+import { loadShellCss } from '../lib/legacy-page';
+
+const shellCss = loadShellCss('es');
 
 type Props = {
   title: string;
@@ -58,6 +61,7 @@ const {
       }
     </style>
     <Fragment set:html={headExtraHtml} />
+    {!headExtraHtml.includes('.elementor-9642') && shellCss && <style set:html={shellCss} />}
   </head>
   <body itemtype={bodyItemType} itemscope="itemscope" class={bodyClass}>
     <a class="skip-link screen-reader-text" href="#content" title="Ir al contenido">Ir al contenido</a>
