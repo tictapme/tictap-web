@@ -1,0 +1,153 @@
+import { e as createAstro, c as createComponent, r as renderComponent, d as renderTemplate, m as maybeRenderHead, f as addAttribute, g as renderSlot } from '../../chunks/astro/server_BXisM0Nw.mjs';
+import 'kleur/colors';
+import { r as renderEntry, g as getCollection } from '../../chunks/_astro_content_Bww9j2hy.mjs';
+import { $ as $$BaseLegacyLayout } from '../../chunks/BaseLegacyLayout_Cd9NXje7.mjs';
+import { l as loadLegacyPage } from '../../chunks/LegacyAssetBundle_DbnA9-al.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+export { renderers } from '../../renderers.mjs';
+
+const $$Astro$1 = createAstro("https://www.tictap.me");
+const $$BlogArticleLayout = createComponent(($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro$1, $$props, $$slots);
+  Astro2.self = $$BlogArticleLayout;
+  const { post, canonical } = Astro2.props;
+  const legacySinglePage = loadLegacyPage("blog/documentacion-tecnica-tienen-que-tener-tus-maquinas/index.html");
+  const articleSupportCss = fs.readFileSync(path.join(process.cwd(), "astro", "src", "styles", "blog-legacy.css"), "utf8");
+  const pageUrl = canonical || post.data.publicUrl;
+  const title = post.data.seoTitle;
+  const description = post.data.metaDescription;
+  const encodedLegacyTitle = encodeURIComponent(`${post.data.title} - TicTAP`);
+  `${(post.data.deck ?? description).replace(/"/g, '\\"')}
+`;
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `${pageUrl}#article`,
+        isPartOf: {
+          "@id": pageUrl
+        },
+        author: {
+          name: post.data.author,
+          "@id": "https://www.tictap.me/#/schema/person/tictap"
+        },
+        headline: post.data.title,
+        datePublished: post.data.publishedTime,
+        dateModified: post.data.modifiedTime,
+        mainEntityOfPage: {
+          "@id": pageUrl
+        },
+        publisher: {
+          "@id": "https://www.tictap.me/#organization"
+        },
+        thumbnailUrl: post.data.ogImage,
+        articleSection: [post.data.category],
+        inLanguage: "es"
+      },
+      {
+        "@type": "WebPage",
+        "@id": pageUrl,
+        url: pageUrl,
+        name: `${title} - TicTAP`,
+        isPartOf: {
+          "@id": "https://www.tictap.me/#website"
+        },
+        primaryImageOfPage: {
+          "@id": `${pageUrl}#primaryimage`
+        },
+        image: {
+          "@id": `${pageUrl}#primaryimage`
+        },
+        thumbnailUrl: post.data.ogImage,
+        datePublished: post.data.publishedTime,
+        dateModified: post.data.modifiedTime,
+        inLanguage: "es"
+      },
+      {
+        "@type": "ImageObject",
+        inLanguage: "es",
+        "@id": `${pageUrl}#primaryimage`,
+        url: post.data.ogImage,
+        contentUrl: post.data.ogImage,
+        width: post.data.ogImageWidth,
+        height: post.data.ogImageHeight
+      }
+    ]
+  };
+  const legacyConfigScript = `
+var astra = {"break_point":"921","isRtl":"","is_scroll_to_id":"","is_scroll_to_top":"","is_header_footer_builder_active":"","responsive_cart_click":"flyout"};
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Compartir en Facebook","shareOnTwitter":"Compartir en Twitter","pinIt":"Pinear","download":"Descargar","downloadImage":"Descargar imagen","fullscreen":"Pantalla completa","zoom":"Zoom","share":"Compartir","playVideo":"Reproducir v\xEDdeo","previous":"Anterior","next":"Siguiente","close":"Cerrar","a11yCarouselPrevSlideMessage":"Diapositiva anterior","a11yCarouselNextSlideMessage":"Diapositiva siguiente","a11yCarouselFirstSlideMessage":"Esta es la primera diapositiva","a11yCarouselLastSlideMessage":"Esta es la \xFAltima diapositiva","a11yCarouselPaginationBulletMessage":"Ir a la diapositiva"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"M\xF3vil vertical","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"M\xF3vil horizontal","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tableta vertical","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tableta horizontal","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Port\xE1til","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Pantalla grande","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"hasCustomBreakpoints":false},"version":"3.35.7","is_static":false,"experimentalFeatures":{"e_font_icon_svg":true,"additional_custom_breakpoints":true,"container":true,"theme_builder_v2":true,"nested-elements":true,"home_screen":true,"global_classes_should_enforce_capabilities":true,"e_variables":true,"cloud-library":true,"e_opt_in_v4_page":true,"e_components":true,"e_interactions":true,"e_editor_one":true,"import-export-customization":true,"mega-menu":true,"e_pro_variables":true},"urls":{"assets":"https://www.tictap.me/wp-content/plugins/elementor/assets/","ajaxurl":"https://www.tictap.me/wp-admin/admin-ajax.php","uploadUrl":"https://www.tictap.me/wp-content/uploads"},"nonces":{"floatingButtonsClickTracking":"ff2328dad0"},"swiperClass":"swiper","settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":7865,"title":${JSON.stringify(encodedLegacyTitle)},"excerpt":"","featuredImage":${JSON.stringify(post.data.ogImage)}}};
+elementorFrontendConfig.post.excerpt = ${JSON.stringify(`${post.data.deck ?? description}
+`)};
+window.astra = astra;
+window.elementorFrontendConfig = elementorFrontendConfig;
+var ElementorProFrontendConfig = {"ajaxurl":"https://www.tictap.me/wp-admin/admin-ajax.php","nonce":"b54341812e","urls":{"assets":"https://www.tictap.me/wp-content/plugins/elementor-pro/assets/","rest":"https://www.tictap.me/wp-json/"},"settings":{"lazy_load_background_images":false},"popup":{"hasPopUps":true},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"es_ES","app_id":""},"lottie":{"defaultAnimationUrl":"https://www.tictap.me/wp-content/plugins/elementor-pro/modules/lottie/assets/animations/default.json"}};
+window.ElementorProFrontendConfig = ElementorProFrontendConfig;
+`;
+  const legacySingleHeadExtras = legacySinglePage.headExtraHtml.replace(/<meta name="robots"[\s\S]*?\/>\s*/gi, "").replace(/<link rel="alternate" hreflang="es"[\s\S]*?>\s*/gi, "").replace(/<link rel="alternate" hreflang="en"[\s\S]*?>\s*/gi, "").replace(/<link rel="alternate" hreflang="x-default"[\s\S]*?>\s*/gi, "").replace(/<!-- This site is optimized with the Yoast SEO plugin[\s\S]*?<!-- \/ Yoast SEO plugin\. -->\s*/gi, "").replace(/<link rel="canonical"[\s\S]*?>\s*/gi, "").replace(/<meta name="description"[\s\S]*?>\s*/gi, "").replace(/<meta property="og:[^"]+"[\s\S]*?>\s*/gi, "").replace(/<meta property="article:[^"]+"[\s\S]*?>\s*/gi, "").replace(/<meta name="author"[\s\S]*?>\s*/gi, "").replace(/<meta name="twitter:[^"]+"[\s\S]*?>\s*/gi, "").replace(/<link rel="alternate" title="oEmbed \(JSON\)"[\s\S]*?>\s*/gi, "").replace(/<link rel="alternate" title="oEmbed \(XML\)"[\s\S]*?>\s*/gi, "").replace(/<link rel="https:\/\/api\.w\.org\/"[\s\S]*?>\s*/gi, "").replace(/<link rel="alternate" title="JSON"[\s\S]*?>\s*/gi, "").replace(/<link rel="EditURI"[\s\S]*?>\s*/gi, "").replace(/<link rel="shortlink"[\s\S]*?>\s*/gi, "");
+  const headExtraHtml = `
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<link rel="canonical" href="${pageUrl}" />
+<meta name="description" content="${description}" />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="${title} - TicTAP" />
+<meta property="og:description" content="${description}" />
+<meta property="og:url" content="${pageUrl}" />
+<meta property="og:site_name" content="TicTAP" />
+<meta property="article:published_time" content="${post.data.publishedTime}" />
+<meta property="article:modified_time" content="${post.data.modifiedTime}" />
+<meta property="og:image" content="${post.data.ogImage}" />
+<meta property="og:image:width" content="${String(post.data.ogImageWidth)}" />
+<meta property="og:image:height" content="${String(post.data.ogImageHeight)}" />
+<meta property="og:image:type" content="image/webp" />
+<meta name="author" content="${post.data.author}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:label1" content="Escrito por" />
+<meta name="twitter:data1" content="${post.data.author}" />
+<meta name="twitter:label2" content="Tiempo de lectura" />
+<meta name="twitter:data2" content="${post.data.readingTime}" />
+${legacySingleHeadExtras}
+<style>${articleSupportCss}</style>
+<script type="application/ld+json">${JSON.stringify(articleJsonLd, null, 2)}<\/script>
+<script>${legacyConfigScript}<\/script>
+`;
+  const afterBodyHtml = `
+<script>if (window.wp?.i18n?.setLocaleData) { window.wp.i18n.setLocaleData({ 'text direction\\u0004ltr': ['ltr'] }); }<\/script>
+`;
+  return renderTemplate`${renderComponent($$result, "BaseLegacyLayout", $$BaseLegacyLayout, { "title": `${title} - TicTAP`, "bodyClass": "wp-singular post-template-default single single-post single-format-standard wp-custom-logo wp-theme-astra ast-desktop ast-page-builder-template ast-no-sidebar astra-4.8.11 ast-header-custom-item-inside ast-full-width-primary-header group-blog ast-blog-single-style-1 ast-single-post ast-inherit-site-logo-transparent elementor-page-7865 ast-normal-title-enabled elementor-default elementor-kit-6185 elementor-page", "headExtraHtml": headExtraHtml, "afterBodyHtml": afterBodyHtml, "cssBundles": ["base-css", "header-css", "blog-single-css"], "jsBundles": ["base-js", "header-js"] }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div id="content" class="site-content"> <div class="ast-container"> <div id="primary" class="content-area primary"> <main id="main" class="site-main"> <div data-elementor-type="single-post" data-elementor-id="7865" class="elementor elementor-7865 elementor-location-single post type-post status-publish format-standard has-post-thumbnail hentry category-blog ast-article-single" data-elementor-post-type="elementor_library"> <div class="elementor-element elementor-element-2e9c6ad e-con-full e-flex e-con e-parent" data-id="2e9c6ad" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"> <div class="elementor-element elementor-element-502ff4e e-flex e-con-boxed e-con e-child" data-id="502ff4e" data-element_type="container" data-e-type="container"> <div class="e-con-inner"> <div class="elementor-element elementor-element-25b5b48 e-con-full e-flex e-con e-child" data-id="25b5b48" data-element_type="container" data-e-type="container"> <div class="elementor-element elementor-element-77dbafe elementor-align-left elementor-widget elementor-widget-post-info" data-id="77dbafe" data-element_type="widget" data-e-type="widget" data-widget_type="post-info.default"> <div class="elementor-widget-container"> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info"> <li class="elementor-icon-list-item elementor-inline-item" itemprop="about"> <span class="elementor-icon-list-icon"> <svg aria-hidden="true" class="e-font-icon-svg e-fas-tags" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"></path></svg> </span> <span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-terms"> <span class="elementor-post-info__terms-list"> <a${addAttribute(pageUrl, "href")} class="elementor-post-info__terms-list-item">${post.data.category}</a> </span> </span> </li> </ul> </div> </div> <div class="elementor-element elementor-element-5133452 elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-id="5133452" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-title.default"> <div class="elementor-widget-container"> <h1 class="elementor-heading-title elementor-size-default" id="blog-title">${post.data.title}</h1> </div> </div> <div class="elementor-element elementor-element-b1ae9e3 elementor-widget elementor-widget-theme-post-excerpt" data-id="b1ae9e3" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-excerpt.default"> <div class="elementor-widget-container"> ${post.data.deck ?? description} </div> </div> </div> <div class="elementor-element elementor-element-baa0782 e-con-full e-flex e-con e-child" data-id="baa0782" data-element_type="container" data-e-type="container"> <div class="elementor-element elementor-element-4367edb elementor-widget elementor-widget-theme-post-featured-image elementor-widget-image" data-id="4367edb" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-featured-image.default"> <div class="elementor-widget-container"> <img fetchpriority="high"${addAttribute(post.data.ogImageWidth, "width")}${addAttribute(post.data.ogImageHeight, "height")}${addAttribute(post.data.ogImage, "src")}${addAttribute(post.data.title, "alt")}> </div> </div> </div> </div> </div> </div> <section class="elementor-section elementor-top-section elementor-element elementor-element-b0b9dc4 tictap-w2021 tictap-outter-section elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="b0b9dc4" data-element_type="section" data-e-type="section"> <div class="elementor-container elementor-column-gap-default"> <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1e22d1b" data-id="1e22d1b" data-element_type="column" data-e-type="column"> <div class="elementor-widget-wrap elementor-element-populated"> <div class="elementor-element elementor-element-70dc1a3 elementor-widget elementor-widget-theme-post-content" data-id="70dc1a3" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-content.default"> <div class="elementor-widget-container"> <div class="elementor e-content-shell"> <article> ${renderSlot($$result2, $$slots["default"])} </article> </div> </div> </div> </div> </div> </div> </section> </div> </main> </div> </div> </div> ` })}`;
+}, "/home/guille/www/tictap/marketing/website/astro/src/layouts/BlogArticleLayout.astro", void 0);
+
+const $$Astro = createAstro("https://www.tictap.me");
+async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+const $$slug = createComponent(async ($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$slug;
+  const { post } = Astro2.props;
+  const { Content } = await renderEntry(post);
+  const canonical = post.data.publicUrl || `https://www.tictap.me/blog/${post.slug}/`;
+  return renderTemplate`${renderComponent($$result, "BlogArticleLayout", $$BlogArticleLayout, { "post": post, "canonical": canonical }, { "default": async ($$result2) => renderTemplate` ${renderComponent($$result2, "Content", Content, {})} ` })}`;
+}, "/home/guille/www/tictap/marketing/website/astro/src/pages/blog/[slug].astro", void 0);
+
+const $$file = "/home/guille/www/tictap/marketing/website/astro/src/pages/blog/[slug].astro";
+const $$url = "/blog/[slug]";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$slug,
+  file: $$file,
+  getStaticPaths,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

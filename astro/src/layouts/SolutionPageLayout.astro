@@ -1,0 +1,45 @@
+---
+import BaseLegacyLayout from './BaseLegacyLayout.astro';
+import BaseLegacyLayoutEn from './BaseLegacyLayoutEn.astro';
+import { stripBundleJsAssets, extractInlineConfigScripts } from '../lib/legacy-page';
+
+type Props = {
+  title: string;
+  lang?: string;
+  bodyClass: string;
+  bodyItemType?: string;
+  headExtraHtml?: string;
+  afterBodyHtml?: string;
+  contentHtml: string;
+};
+
+const {
+  title,
+  lang = 'es-ES',
+  bodyClass,
+  bodyItemType = 'https://schema.org/WebPage',
+  headExtraHtml = '',
+  afterBodyHtml = '',
+  contentHtml,
+} = Astro.props as Props;
+
+const isEnglish = lang.toLowerCase().startsWith('en');
+const Layout = isEnglish ? BaseLegacyLayoutEn : BaseLegacyLayout;
+
+const strippedAfterBody = stripBundleJsAssets(afterBodyHtml);
+const { configHtml, remainingHtml: finalAfterBodyHtml } = extractInlineConfigScripts(strippedAfterBody);
+const finalHeadExtraHtml = headExtraHtml + configHtml;
+---
+
+<Layout
+  title={title}
+  lang={lang}
+  bodyClass={bodyClass}
+  bodyItemType={bodyItemType}
+  headExtraHtml={finalHeadExtraHtml}
+  afterBodyHtml={finalAfterBodyHtml}
+  cssBundles={['base-css', 'header-css']}
+  jsBundles={['base-js', 'header-js']}
+>
+  <Fragment set:html={contentHtml} />
+</Layout>
