@@ -1,17 +1,27 @@
 #!/bin/bash
-# Sync entire site or a specific subfolder from remote 'generated' to local 'src'.
-# Usage:
-#   ./bin/sync.sh                              # sync everything (current behavior)
-#   ./bin/sync.sh carpeta [carpeta2 …]         # sync one or more subfolders (e.g., blog en/blog contacto)
-#   ./bin/sync.sh --exclude=en/                # sync everything except a folder (relative to src/, e.g. src/en)
-#   ./bin/sync.sh --exclude=en/ --exclude=blog # multiple excludes
-#   ./bin/sync.sh --help                       # show this help
+# sync.sh
 #
-# Notes:
-# - The optional "carpeta" is a path relative to src/ (e.g., blog, en/blog, contacto).
-# - Excludes: .git/, 404.html, bin/, _redirects
-# - After syncing, staging links are replaced with production in .html/.xml within the affected path.
-# - Finally, sitemap, Pages config and SEO cleanup scripts are executed.
+# Sincroniza el export estático del servidor remoto al directorio publicado local (src/).
+# Tras la sincronización ejecuta el pipeline completo de limpieza y validación SEO.
+#
+# Uso:
+#   ./bin/sync.sh                              # sincroniza todo el sitio
+#   ./bin/sync.sh carpeta [carpeta2 …]         # sincroniza una o más subcarpetas (p.ej. blog en/blog contacto)
+#   ./bin/sync.sh --exclude=en/                # sincroniza todo excepto la carpeta indicada (relativa a src/)
+#   ./bin/sync.sh --exclude=en/ --exclude=blog # múltiples exclusiones
+#   ./bin/sync.sh --help                       # muestra la ayuda completa
+#
+# Detalles:
+# - El remoto es debian@51.83.111.98:/home/debian/docker-wp/generated (export del CMS).
+# - Las carpetas son rutas relativas a src/ (sin prefijo ./, el / final se ignora).
+# - Siempre excluye: .git/, 404.html, bin/, _redirects, ai.md
+# - Tras la descarga, reemplaza en HTML cualquier subdominio de staging de tictap.me por www.tictap.me,
+#   y en XML reemplaza staging-www.tictap.me por www.tictap.me.
+# - Pipeline post-sync:
+#     1. node bin/fix-sitemaps.js          → añade URLs absolutas a los sitemaps
+#     2. node bin/normalize-pages-config.js → normaliza _headers/_redirects y los sincroniza en src/
+#     3. node bin/optimize-seo.js          → corrige canonical, noindex y referencias de sitemap
+#     4. node bin/validate-static-site.js  → falla rápido si el export no es seguro para producción
 
 set -euo pipefail
 

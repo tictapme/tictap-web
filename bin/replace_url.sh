@@ -1,4 +1,22 @@
 #!/bin/bash
+# replace_url.sh
+#
+# Reemplaza en masa las URLs de host en todos los archivos de src/ según el modo indicado.
+# Útil para alternar el sitio entre producción y el entorno develop (Cloudflare Pages preview).
+#
+# Modos:
+#   production  (por defecto) – reemplaza cualquier host de staging/develop por www.tictap.me
+#   develop                   – reemplaza www.tictap.me y hosts de staging por develop.wp-web.pages.dev
+#
+# Uso:
+#   ./bin/replace_url.sh                          # modo production con regex y destino por defecto
+#   ./bin/replace_url.sh production               # equivalente al anterior
+#   ./bin/replace_url.sh develop                  # apunta todo a develop.wp-web.pages.dev
+#   ./bin/replace_url.sh production "regex" "url" # regex y URL de destino personalizados
+#
+# Precaución: modifica todos los archivos de src/ en sitio. Pide confirmación antes de ejecutar.
+# No ejecuta validación ni limpieza SEO posterior; hazlo manualmente si es necesario.
+
 set -euo pipefail
 
 MODE="${1:-production}"

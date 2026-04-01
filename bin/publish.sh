@@ -1,4 +1,20 @@
 #!/bin/bash
+# publish.sh
+#
+# Prepara src/ para la rama actual y, con confirmación del usuario, hace commit y push a esa rama.
+#
+# Pasos que ejecuta:
+#   1. Lee la rama activa con `git branch --show-current`.
+#   2. Ejecuta optimize-seo.js, normalize-pages-config.js y validate-static-site.js
+#      pasando la variable SITE_BRANCH para que los scripts conozcan el contexto de rama.
+#   3. Hace `git add src/` para incluir todos los cambios generados.
+#   4. Pregunta confirmación antes de crear el commit y hacer push.
+#
+# Uso:
+#   ./bin/publish.sh
+#
+# Precaución: hace push directo a la rama actual. Usar solo tras revisar el diff de src/.
+
 set -euo pipefail
 
 current_branch=$(git branch --show-current)

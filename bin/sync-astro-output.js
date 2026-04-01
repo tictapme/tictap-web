@@ -1,5 +1,21 @@
 #!/usr/bin/env node
 
+/**
+ * sync-astro-output.js
+ *
+ * Sincroniza la salida del build de Astro (dist/) en el directorio publicado (src/).
+ *
+ * Pasos que ejecuta:
+ *   1. Borra src/_astro/ para eliminar assets versionados del build anterior.
+ *   2. Copia recursivamente todo dist/ sobre src/, sobreescribiendo archivos existentes.
+ *   3. Elimina de src/ las rutas de autor y etiqueta (author/, tag/, en/author/, en/tag/)
+ *      que Astro genera pero no deben publicarse.
+ *
+ * Uso:
+ *   node bin/sync-astro-output.js
+ *   (normalmente invocado desde `npm run preview` tras `npm run astro:build`)
+ */
+
 const fs = require('fs');
 const path = require('path');
 

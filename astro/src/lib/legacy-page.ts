@@ -73,7 +73,7 @@ export function loadShellCss(lang: 'es' | 'en'): string {
   if (shellCssCache.has(lang)) return shellCssCache.get(lang)!;
 
   const headerId = lang === 'es' ? '9642' : '10265';
-  const refPath = lang === 'es' ? 'blog/index.html' : 'en/blog/index.html';
+  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
 
   try {
     const rawHtml = readSourceFile(refPath);

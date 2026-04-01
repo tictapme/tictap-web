@@ -1,3 +1,30 @@
+/**
+ * validate-static-site.js
+ *
+ * Valida que el directorio publicado (src/) esté listo para producción antes de hacer push a main.
+ * Sale con código 1 si encuentra algún error; con código 0 si todo es correcto.
+ *
+ * Validaciones que ejecuta:
+ *   1. validateRequiredFiles      – comprueba que existen los archivos SEO y de configuración
+ *                                   obligatorios (_headers, _redirects, robots.txt, sitemaps).
+ *   2. validateSyncedRootFiles    – verifica que _headers y _redirects de la raíz del repo sean
+ *                                   idénticos a los de src/ (deben mantenerse sincronizados).
+ *   3. validateNoLegacyHosts      – recorre todos los archivos de texto de src/ buscando
+ *                                   referencias a hosts distintos al de producción (p.ej. URLs de
+ *                                   staging o del CMS anterior).
+ *   4. validateRobotsTxt          – confirma que robots.txt apunta al sitemap index correcto.
+ *   5. validateSitemaps           – confirma que sitemap_index.xml y sitemap.xml incluyen las
+ *                                   entradas de page-sitemap.xml y post-sitemap.xml apuntando al
+ *                                   host de producción.
+ *   6. validateRedirects          – revisa cada regla de src/_redirects: tres campos obligatorios,
+ *                                   código de estado válido, sin fragmentos en la ruta origen y sin
+ *                                   destinos que apunten a hosts legacy.
+ *
+ * Uso:
+ *   node bin/validate-static-site.js
+ *   (normalmente invocado desde `npm run validate:static` o el hook pre-commit)
+ */
+
 const fs = require('fs');
 const path = require('path');
 const { resolvePublishContext } = require('./site-host');

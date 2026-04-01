@@ -1,5 +1,6 @@
 ---
 import GenericPageLayout from '../layouts/GenericPageLayout.astro';
+import SolutionPageLayout from '../layouts/SolutionPageLayout.astro';
 import CaseStudyArchiveLayout from '../layouts/CaseStudyArchiveLayout.astro';
 import CaseStudySingleLayout from '../layouts/CaseStudySingleLayout.astro';
 import LegacyCaseStudyElementorLayout from '../layouts/LegacyCaseStudyElementorLayout.astro';
@@ -12,6 +13,7 @@ import {
   loadSourceStructuredElementorShellPage,
   loadSourceStructuredPage,
 } from '../lib/legacy-page';
+import { isSolutionPage } from '../lib/solution-pages';
 
 export async function getStaticPaths() {
   return listManagedLegacyRoutes()
@@ -43,7 +45,9 @@ const isLegacyElementorCaseStudySingle =
 const isRedirectPage =
   /<meta[^>]+http-equiv=["']refresh["']/i.test(rawPage.headExtraHtml) ||
   /window\.location\s*=/.test(rawPage.bodyInnerHtml);
+const isSolutionPageRoute = isSolutionPage(relativePath);
 const isGenericPage =
+  !isSolutionPageRoute &&
   /\bpage-template-default\b/.test(rawPage.bodyClass) &&
   /\bpage-id-\d+\b/.test(rawPage.bodyClass) &&
   !/^\/?(en\/)?blog\//i.test(relativePath) &&
@@ -57,11 +61,11 @@ let page = rawPage;
 let legacyElementorPage = null;
 let redirectPage = null;
 
-if (isGenericPage || isStructuredCaseStudy) {
+if (isGenericPage || isStructuredCaseStudy || isSolutionPageRoute) {
   try {
     page = loadSourceStructuredPage(relativePath);
   } catch (error) {
-    if (isGenericPage) {
+    if (isGenericPage || isSolutionPageRoute) {
       throw error;
     }
   }
@@ -119,6 +123,16 @@ const canRenderStructuredCaseStudy = page !== rawPage && isStructuredCaseStudy;
       headExtraHtml={redirectPage.headExtraHtml}
       bodyClass={redirectPage.bodyClass}
       targetUrl={redirectPage.targetUrl}
+    />
+  ) : isSolutionPageRoute ? (
+    <SolutionPageLayout
+      title={page.title}
+      lang={page.lang}
+      bodyClass={page.bodyClass}
+      bodyItemType={page.bodyItemType}
+      headExtraHtml={page.headExtraHtml}
+      afterBodyHtml={page.afterFooterHtml}
+      contentHtml={page.contentHtml}
     />
   ) : isGenericPage ? (
     <GenericPageLayout

@@ -1,7 +1,7 @@
 ---
-import { loadLegacyShell } from '../../lib/legacy-page';
+import { loadSourceShell } from '../../lib/legacy-page';
 
-const { footerHtml } = loadLegacyShell('blog/index.html');
+const { footerHtml } = loadSourceShell('index.html');
 ---
 
 <Fragment set:html={footerHtml} />
