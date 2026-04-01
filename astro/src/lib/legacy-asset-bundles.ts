@@ -36,6 +36,7 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
     css('/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css', 'font-awesome-v4-shims-css'),
     css('/wp-content/uploads/elementor/google-fonts/css/lato.css', 'elementor-google-font-lato-css'),
     css('/wp-content/uploads/elementor/google-fonts/css/varelaround.css', 'elementor-google-font-varelaround-css'),
+    css('/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css', 'elementor-widget-icon-list-css'),
   ],
   'base-js': [
     js('/wp-includes/js/jquery/jquery.min.js', 'jquery-core-js'),
@@ -77,7 +78,6 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
   ],
   'blog-single-css': [
     css('/wp-content/plugins/elementor-pro/assets/css/widget-post-info.min.css', 'elementor-pro-widget-post-info-css'),
-    css('/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css', 'elementor-widget-icon-list-css'),
   ],
   'blog-archive-css': [
     css('/wp-includes/css/dist/block-library/style.min.css', 'wp-block-library-css'),
