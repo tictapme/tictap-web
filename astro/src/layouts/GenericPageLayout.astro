@@ -1,6 +1,7 @@
 ---
 import BaseLegacyLayout from './BaseLegacyLayout.astro';
 import BaseLegacyLayoutEn from './BaseLegacyLayoutEn.astro';
+import { stripBundleJsAssets, extractInlineConfigScripts } from '../lib/legacy-page';
 
 type Props = {
   title: string;
@@ -24,6 +25,10 @@ const {
 
 const isEnglish = lang.toLowerCase().startsWith('en');
 const Layout = isEnglish ? BaseLegacyLayoutEn : BaseLegacyLayout;
+
+const strippedAfterBody = stripBundleJsAssets(afterBodyHtml);
+const { configHtml, remainingHtml: finalAfterBodyHtml } = extractInlineConfigScripts(strippedAfterBody);
+const finalHeadExtraHtml = headExtraHtml + configHtml;
 ---
 
 <Layout
@@ -31,9 +36,10 @@ const Layout = isEnglish ? BaseLegacyLayoutEn : BaseLegacyLayout;
   lang={lang}
   bodyClass={bodyClass}
   bodyItemType={bodyItemType}
-  headExtraHtml={headExtraHtml}
-  afterBodyHtml={afterBodyHtml}
+  headExtraHtml={finalHeadExtraHtml}
+  afterBodyHtml={finalAfterBodyHtml}
   cssBundles={['base-css', 'header-css']}
+  jsBundles={['base-js', 'header-js']}
 >
   <Fragment set:html={contentHtml} />
 </Layout>
