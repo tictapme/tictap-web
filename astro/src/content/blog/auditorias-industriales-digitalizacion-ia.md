@@ -5,7 +5,7 @@ metaDescription: "Descubre como la digitalizacion industrial, los formularios fl
 publicUrl: "https://www.tictap.me/blog/auditorias-industriales-digitalizacion-ia/"
 publishedTime: "2026-04-07T09:00:00+00:00"
 modifiedTime: "2026-04-07T09:00:00+00:00"
-ogImage: "https://www.tictap.me/wp-content/uploads/2026/02/Tecnologia-NFC-y-QR-en-operaciones-industriales-1024x572.webp"
+ogImage: "https://www.tictap.me/wp-content/uploads/2026/04/auditorias-industriales-sin-caos-1024x572.webp"
 ogImageWidth: 1024
 ogImageHeight: 572
 author: "TicTAP"
