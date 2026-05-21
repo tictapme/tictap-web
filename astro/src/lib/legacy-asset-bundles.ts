@@ -14,6 +14,7 @@ export type LegacyBundleName =
   | 'home-css'
   | 'blog-single-css'
   | 'blog-archive-css'
+  | 'casos-de-exito-css'
   | 'cookie-js'
   | 'analytics-js';
 
@@ -81,6 +82,10 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
   ],
   'blog-archive-css': [
     css('/wp-includes/css/dist/block-library/style.min.css', 'wp-block-library-css'),
+  ],
+  'casos-de-exito-css': [
+    css('/wp-content/themes/astra/assets/css/casos-de-exito-global.css', 'casos-de-exito-global-css'),
+    css('/wp-content/themes/astra/assets/css/casos-de-exito.css', 'casos-de-exito-css'),
   ],
   'cookie-js': [
     js('/wp-content/plugins/cookie-law-info/lite/frontend/js/script.min.js', 'cookie-law-info-js'),
