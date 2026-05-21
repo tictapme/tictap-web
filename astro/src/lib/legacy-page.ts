@@ -67,6 +67,20 @@ function mustMatch(html: string, pattern: RegExp, label: string) {
   return match[1];
 }
 
+function ensureElementorBodyClasses(bodyClass: string, pageHtml: string): string {
+  if (!/data-elementor-type=["']header["']/i.test(pageHtml)) {
+    return bodyClass;
+  }
+
+  const classes = bodyClass.split(/\s+/).filter(Boolean);
+  for (const required of ['elementor-default', 'elementor-kit-6185']) {
+    if (!classes.includes(required)) {
+      classes.push(required);
+    }
+  }
+  return classes.join(' ');
+}
+
 const shellCssCache = new Map<string, string>();
 
 export function loadShellCss(lang: 'es' | 'en'): string {
@@ -418,7 +432,7 @@ export function loadSourcePage(relativePath: string) {
   return {
     title,
     lang: langMatch?.[1] || 'es-ES',
-    bodyClass: bodyClassMatch?.[1] || '',
+    bodyClass: ensureElementorBodyClasses(bodyClassMatch?.[1] || '', bodyInnerHtml),
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
     headExtraHtml: stripAstroInjectedHeadHtml(stripBaseHeadTags(headInner)).trim(),
@@ -440,7 +454,7 @@ export function loadSourceStructuredPage(relativePath: string) {
   return {
     title,
     lang: langMatch?.[1] || 'es-ES',
-    bodyClass,
+    bodyClass: ensureElementorBodyClasses(bodyClass, normalized),
     bodyItemType: bodyItemTypeMatch?.[1] || 'https://schema.org/WebPage',
     headExtraHtml: sanitizeHeadExtraHtml(headInner),
     contentHtml,
@@ -487,7 +501,7 @@ export function loadSourceStructuredElementorShellPage(relativePath: string) {
   return {
     title,
     lang: langMatch?.[1] || 'es-ES',
-    bodyClass: bodyClassMatch?.[1] || '',
+    bodyClass: ensureElementorBodyClasses(bodyClassMatch?.[1] || '', bodyInnerHtml),
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
     headExtraHtml: sanitizeHeadExtraHtml(headInner),
