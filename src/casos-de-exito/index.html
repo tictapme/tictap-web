@@ -1661,8 +1661,8 @@ fieldset.mc_fieldset.gdprRequired.mc-field-group {
             timer = setInterval(next, 5000);
           }
 
-          carousel.querySelector('.featured-carousel__btn--next').addEventListener('click', function () { next(); startTimer(); });
-          carousel.querySelector('.featured-carousel__btn--prev').addEventListener('click', function () { prev(); startTimer(); });
+          carousel.querySelector('.featured-carousel__btn--next').addEventListener('click', function () { next(); startTimer(); this.blur(); });
+          carousel.querySelector('.featured-carousel__btn--prev').addEventListener('click', function () { prev(); startTimer(); this.blur(); });
 
           setWidths();
           moveTo(current, false);

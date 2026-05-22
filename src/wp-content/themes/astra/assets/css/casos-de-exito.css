@@ -309,6 +309,8 @@ img.placeholder, .placeholder img {
   color: #c8c8c8;
   transition: color 0.2s;
 }
+.featured-carousel__btn:focus { outline: none; }
+.featured-carousel__btn:focus-visible { outline: 2px solid #00b0ff; outline-offset: 2px; }
 .featured-carousel__btn:hover { color: #ffffff; }
 .featured-carousel__btn:hover .featured-carousel__btn-icon {
   background: #00b0ff;
