@@ -269,7 +269,6 @@ img.placeholder, .placeholder img {
   background: var(--c-paper);
   padding: 8px 14px;
   border-radius: var(--radius);
-  border-left: 3px solid var(--c-brand);
   font-family: var(--f-body);
   font-size: 12px;
   font-weight: 700;
@@ -279,6 +278,46 @@ img.placeholder, .placeholder img {
 }
 .l-featured__title { margin: 14px 0 24px; }
 .l-featured__lead  { margin-bottom: 28px; }
+
+/* Carrusel de casos destacados */
+.featured-carousel {
+  overflow: hidden;
+  position: relative;
+}
+.featured-carousel__track {
+  display: flex;
+}
+.featured-carousel__slide {
+  flex-shrink: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .featured-carousel__track { transition: none !important; }
+}
+
+/* Nav buttons — 20 px outside the 1140 px container (570 + 20 + 22 = 612) */
+.featured-carousel__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--c-line);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.featured-carousel__btn:hover {
+  background: var(--c-brand);
+  color: #fff;
+  border-color: var(--c-brand);
+}
+.featured-carousel__btn--prev { left:  max(8px, calc(50% - 612px)); }
+.featured-carousel__btn--next { right: max(8px, calc(50% - 612px)); }
 
 /* Metric callout (en featured) */
 .metric-callout {
