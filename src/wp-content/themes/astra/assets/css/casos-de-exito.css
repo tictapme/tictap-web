@@ -215,6 +215,9 @@
 /* Cuando el dev sustituye por <img>: */
 img.placeholder, .placeholder img {
   object-fit: cover;
+}
+.case .placeholder img {
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }
@@ -399,6 +402,16 @@ img.placeholder, .placeholder img {
 .case {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+.case .link-action {
+  font-size: 0;
+  color: transparent;
+}
+.case .link-action::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }
 .case__meta {
   display: flex;
