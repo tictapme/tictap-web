@@ -66,6 +66,7 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
     css('/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css', 'elementor-fadein-css'),
     css('/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.min.css', 'elementor-shrink-css'),
     css('/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-grow.min.css', 'elementor-grow-css'),
+    css('/wp-content/themes/astra/assets/css/casos-de-exito-global.css', 'casos-de-exito-global-css'),
   ],
   'header-js': [
     js('/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js', 'smartmenus-js'),
@@ -84,7 +85,6 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
     css('/wp-includes/css/dist/block-library/style.min.css', 'wp-block-library-css'),
   ],
   'casos-de-exito-css': [
-    css('/wp-content/themes/astra/assets/css/casos-de-exito-global.css', 'casos-de-exito-global-css'),
     css('/wp-content/themes/astra/assets/css/casos-de-exito.css', 'casos-de-exito-css'),
   ],
   'cookie-js': [
