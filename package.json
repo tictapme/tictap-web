@@ -11,6 +11,7 @@
     "static:verify-clean": "bash bin/verify-static-sync.sh",
     "hooks:install": "git config core.hooksPath .githooks",
     "analyze:astro-migration": "node bin/analyze-astro-migration.js",
+    "sync:ttps": "node bin/sync-ttps.js",
     "render:blog": "node bin/render-blog-article.js",
     "normalize:pages": "node bin/normalize-pages-config.js",
     "optimize:seo": "node bin/optimize-seo.js",
