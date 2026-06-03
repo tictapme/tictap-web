@@ -39,6 +39,9 @@ const SOLUTION_SLUGS = new Set<string>([
   'en/industry',
   'en/railway',
   'en/stock',
+  // Partners / distributors landings
+  'stock/partners-distribuidores',
+  'en/stock/electrical-distributors',
 ]);
 
 export function isSolutionPage(relativePath: string): boolean {
