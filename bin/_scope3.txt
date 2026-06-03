@@ -1,0 +1,4 @@
+EN cs-card count: 0
+ES cs-card count: 0
+ES outer: none
+ES links /casos-de-exito/: 12
