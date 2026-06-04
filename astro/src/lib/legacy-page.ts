@@ -82,6 +82,40 @@ function ensureElementorBodyClasses(bodyClass: string, pageHtml: string): string
 }
 
 const shellCssCache = new Map<string, string>();
+const globalInlineCssCache = new Map<string, string>();
+
+/**
+ * Extracts the global inline CSS blocks that WordPress/Elementor inject on every page
+ * (astra-theme-css-inline-css and elementor-frontend-inline-css) from the reference
+ * index page. These blocks contain CSS custom properties (colors, spacing, kit vars)
+ * that the header and all Elementor widgets rely on, but that individual legacy-exported
+ * pages may not include in their own <head>.
+ */
+export function loadGlobalInlineCss(lang: 'es' | 'en'): string {
+  if (globalInlineCssCache.has(lang)) return globalInlineCssCache.get(lang)!;
+
+  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
+  const styleIds = ['astra-theme-css-inline-css', 'elementor-frontend-inline-css'];
+
+  try {
+    const rawHtml = readSourceFile(refPath);
+    const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+    const blocks = styleIds
+      .map((id) => {
+        const match = headInner.match(
+          new RegExp(`<style[^>]*id=["']${id}["'][^>]*>([\\s\\S]*?)<\\/style>`, 'i'),
+        );
+        return match ? match[1] : '';
+      })
+      .filter(Boolean);
+    const css = blocks.join('\n');
+    globalInlineCssCache.set(lang, css);
+    return css;
+  } catch {
+    globalInlineCssCache.set(lang, '');
+    return '';
+  }
+}
 
 export function loadShellCss(lang: 'es' | 'en'): string {
   if (shellCssCache.has(lang)) return shellCssCache.get(lang)!;

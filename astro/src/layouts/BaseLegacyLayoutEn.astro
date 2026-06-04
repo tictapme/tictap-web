@@ -3,9 +3,10 @@ import HeaderEn from '../components/header/HeaderEn.astro';
 import FooterEn from '../components/footer/FooterEn.astro';
 import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
 import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
-import { loadShellCss } from '../lib/legacy-page';
+import { loadShellCss, loadGlobalInlineCss } from '../lib/legacy-page';
 
 const shellCss = loadShellCss('en');
+const globalInlineCss = loadGlobalInlineCss('en');
 
 type Props = {
   title: string;
@@ -37,6 +38,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
+    {globalInlineCss && !headExtraHtml.includes('astra-theme-css-inline') && <style set:html={globalInlineCss} />}
     <style>
       .elementor-location-header {
         display: block !important;
