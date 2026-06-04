@@ -82,6 +82,7 @@ function ensureElementorBodyClasses(bodyClass: string, pageHtml: string): string
 }
 
 const shellCssCache = new Map<string, string>();
+const shellCssMqCache = new Map<string, string>();
 const globalInlineCssCache = new Map<string, string>();
 
 /**
@@ -131,11 +132,37 @@ export function loadShellCss(lang: 'es' | 'en'): string {
     const rules = [...block.matchAll(new RegExp(`\\.elementor-${headerId}[^{}]*\\{[^{}]*\\}`, 'g'))].map(
       (m) => m[0],
     );
-    const css = rules.join('');
+    const mqRules = [...block.matchAll(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g)]
+      .map((m) => m[0])
+      .filter((mq) => mq.includes(`.elementor-${headerId}`));
+    const css = rules.join('') + mqRules.join('');
     shellCssCache.set(lang, css);
     return css;
   } catch {
     shellCssCache.set(lang, '');
+    return '';
+  }
+}
+
+export function loadShellCssMq(lang: 'es' | 'en'): string {
+  if (shellCssMqCache.has(lang)) return shellCssMqCache.get(lang)!;
+
+  const headerId = lang === 'es' ? '9642' : '10265';
+  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
+
+  try {
+    const rawHtml = readSourceFile(refPath);
+    const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+    const styleBlocks = [...headInner.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]);
+    const block = styleBlocks.find((s) => s.includes(`.elementor-${headerId} `)) ?? '';
+    const mqRules = [...block.matchAll(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g)]
+      .map((m) => m[0])
+      .filter((mq) => mq.includes(`.elementor-${headerId}`));
+    const css = mqRules.join('');
+    shellCssMqCache.set(lang, css);
+    return css;
+  } catch {
+    shellCssMqCache.set(lang, '');
     return '';
   }
 }

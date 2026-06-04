@@ -3,9 +3,10 @@ import HeaderEs from '../components/header/HeaderEs.astro';
 import FooterEs from '../components/footer/FooterEs.astro';
 import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
 import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
-import { loadShellCss, loadGlobalInlineCss } from '../lib/legacy-page';
+import { loadShellCss, loadShellCssMq, loadGlobalInlineCss } from '../lib/legacy-page';
 
 const shellCss = loadShellCss('es');
+const shellCssMq = loadShellCssMq('es');
 const globalInlineCss = loadGlobalInlineCss('es');
 
 type Props = {
@@ -64,6 +65,7 @@ const {
     </style>
     <Fragment set:html={headExtraHtml} />
     {!headExtraHtml.includes('.elementor-9642') && shellCss && <style set:html={shellCss} />}
+    {shellCssMq && <style set:html={shellCssMq} />}
   </head>
   <body itemtype={bodyItemType} itemscope="itemscope" class={bodyClass}>
     <a class="skip-link screen-reader-text" href="#content" title="Ir al contenido">Ir al contenido</a>
