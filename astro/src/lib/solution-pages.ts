@@ -42,6 +42,8 @@ const SOLUTION_SLUGS = new Set<string>([
   // Partners / distributors landings
   'stock/partners-distribuidores',
   'en/stock/electrical-distributors',
+  // Case studies with Astro header
+  'casos-de-exito/yessss-electrical-stock',
 ]);
 
 export function isSolutionPage(relativePath: string): boolean {
