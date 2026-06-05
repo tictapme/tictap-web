@@ -69,6 +69,8 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
     css('/wp-content/themes/astra/assets/css/casos-de-exito-global.css', 'casos-de-exito-global-css'),
   ],
   'header-js': [
+    js('/wp-content/plugins/elementor-pro/assets/js/frontend.min.js', 'elementor-pro-frontend-js'),
+    js('/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js', 'pro-elements-handlers-js'),
     js('/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js', 'smartmenus-js'),
     js('/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js', 'e-sticky-js'),
   ],

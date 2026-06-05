@@ -1,0 +1,15 @@
+---
+import CaseStudyArchiveLayout from '../../layouts/CaseStudyArchiveLayout.astro';
+import { loadSourcePage } from '../../lib/legacy-page';
+
+const sibling = loadSourcePage('casos-de-exito/trazabilidad-de-grupos-electrogenos-para-dagartech/index.html');
+---
+
+<CaseStudyArchiveLayout
+  title="Casos de éxito · TicTAP"
+  lang="es-ES"
+  bodyClass={sibling.bodyClass}
+  headExtraHtml={sibling.headExtraHtml}
+  afterBodyHtml=""
+  contentHtml=""
+/>

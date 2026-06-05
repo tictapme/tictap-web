@@ -1,0 +1,579 @@
+---
+type Props = {
+  lang?: string;
+};
+
+const { lang = 'es-ES' } = Astro.props;
+const isEn = lang.toLowerCase().startsWith('en');
+
+const logoHref = isEn ? '/en/' : '/';
+const loginHref = `http://admin.tictap.me/#/login?hl=${isEn ? 'en' : 'es'}`;
+const demoHref = isEn ? '/en/free-demo-tictap-industry/' : '/demo-gratuita-tictap-industry/';
+const demoLabel = isEn ? 'Free demo' : 'Demo gratis';
+const langHref = isEn ? '/' : '/en/';
+const langLabel = isEn ? 'ES' : 'EN';
+
+const nav = isEn
+  ? {
+      solutions: {
+        label: 'Solutions',
+        items: [
+          { href: '/en/asset-passport/', label: 'Asset Passport' },
+          { href: '/en/industry/', label: 'Industrial maintenance' },
+          { href: '/en/stock/', label: 'Stock Management' },
+          { href: '/en/tictap-facilities-maintenance/', label: 'Facility management' },
+          { href: '/en/risk-assesment/', label: 'Health and safety' },
+          { href: '/en/tool-maintenance/', label: 'Tool & machinery management' },
+          { href: '/en/fire-management/', label: 'Fire equipment management' },
+          { href: '/en/coshh-management/', label: 'COSHH management' },
+          { href: '/en/fleet-maintenance/', label: 'Fleet maintenance' },
+          { href: '/en/cleaning-management/', label: 'Cleaning task management' },
+          { href: '/en/railway/', label: 'Railway maintenance' },
+        ],
+      },
+      resources: {
+        label: 'Resources',
+        items: [
+          { href: '/en/sucess-stories/', label: 'Success stories' },
+          { href: '/en/blog/', label: 'Blog' },
+          { href: 'https://help.tictap.me/shelves/tictap-user-manual', label: 'TicTAP Academy' },
+          { href: '/en/stock/electrical-distributors/', label: 'Partners' },
+        ],
+      },
+      pricing: { href: '/en/pricing/', label: 'Pricing' },
+      contact: { href: '/en/contact/', label: 'Contact' },
+    }
+  : {
+      solutions: {
+        label: 'Soluciones',
+        items: [
+          { href: '/asset-passport/', label: 'Asset Passport' },
+          { href: '/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/', label: 'Mantenimiento industrial' },
+          { href: '/stock/', label: 'Gestión de stock' },
+          { href: '/gestion-de-tu-instalacion/', label: 'Gestión de instalaciones' },
+          { href: '/gestion-equipo-proteccion-personal/', label: 'Health and safety' },
+          { href: '/mantenimiento-de-herramientas/', label: 'Gestión de herramientas y maquinaria' },
+          { href: '/gestion-equipos-contra-incendios/', label: 'Gestión de equipos contra incendios' },
+          { href: '/gestion-de-coshh/', label: 'Gestión de COSHH' },
+          { href: '/mantenimiento-de-flotas/', label: 'Mantenimiento de flotas' },
+          { href: '/gestion-tareas-de-limpieza/', label: 'Gestión de tareas de limpieza' },
+          { href: '/railway/', label: 'Mantenimiento ferroviario' },
+        ],
+      },
+      resources: {
+        label: 'Recursos',
+        items: [
+          { href: '/casos-de-exito/', label: 'Casos de éxito' },
+          { href: '/blog/', label: 'Blog' },
+          { href: 'https://help.tictap.me/shelves/tictap-user-manual', label: 'TicTAP Academy' },
+          { href: '/stock/partners-distribuidores/', label: 'Partners' },
+        ],
+      },
+      pricing: { href: '/precios/', label: 'Precios' },
+      contact: { href: '/contacto/', label: 'Contacto' },
+    };
+---
+
+<header class="tt-header" id="tt-header">
+  <div class="tt-header__inner">
+
+    <!-- Logo -->
+    <a href={logoHref} class="tt-header__logo" aria-label="TicTAP — inicio">
+      <img
+        src="/wp-content/uploads/2021/02/TicTAP-logo_completo_vector-180px-01.png"
+        alt="TicTAP"
+        width="120"
+        height="46"
+        loading="eager"
+      />
+    </a>
+
+    <!-- Nav desktop -->
+    <nav class="tt-nav" aria-label={isEn ? 'Main navigation' : 'Navegación principal'}>
+      <ul class="tt-nav__list">
+
+        <!-- Soluciones -->
+        <li class="tt-nav__item tt-nav__item--has-dropdown">
+          <button class="tt-nav__link tt-nav__link--toggle" aria-expanded="false" aria-haspopup="true">
+            {nav.solutions.label}
+            <svg class="tt-nav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="tt-dropdown" role="menu">
+            {nav.solutions.items.map(item => (
+              <li role="none">
+                <a href={item.href} class="tt-dropdown__link" role="menuitem">{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </li>
+
+        <!-- Recursos -->
+        <li class="tt-nav__item tt-nav__item--has-dropdown">
+          <button class="tt-nav__link tt-nav__link--toggle" aria-expanded="false" aria-haspopup="true">
+            {nav.resources.label}
+            <svg class="tt-nav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="tt-dropdown" role="menu">
+            {nav.resources.items.map(item => (
+              <li role="none">
+                <a href={item.href} class="tt-dropdown__link" role="menuitem">{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </li>
+
+        <li class="tt-nav__item">
+          <a href={nav.pricing.href} class="tt-nav__link">{nav.pricing.label}</a>
+        </li>
+
+        <li class="tt-nav__item">
+          <a href={nav.contact.href} class="tt-nav__link">{nav.contact.label}</a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="tt-header__actions">
+      <a href={langHref} class="tt-header__lang" aria-label={isEn ? 'Switch to Spanish' : 'Switch to English'}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        {langLabel}
+      </a>
+      <a href={loginHref} class="tt-header__login" target="_blank" rel="noopener">Log in</a>
+      <a href={demoHref} class="tt-header__demo">{demoLabel}</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button class="tt-header__burger" aria-label={isEn ? 'Open menu' : 'Abrir menú'} aria-expanded="false" aria-controls="tt-mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="tt-mobile-menu" id="tt-mobile-menu" aria-hidden="true">
+    <nav aria-label={isEn ? 'Mobile navigation' : 'Navegación móvil'}>
+      <ul class="tt-mobile-nav">
+
+        <li class="tt-mobile-nav__item tt-mobile-nav__item--has-sub">
+          <button class="tt-mobile-nav__link tt-mobile-nav__link--toggle" aria-expanded="false">
+            {nav.solutions.label}
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="tt-mobile-sub">
+            {nav.solutions.items.map(item => (
+              <li><a href={item.href} class="tt-mobile-sub__link">{item.label}</a></li>
+            ))}
+          </ul>
+        </li>
+
+        <li class="tt-mobile-nav__item tt-mobile-nav__item--has-sub">
+          <button class="tt-mobile-nav__link tt-mobile-nav__link--toggle" aria-expanded="false">
+            {nav.resources.label}
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="tt-mobile-sub">
+            {nav.resources.items.map(item => (
+              <li><a href={item.href} class="tt-mobile-sub__link">{item.label}</a></li>
+            ))}
+          </ul>
+        </li>
+
+        <li class="tt-mobile-nav__item">
+          <a href={nav.pricing.href} class="tt-mobile-nav__link">{nav.pricing.label}</a>
+        </li>
+        <li class="tt-mobile-nav__item">
+          <a href={nav.contact.href} class="tt-mobile-nav__link">{nav.contact.label}</a>
+        </li>
+
+        <li class="tt-mobile-nav__item tt-mobile-nav__item--actions">
+          <a href={langHref} class="tt-header__lang">{langLabel}</a>
+          <a href={loginHref} class="tt-header__login" target="_blank" rel="noopener">Log in</a>
+          <a href={demoHref} class="tt-header__demo">{demoLabel}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style is:global>
+/* ── Variables ─────────────────────────────────────────── */
+:root {
+  --tt-header-h: 72px;
+  --tt-header-bg: #fff;
+  --tt-header-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --tt-nav-color: #000;
+  --tt-nav-hover: #00b0ff;
+  --tt-dropdown-bg: #fff;
+  --tt-dropdown-color: #54595f;
+  --tt-dropdown-shadow: 6px 7px 18px -7px rgba(0,0,0,0.5);
+  --tt-demo-bg: #00b0ff;
+  --tt-demo-color: #fff;
+  --tt-radius: 8px;
+  --tt-z: 1000;
+  --tt-font: "Lato", sans-serif;
+}
+
+/* ── Header shell ───────────────────────────────────────── */
+.tt-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--tt-z);
+  background: var(--tt-header-bg);
+  box-shadow: var(--tt-header-shadow);
+  width: 100%;
+}
+
+.tt-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 50px;
+  height: var(--tt-header-h);
+}
+
+/* ── Logo ───────────────────────────────────────────────── */
+.tt-header__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.tt-header__logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* ── Desktop nav ────────────────────────────────────────── */
+.tt-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.tt-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tt-nav__item {
+  position: relative;
+}
+.tt-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--tt-font);
+  color: var(--tt-nav-color);
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.tt-nav__link:hover,
+.tt-nav__link[aria-expanded="true"] {
+  color: var(--tt-nav-hover);
+  background: rgba(0,176,255,0.06);
+}
+.tt-nav__chevron {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.tt-nav__link[aria-expanded="true"] .tt-nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown ───────────────────────────────────────────── */
+.tt-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 240px;
+  background: var(--tt-dropdown-bg);
+  border-radius: var(--tt-radius);
+  box-shadow: var(--tt-dropdown-shadow);
+  border: 1px solid rgba(0,0,0,0.08);
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s, visibility 0.15s, transform 0.15s;
+  transform: translateX(-50%) translateY(-4px);
+}
+.tt-nav__item--has-dropdown:hover .tt-dropdown,
+.tt-nav__item--has-dropdown:focus-within .tt-dropdown,
+.tt-dropdown--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.tt-dropdown__link {
+  display: block;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-family: var(--tt-font);
+  color: var(--tt-dropdown-color);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+.tt-dropdown__link:hover {
+  color: var(--tt-nav-hover);
+}
+
+/* ── Actions ────────────────────────────────────────────── */
+.tt-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.tt-header__lang {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--tt-nav-color);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.tt-header__lang:hover {
+  color: var(--tt-nav-hover);
+  background: rgba(0,176,255,0.06);
+}
+.tt-header__login {
+  padding: 8px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--tt-font);
+  color: #00b0ff;
+  text-decoration: none;
+  background: #fff;
+  transition: color 0.15s;
+}
+.tt-header__login:hover {
+  color: #0099e6;
+}
+.tt-header__demo {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--tt-font);
+  background: #00b0ff;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #00b0ff;
+  border-radius: 3px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.tt-header__demo:hover {
+  background: #fff;
+  color: #00b0ff;
+}
+
+/* ── Mobile toggle ──────────────────────────────────────── */
+.tt-header__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.tt-header__burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--tt-nav-color);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.tt-header__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.tt-header__burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.tt-header__burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile menu ────────────────────────────────────────── */
+.tt-mobile-menu {
+  display: none;
+  background: var(--tt-header-bg);
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 16px 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.tt-mobile-menu.is-open {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.tt-mobile-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0 24px;
+}
+.tt-mobile-nav__item {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.tt-mobile-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--tt-nav-color);
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+.tt-mobile-sub {
+  list-style: none;
+  padding: 0 0 12px 16px;
+  margin: 0;
+  display: none;
+}
+.tt-mobile-sub.is-open {
+  display: block;
+}
+.tt-mobile-sub__link {
+  display: block;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: #555;
+  text-decoration: none;
+}
+.tt-mobile-sub__link:hover {
+  color: var(--tt-nav-hover);
+}
+.tt-mobile-nav__item--actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: none;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .tt-nav,
+  .tt-header__actions {
+    display: none;
+  }
+  .tt-header__burger {
+    display: flex;
+    margin-left: auto;
+  }
+  .tt-mobile-menu {
+    display: block;
+  }
+}
+</style>
+
+<script>
+  (function () {
+    var header = document.getElementById('tt-header');
+    if (!header) return;
+
+    // Mobile toggle
+    var burger = header.querySelector('.tt-header__burger');
+    var mobileMenu = document.getElementById('tt-mobile-menu');
+    if (burger && mobileMenu) {
+      burger.addEventListener('click', function () {
+        var open = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!open));
+        mobileMenu.setAttribute('aria-hidden', String(open));
+        mobileMenu.classList.toggle('is-open', !open);
+      });
+    }
+
+    // Mobile submenus
+    var mobileToggles = header.querySelectorAll('.tt-mobile-nav__link--toggle');
+    mobileToggles.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!open));
+        var sub = this.nextElementSibling;
+        if (sub) sub.classList.toggle('is-open', !open);
+      });
+    });
+
+    // Desktop dropdowns — keyboard accessible
+    var dropdownItems = header.querySelectorAll('.tt-nav__item--has-dropdown');
+    dropdownItems.forEach(function (item) {
+      var toggle = item.querySelector('.tt-nav__link--toggle');
+      var dropdown = item.querySelector('.tt-dropdown');
+      if (!toggle || !dropdown) return;
+
+      toggle.addEventListener('click', function () {
+        var open = this.getAttribute('aria-expanded') === 'true';
+        // Close others
+        dropdownItems.forEach(function (other) {
+          if (other !== item) {
+            var t = other.querySelector('.tt-nav__link--toggle');
+            var d = other.querySelector('.tt-dropdown');
+            if (t) t.setAttribute('aria-expanded', 'false');
+            if (d) d.classList.remove('tt-dropdown--open');
+          }
+        });
+        this.setAttribute('aria-expanded', String(!open));
+        dropdown.classList.toggle('tt-dropdown--open', !open);
+      });
+    });
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', function (e) {
+      if (!header.contains(e.target)) {
+        dropdownItems.forEach(function (item) {
+          var t = item.querySelector('.tt-nav__link--toggle');
+          var d = item.querySelector('.tt-dropdown');
+          if (t) t.setAttribute('aria-expanded', 'false');
+          if (d) d.classList.remove('tt-dropdown--open');
+        });
+      }
+    });
+  })();
+</script>

@@ -1,0 +1,15 @@
+---
+import CaseStudyArchiveLayout from '../../../layouts/CaseStudyArchiveLayout.astro';
+import { loadSourcePage } from '../../../lib/legacy-page';
+
+const sibling = loadSourcePage('en/sucess-stories/dagartech/index.html');
+---
+
+<CaseStudyArchiveLayout
+  title="Success Stories · TicTAP"
+  lang="en-GB"
+  bodyClass={sibling.bodyClass}
+  headExtraHtml={sibling.headExtraHtml}
+  afterBodyHtml=""
+  contentHtml=""
+/>

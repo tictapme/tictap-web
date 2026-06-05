@@ -61,13 +61,13 @@ let page = rawPage;
 let legacyElementorPage = null;
 let redirectPage = null;
 
-if (isGenericPage || isStructuredCaseStudy || isSolutionPageRoute) {
+if (isGenericPage || isSolutionPageRoute) {
+  page = loadSourceStructuredPage(relativePath);
+} else if (isStructuredCaseStudy && !isCaseStudyArchive) {
   try {
     page = loadSourceStructuredPage(relativePath);
-  } catch (error) {
-    if (isGenericPage || isSolutionPageRoute) {
-      throw error;
-    }
+  } catch {
+    // fall through to RawLegacyLayout
   }
 }
 
@@ -79,19 +79,19 @@ if (isRedirectPage) {
   redirectPage = loadSourceRedirectPage(relativePath);
 }
 
-const canRenderStructuredCaseStudy = page !== rawPage && isStructuredCaseStudy;
+const canRenderStructuredCaseStudy = isCaseStudyArchive || (page !== rawPage && isStructuredCaseStudy);
 ---
 
 {
   canRenderStructuredCaseStudy && isCaseStudyArchive ? (
     <CaseStudyArchiveLayout
-      title={page.title}
-      lang={page.lang}
-      bodyClass={page.bodyClass}
-      bodyItemType={page.bodyItemType}
-      headExtraHtml={page.headExtraHtml}
-      afterBodyHtml={page.afterFooterHtml}
-      contentHtml={page.contentHtml}
+      title={rawPage.title}
+      lang={rawPage.lang}
+      bodyClass={rawPage.bodyClass}
+      bodyItemType={rawPage.bodyItemType}
+      headExtraHtml={rawPage.headExtraHtml}
+      afterBodyHtml=""
+      contentHtml=""
     />
   ) : canRenderStructuredCaseStudy && isStructuredCaseStudySingle ? (
     <CaseStudySingleLayout

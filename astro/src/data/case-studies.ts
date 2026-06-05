@@ -28,9 +28,9 @@ export const caseStudies: CaseStudy[] = [
     sectorEn: 'distribution',
     tag: 'Distribución',
     tagEn: 'Distribution',
-    image: '/wp-content/uploads/2026/06/electrical-worker.webp',
-    imageAlt: 'Técnico YESSS Electrical escaneando QR en almacén',
-    imageAltEn: 'YESSS Electrical technician scanning QR in warehouse',
+    image: '/wp-content/uploads/2026/06/flota-yesss-electrical-light-blue.webp',
+    imageAlt: 'Flota YESSS Electrical',
+    imageAltEn: 'YESSS Electrical fleet',
     titleEs: 'Control de stock para instaladores y mantenedores sin instalar apps',
     titleEn: 'Stock control for installers and maintenance teams with no app required',
     leadEs: 'El distribuidor eléctrico ofrece a sus clientes profesionales trazabilidad de material en almacenes, furgonetas y puntos de trabajo mediante QR/NFC, diferenciándose de la competencia con un servicio de valor añadido.',
@@ -76,7 +76,6 @@ export const caseStudies: CaseStudy[] = [
     leadEn: 'Fire audits passed first time, without last-minute paperwork scrambles: all fire equipment documentation centralised and up to date.',
     quoteEs: '«Auditorías PCI pasadas a la primera, sin recopilar papeles a última hora.»',
     quoteEn: '"Fire audits passed first time, no last-minute scramble for paperwork."',
-    featured: true,
   },
   {
     slug: '/casos-de-exito/unificacion-y-aumento-de-eficiencia-en-mantenimiento-para-delgado-instalaciones/',
@@ -108,7 +107,6 @@ export const caseStudies: CaseStudy[] = [
     leadEn: 'Assets spread across four countries, inventoried in one place: every rolling-stock component locatable with its full history on hand.',
     quoteEs: '«Material distribuido en cuatro países, inventariado en un solo sitio.»',
     quoteEn: '"Assets across four countries, inventoried in one place."',
-    featured: true,
   },
   {
     slug: '/casos-de-exito/trazabilidad-y-gestion-eficiente-de-tag-carretillas-elevadoras/',
