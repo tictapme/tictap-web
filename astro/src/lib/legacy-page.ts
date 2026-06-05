@@ -129,7 +129,8 @@ export function loadShellCss(lang: 'es' | 'en'): string {
     const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
     const styleBlocks = [...headInner.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]);
     const block = styleBlocks.find((s) => s.includes(`.elementor-${headerId} `)) ?? '';
-    const rules = [...block.matchAll(new RegExp(`\\.elementor-${headerId}[^{}]*\\{[^{}]*\\}`, 'g'))].map(
+    const blockWithoutMedia = block.replace(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+    const rules = [...blockWithoutMedia.matchAll(new RegExp(`\\.elementor-${headerId}[^{}]*\\{[^{}]*\\}`, 'g'))].map(
       (m) => m[0],
     );
     const mqRules = [...block.matchAll(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g)]

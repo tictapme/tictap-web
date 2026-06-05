@@ -64,8 +64,7 @@ const {
       }
     </style>
     <Fragment set:html={headExtraHtml} />
-    {!headExtraHtml.includes('.elementor-10265') && shellCss && <style set:html={shellCss} />}
-    {shellCssMq && <style set:html={shellCssMq} />}
+    {shellCss && <style set:html={shellCss} />}
   </head>
   <body itemtype={bodyItemType} itemscope="itemscope" class={bodyClass}>
     <a class="skip-link screen-reader-text" href="#content" title="Skip to content">Skip to content</a>
