@@ -1,7 +1,8 @@
 ---
 import CaseStudyArchiveLayout from '../../../layouts/CaseStudyArchiveLayout.astro';
-import { loadSourcePage } from '../../../lib/legacy-page';
+import { loadLegacyPage, loadSourcePage } from '../../../lib/legacy-page';
 
+const shell = loadLegacyPage('en/index.html');
 const sibling = loadSourcePage('en/sucess-stories/dagartech/index.html');
 ---
 
@@ -10,6 +11,6 @@ const sibling = loadSourcePage('en/sucess-stories/dagartech/index.html');
   lang="en-GB"
   bodyClass={sibling.bodyClass}
   headExtraHtml={sibling.headExtraHtml}
-  afterBodyHtml=""
+  afterBodyHtml={shell.afterFooterHtml}
   contentHtml=""
 />

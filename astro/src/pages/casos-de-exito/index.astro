@@ -1,15 +1,19 @@
 ---
 import CaseStudyArchiveLayout from '../../layouts/CaseStudyArchiveLayout.astro';
-import { loadSourcePage } from '../../lib/legacy-page';
+import { sanitizeAfterFooterHtml, sanitizeHeadExtraHtml } from '../../lib/legacy-page';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-const sibling = loadSourcePage('casos-de-exito/trazabilidad-de-grupos-electrogenos-para-dagartech/index.html');
+const legacyRoot = join(process.cwd(), 'astro/legacy-sources/casos-de-exito');
+const rawHead = readFileSync(join(legacyRoot, 'head-extra.html'), 'utf8');
+const rawAfterFooter = readFileSync(join(legacyRoot, 'after-footer.html'), 'utf8');
 ---
 
 <CaseStudyArchiveLayout
   title="Casos de éxito · TicTAP"
   lang="es-ES"
-  bodyClass={sibling.bodyClass}
-  headExtraHtml={sibling.headExtraHtml}
-  afterBodyHtml=""
+  bodyClass="page-template-default page elementor-default elementor-kit-6185"
+  headExtraHtml={sanitizeHeadExtraHtml(rawHead)}
+  afterBodyHtml={sanitizeAfterFooterHtml(rawAfterFooter)}
   contentHtml=""
 />

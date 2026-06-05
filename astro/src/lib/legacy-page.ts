@@ -264,11 +264,11 @@ function stripAstroInjectedHeadHtml(html: string) {
     .replace(/\sdata-astro-cid-[a-z0-9]+(?:=(?:"[^"]*"|'[^']*'))?/gi, '');
 }
 
-function sanitizeHeadExtraHtml(html: string) {
+export function sanitizeHeadExtraHtml(html: string) {
   return stripAstroInjectedHeadHtml(stripBaseHeadTags(stripCommonCssAssetTags(html))).trim();
 }
 
-function sanitizeAfterFooterHtml(html: string) {
+export function sanitizeAfterFooterHtml(html: string) {
   const seenScriptSrcs = new Set<string>();
 
   const dedupedHtml = html
