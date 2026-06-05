@@ -985,7 +985,12 @@ fieldset.mc_fieldset.gdprRequired.mc-field-group {
 
 .elementor-section elementor-top-section elementor-element elementor-element-397967ca elementor-section-stretched elementor-section-full_width elementor-section-content-top tictap-horizontal-layout tictap-outter-section tictap-w2021 tictap-text-dark elementor-section-height-default elementor-section-height-default .elementor-container elementor-column-gap-no{
 	flex: column !important;
-}		</style>
+}
+.checklist { background-color: #fff !important; height: 100%; }
+.checklist ul { height: 100%; flex-wrap: nowrap; justify-content: space-between; }
+.checklist li { min-height: 45px; }
+.checklist li::before { background: #00b0ff !important; }
+		</style>
 <style>
 .elementor-kit-6185{--e-global-color-primary:#00B0FF;--e-global-color-secondary:#54595F;--e-global-color-text:#00202E;--e-global-color-accent:#00B0FF;--e-global-color-77194495:#00BFF0;--e-global-color-631fa1d1:#E8F4FF;--e-global-color-740538e9:#000;--e-global-color-19569c32:#FFF;--e-global-color-2d062db8:#3D4C99;--e-global-color-424bee8c:#FFB266;--e-global-color-78ad8c41:#F44040;--e-global-color-5b54a740:#F3F6F9;--e-global-color-115332c5:#4DA6E8;--e-global-color-405959d9:#484848;--e-global-color-703a3518:#FF8AB4;--e-global-color-707a4369:#677BC6;--e-global-color-1160bde8:#C6C6C6;--e-global-color-2a99b5e9:#D8D5D5;--e-global-color-13ce11d4:#BCDCFF;--e-global-color-8b01452:#E8F4FF;--e-global-typography-primary-font-family:"Varela Round";--e-global-typography-primary-font-size:48px;--e-global-typography-primary-font-weight:400;--e-global-typography-secondary-font-family:"Varela Round";--e-global-typography-secondary-font-size:28px;--e-global-typography-secondary-font-weight:400;--e-global-typography-3ffc6b3-font-size:14px;--e-global-typography-3ffc6b3-font-weight:400;--e-global-typography-3ffc6b3-font-style:normal;--e-global-typography-e9fbc4c-font-family:"Varela Round";--e-global-typography-e9fbc4c-font-size:40px;--e-global-typography-e9fbc4c-font-weight:400;--e-global-typography-e9fbc4c-line-height:44px;--e-global-typography-5e4c4bd-font-family:"Varela Round";--e-global-typography-5e4c4bd-font-size:28px;--e-global-typography-5e4c4bd-font-weight:500;}.elementor-kit-6185 e-page-transition{background-color:#FFBC7D;}.elementor-kit-6185 h1{font-family:"Varela Round";font-weight:400;}.elementor-kit-6185 button,.elementor-kit-6185 input[type="button"],.elementor-kit-6185 input[type="submit"],.elementor-kit-6185 .elementor-button{border-radius:27px 27px 27px 27px;}.elementor-kit-6185 button:hover,.elementor-kit-6185 button:focus,.elementor-kit-6185 input[type="button"]:hover,.elementor-kit-6185 input[type="button"]:focus,.elementor-kit-6185 input[type="submit"]:hover,.elementor-kit-6185 input[type="submit"]:focus,.elementor-kit-6185 .elementor-button:hover,.elementor-kit-6185 .elementor-button:focus{color:#000000;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1140px;}.e-con{--container-max-width:1140px;}.elementor-widget:not(:last-child){margin-block-end:50px;}.elementor-element{--widgets-spacing:50px 50px;--widgets-spacing-row:50px;--widgets-spacing-column:50px;}{}h1.entry-title{display:var(--page-title-display);}.elementor-lightbox{background-color:#B13939;--lightbox-ui-color:#00B0FF;--lightbox-ui-color-hover:#BCDCFF;}@media(max-width:1024px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}/* Start custom CSS */.smart-tag {
     height: auto;
@@ -1415,15 +1420,7 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
 				</header>  <div id="content" class="site-content">
 
   <!-- ── Breadcrumb ─────────────────────────────────────────── -->
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <div class="breadcrumb__inner">
-      <a href="/">Inicio</a>
-      <span class="breadcrumb__sep" aria-hidden="true">›</span>
-      <a href="/casos-de-exito/">Casos de éxito</a>
-      <span class="breadcrumb__sep" aria-hidden="true">›</span>
-      <span class="breadcrumb__current">YESSS Electrical</span>
-    </div>
-  </nav>
+
 
   <!-- ── Hero ──────────────────────────────────────────────── -->
   <section class="section section--bot-soft">
@@ -1432,8 +1429,8 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
 
         <div class="d-hero__content">
           <div class="d-hero__tags">
-            <span class="tag tag--blue">Distribución Eléctrica</span>
-            <span class="tag">Reino Unido</span>
+            <span class="tag tag--blue">Caso de éxito</span>
+            <span class="tag">Logística</span>
           </div>
           <h1 class="t-display t-h2 d-hero__title">
             Cómo YESSS Electrical utiliza TicTAP Stock para llevar más control al stock distribuido
@@ -1443,7 +1440,7 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
           </p>
           <div class="d-hero__meta">
             <figure class="placeholder" style="--ph-h:48px">
-              <span class="placeholder__label">Logo YESSS Electrical</span>
+              <img src="/wp-content/uploads/2026/06/yesss-electrical-logo.png" alt="Logo YESSS Electrical" style="height:48px;width:auto;display:block;">
             </figure>
             <dl class="d-hero__data">
               <div>
@@ -1453,10 +1450,6 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
               <div>
                 <dt>Sector</dt>
                 <dd>Distribución Eléctrica</dd>
-              </div>
-              <div>
-                <dt>País</dt>
-                <dd>Reino Unido</dd>
               </div>
               <div>
                 <dt>Solución</dt>
@@ -1473,13 +1466,13 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
   </section>
 
   <!-- ── Capítulo 1 — Contexto ─────────────────────────────── -->
-  <section class="chapter chapter--cap1">
+  <section class="chapter chapter--cap1" style="background-color:#E8F4FF">
     <div class="chapter__inner">
       <div class="chapter__head">
-        <span class="chapter__num">01</span>
+
         <div>
-          <p class="t-eyebrow">El contexto</p>
-          <h2 class="t-display t-h3 chapter__title">
+
+          <h2 class="t-display t-h3 chapter__title" style="color:#00b0ff">
             Stock repartido, clientes profesionales y necesidad de control simple
           </h2>
         </div>
@@ -1497,7 +1490,7 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
           </p>
         </div>
         <div class="checklist">
-          <p class="t-eyebrow">El reto operativo</p>
+
           <ul>
             <li>Stock repartido entre furgonetas, almacenes, depots y ubicaciones de cliente</li>
             <li>Necesidad de registrar movimientos sin fricción desde campo</li>
@@ -1514,10 +1507,10 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
   <section class="chapter chapter--cap2 chapter--highlight">
     <div class="chapter__inner">
       <div class="chapter__head">
-        <span class="chapter__num">02</span>
+
         <div>
-          <p class="t-eyebrow t-eyebrow--brand">La solución</p>
-          <h2 class="t-display t-h3 chapter__title">
+
+          <h2 class="t-display t-h3 chapter__title" style="color:#00b0ff">
             Smart Asset Solutions, powered by TicTAP: una plataforma, tres formatos
           </h2>
         </div>
@@ -1562,7 +1555,7 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
   <section class="section section--alt section--bot-soft">
     <div class="container container--narrow">
       <div class="section-head" style="text-align:center">
-        <p class="t-eyebrow">Cómo funciona</p>
+
         <h2 class="t-display t-h3" style="margin-top:10px">
           Del escaneo a la reposición, sin intervención manual
         </h2>
@@ -1604,10 +1597,10 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
   <section class="chapter chapter--cap3">
     <div class="chapter__inner">
       <div class="chapter__head">
-        <span class="chapter__num">03</span>
+
         <div>
-          <p class="t-eyebrow">Resultados</p>
-          <h2 class="t-display t-h3 chapter__title">
+
+          <h2 class="t-display t-h3 chapter__title" style="color:#00b0ff">
             Métricas que estamos monitorizando
           </h2>
         </div>
@@ -1655,7 +1648,7 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.tictap.me\/wp-admin\/
   <section class="section section--soft section--top-soft section--bot-soft">
     <div class="container container--narrow">
       <div class="section-head">
-        <p class="t-eyebrow">Aprendizajes</p>
+
         <h2 class="t-display t-h3" style="margin-top:10px">
           Qué estamos aprendiendo del caso YESSS Electrical
         </h2>
