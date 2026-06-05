@@ -207,48 +207,46 @@ const nav = isEn
 </header>
 
 <style is:global>
-/* ── Variables ─────────────────────────────────────────── */
+/* ── Variables (match Elementor/Astra theme vars) ───────── */
 :root {
-  --tt-header-h: 72px;
-  --tt-header-bg: #fff;
-  --tt-header-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --tt-nav-color: #000;
-  --tt-nav-hover: #00b0ff;
-  --tt-dropdown-bg: #fff;
-  --tt-dropdown-color: #54595f;
+  --tt-primary: #00B0FF;
+  --tt-text: #4B4F58;
+  --tt-text-dark: #000;
+  --tt-dropdown-color: #54595F;
   --tt-dropdown-shadow: 6px 7px 18px -7px rgba(0,0,0,0.5);
-  --tt-demo-bg: #00b0ff;
-  --tt-demo-color: #fff;
-  --tt-radius: 8px;
-  --tt-z: 1000;
   --tt-font: "Lato", sans-serif;
+  --tt-z: 1000;
 }
 
 /* ── Header shell ───────────────────────────────────────── */
 .tt-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: var(--tt-z);
-  background: var(--tt-header-bg);
-  box-shadow: var(--tt-header-shadow);
+  background: #fff;
   width: 100%;
 }
 
+/* spacer so content doesn't hide under fixed header */
+.tt-header + * { margin-top: 72px; }
+
 .tt-header__inner {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 50px;
-  height: var(--tt-header-h);
+  padding: 0 30px;
+  min-height: 72px;
 }
 
 /* ── Logo ───────────────────────────────────────────────── */
 .tt-header__logo {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  margin-right: 20px;
 }
 .tt-header__logo img {
   height: 40px;
@@ -256,48 +254,70 @@ const nav = isEn
   display: block;
 }
 
-/* ── Desktop nav ────────────────────────────────────────── */
+/* ── Desktop nav (Soluciones / Recursos / Precios / Contacto) */
 .tt-nav {
   flex: 1;
   display: flex;
-  justify-content: center;
+  align-items: stretch;
 }
 .tt-nav__list {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  align-items: stretch;
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: 0;
 }
 .tt-nav__item {
   position: relative;
+  display: flex;
+  align-items: stretch;
 }
+
+/* nav link — replicates .elementor-item style */
 .tt-nav__link {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 8px 14px;
-  font-size: 15px;
-  font-weight: 700;
+  gap: 5px;
+  padding: 0 14px;
   font-family: var(--tt-font);
-  color: var(--tt-nav-color);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tt-text-dark);
   text-decoration: none;
-  border-radius: 6px;
-  border: none;
   background: none;
+  border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.15s;
+  position: relative;
+}
+
+/* underline hover — replicates e--pointer-underline */
+.tt-nav__link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: var(--tt-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease;
+}
+.tt-nav__link:hover::after,
+.tt-nav__link[aria-expanded="true"]::after {
+  transform: scaleX(1);
 }
 .tt-nav__link:hover,
 .tt-nav__link[aria-expanded="true"] {
-  color: var(--tt-nav-hover);
-  background: rgba(0,176,255,0.06);
+  color: var(--tt-primary);
 }
+
 .tt-nav__chevron {
-  transition: transform 0.2s;
+  width: 10px;
   flex-shrink: 0;
+  transition: transform 0.2s;
 }
 .tt-nav__link[aria-expanded="true"] .tt-nav__chevron {
   transform: rotate(180deg);
@@ -306,22 +326,19 @@ const nav = isEn
 /* ── Dropdown ───────────────────────────────────────────── */
 .tt-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 240px;
-  background: var(--tt-dropdown-bg);
-  border-radius: var(--tt-radius);
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: #fff;
   box-shadow: var(--tt-dropdown-shadow);
-  border: 1px solid rgba(0,0,0,0.08);
   list-style: none;
   margin: 0;
-  padding: 8px 0;
+  padding: 10px 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.15s, visibility 0.15s, transform 0.15s;
-  transform: translateX(-50%) translateY(-4px);
+  transition: opacity 0.15s, visibility 0.15s;
+  z-index: calc(var(--tt-z) + 1);
 }
 .tt-nav__item--has-dropdown:hover .tt-dropdown,
 .tt-nav__item--has-dropdown:focus-within .tt-dropdown,
@@ -329,114 +346,110 @@ const nav = isEn
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
 }
+
+/* sub-items — replicates .elementor-sub-item */
 .tt-dropdown__link {
   display: block;
-  padding: 9px 20px;
-  font-size: 14px;
+  padding: 8px 20px;
   font-family: var(--tt-font);
+  font-size: 14px;
   color: var(--tt-dropdown-color);
   text-decoration: none;
   transition: color 0.12s;
 }
 .tt-dropdown__link:hover {
-  color: var(--tt-nav-hover);
+  color: var(--tt-primary);
 }
 
-/* ── Actions ────────────────────────────────────────────── */
+/* ── Right-side actions ─────────────────────────────────── */
 .tt-header__actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+  margin-left: auto;
   flex-shrink: 0;
 }
+
+/* Language switcher — replicates WPML globe widget */
 .tt-header__lang {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   padding: 6px 10px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--tt-nav-color);
-  text-decoration: none;
-  border-radius: 6px;
-  transition: color 0.15s, background 0.15s;
-}
-.tt-header__lang:hover {
-  color: var(--tt-nav-hover);
-  background: rgba(0,176,255,0.06);
-}
-.tt-header__login {
-  padding: 8px 22px;
-  font-size: 14px;
-  font-weight: 700;
   font-family: var(--tt-font);
-  color: #00b0ff;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tt-text-dark);
   text-decoration: none;
-  background: #fff;
   transition: color 0.15s;
 }
-.tt-header__login:hover {
-  color: #0099e6;
-}
-.tt-header__demo {
-  padding: 10px 15px;
-  font-size: 14px;
-  font-weight: 700;
+.tt-header__lang:hover { color: var(--tt-primary); }
+.tt-header__lang svg { flex-shrink: 0; }
+
+/* Log in — replicates elementor-animation-shrink ghost style */
+.tt-header__login {
+  display: inline-block;
+  padding: 10px 20px;
   font-family: var(--tt-font);
-  background: #00b0ff;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tt-primary);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: transform 0.3s;
+}
+.tt-header__login:hover { transform: scale(0.9); }
+
+/* Demo gratis — replicates .elementor-button.elementor-size-sm primary style */
+.tt-header__demo {
+  display: inline-block;
+  padding: 10px 20px;
+  font-family: var(--tt-font);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: var(--tt-primary);
   color: #fff;
   text-decoration: none;
-  border: 1px solid #00b0ff;
   border-radius: 3px;
-  transition: background 0.15s, color 0.15s;
   white-space: nowrap;
+  transition: transform 0.3s;
 }
-.tt-header__demo:hover {
-  background: #fff;
-  color: #00b0ff;
-}
+.tt-header__demo:hover { transform: scale(0.9); }
 
-/* ── Mobile toggle ──────────────────────────────────────── */
+/* ── Mobile burger ──────────────────────────────────────── */
 .tt-header__burger {
   display: none;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
-  padding: 6px;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  margin-left: auto;
   border: none;
   background: none;
   cursor: pointer;
-  border-radius: 6px;
   flex-shrink: 0;
 }
 .tt-header__burger span {
   display: block;
   width: 100%;
   height: 2px;
-  background: var(--tt-nav-color);
+  background: var(--tt-text-dark);
   border-radius: 2px;
   transition: transform 0.2s, opacity 0.2s;
 }
-.tt-header__burger[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.tt-header__burger[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0;
-}
-.tt-header__burger[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+.tt-header__burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.tt-header__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.tt-header__burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* ── Mobile menu ────────────────────────────────────────── */
 .tt-mobile-menu {
   display: none;
-  background: var(--tt-header-bg);
+  background: #fff;
   border-top: 1px solid rgba(0,0,0,0.08);
-  padding: 16px 0 24px;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
@@ -448,7 +461,7 @@ const nav = isEn
 .tt-mobile-nav {
   list-style: none;
   margin: 0;
-  padding: 0 24px;
+  padding: 0 20px 20px;
 }
 .tt-mobile-nav__item {
   border-bottom: 1px solid rgba(0,0,0,0.06);
@@ -459,39 +472,36 @@ const nav = isEn
   justify-content: space-between;
   width: 100%;
   padding: 14px 0;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--tt-nav-color);
+  font-family: var(--tt-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tt-text-dark);
   text-decoration: none;
   border: none;
   background: none;
   cursor: pointer;
-  font-family: inherit;
   text-align: left;
 }
 .tt-mobile-sub {
   list-style: none;
-  padding: 0 0 12px 16px;
+  padding: 0 0 12px 12px;
   margin: 0;
   display: none;
 }
-.tt-mobile-sub.is-open {
-  display: block;
-}
+.tt-mobile-sub.is-open { display: block; }
 .tt-mobile-sub__link {
   display: block;
-  padding: 8px 0;
-  font-size: 0.9rem;
-  color: #555;
+  padding: 7px 0;
+  font-family: var(--tt-font);
+  font-size: 13px;
+  color: var(--tt-dropdown-color);
   text-decoration: none;
 }
-.tt-mobile-sub__link:hover {
-  color: var(--tt-nav-hover);
-}
+.tt-mobile-sub__link:hover { color: var(--tt-primary); }
 .tt-mobile-nav__item--actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 16px 0;
   border-bottom: none;
   flex-wrap: wrap;
@@ -500,16 +510,9 @@ const nav = isEn
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 960px) {
   .tt-nav,
-  .tt-header__actions {
-    display: none;
-  }
-  .tt-header__burger {
-    display: flex;
-    margin-left: auto;
-  }
-  .tt-mobile-menu {
-    display: block;
-  }
+  .tt-header__actions { display: none; }
+  .tt-header__burger { display: flex; }
+  .tt-mobile-menu { display: block; }
 }
 </style>
 
