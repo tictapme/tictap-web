@@ -298,20 +298,20 @@ const nav = isEn
 .tt-nav__item {
   position: relative;
   display: flex;
-  align-items: stretch;
+  align-items: flex-end;
   height: 100%;
 }
 
 /* nav link — replicates .elementor-item style */
 .tt-nav__link--toggle {
   border-radius: 0;
-  padding: 0;
+  padding: 0 0 10px 0;
 }
 .tt-nav__link {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 0 14px;
+  padding: 0 14px 10px 14px;
   font-family: var(--tt-font);
   font-size: 14px;
   font-weight: 600;
@@ -456,7 +456,7 @@ const nav = isEn
 .tt-header__actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 20px;
   flex-shrink: 0;
 }
 
@@ -489,14 +489,15 @@ const nav = isEn
   letter-spacing: 0.5px;
   border-radius: 50px;
   border: 1px solid var(--tt-primary);
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, color 0.2s, transform 0.3s ease;
 }
 .tt-header__login:hover {
-  background-color: #fff;
-  color: var(--tt-primary);
+  background-color: var(--tt-primary);
+  color: #fff;
+  transform: scale(0.9);
 }
 
-/* Demo gratis — replicates .elementor-button.elementor-size-sm primary style */
+/* Demo gratis */
 .tt-header__demo {
   display: inline-block;
   padding: 10px 20px;
@@ -507,11 +508,16 @@ const nav = isEn
   background: var(--tt-primary);
   color: #fff;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 50px;
+  border: 1px solid var(--tt-primary);
   white-space: nowrap;
-  transition: transform 0.3s;
+  transition: background-color 0.2s, color 0.2s, transform 0.3s ease;
 }
-.tt-header__demo:hover { transform: scale(0.9); }
+.tt-header__demo:hover {
+  background-color: #fff;
+  color: var(--tt-primary);
+  transform: scale(0.9);
+}
 
 /* ── Mobile burger ──────────────────────────────────────── */
 .tt-header__burger {
