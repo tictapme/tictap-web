@@ -18,17 +18,17 @@ const nav = isEn
       solutions: {
         label: 'Solutions',
         items: [
-          { href: '/en/asset-passport/', label: 'Asset Passport' },
-          { href: '/en/industry/', label: 'Industrial maintenance' },
-          { href: '/en/stock/', label: 'Stock Management' },
-          { href: '/en/tictap-facilities-maintenance/', label: 'Facility management' },
-          { href: '/en/risk-assesment/', label: 'Health and safety' },
-          { href: '/en/tool-maintenance/', label: 'Tool & machinery management' },
-          { href: '/en/fire-management/', label: 'Fire equipment management' },
-          { href: '/en/coshh-management/', label: 'COSHH management' },
-          { href: '/en/fleet-maintenance/', label: 'Fleet maintenance' },
-          { href: '/en/cleaning-management/', label: 'Cleaning task management' },
-          { href: '/en/railway/', label: 'Railway maintenance' },
+          { href: '/en/asset-passport/', label: 'Asset Passport', iconSrc: '/wp-content/uploads/2024/09/passport-01.png' },
+          { href: '/en/industry/', label: 'Industrial maintenance', iconSrc: '/wp-content/uploads/2024/09/factory.png' },
+          { href: '/en/stock/', label: 'Stock Management', iconSrc: '/wp-content/uploads/2025/12/Recurso-8.png' },
+          { href: '/en/tictap-facilities-maintenance/', label: 'Facility management', iconSrc: '/wp-content/uploads/2024/09/instalations.png' },
+          { href: '/en/risk-assesment/', label: 'Health and safety', iconSrc: '/wp-content/uploads/2024/09/toolbox.png' },
+          { href: '/en/tool-maintenance/', label: 'Tool & machinery management', iconSrc: '/wp-content/uploads/2024/09/tool.png' },
+          { href: '/en/fire-management/', label: 'Fire equipment management', iconSrc: '/wp-content/uploads/2024/09/extinguisher.png' },
+          { href: '/en/coshh-management/', label: 'COSHH management', iconSrc: '/wp-content/uploads/2024/09/alert.png' },
+          { href: '/en/fleet-maintenance/', label: 'Fleet maintenance', iconSrc: '/wp-content/uploads/2024/09/car.png' },
+          { href: '/en/cleaning-management/', label: 'Cleaning task management', iconSrc: '/wp-content/uploads/2024/09/cleaning.png' },
+          { href: '/en/railway/', label: 'Railway maintenance', iconSrc: '/wp-content/uploads/2026/02/rail-icon.svg' },
         ],
       },
       resources: {
@@ -47,17 +47,17 @@ const nav = isEn
       solutions: {
         label: 'Soluciones',
         items: [
-          { href: '/asset-passport/', label: 'Asset Passport' },
-          { href: '/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/', label: 'Mantenimiento industrial' },
-          { href: '/stock/', label: 'Gestión de stock' },
-          { href: '/gestion-de-tu-instalacion/', label: 'Gestión de instalaciones' },
-          { href: '/gestion-equipo-proteccion-personal/', label: 'Health and safety' },
-          { href: '/mantenimiento-de-herramientas/', label: 'Gestión de herramientas y maquinaria' },
-          { href: '/gestion-equipos-contra-incendios/', label: 'Gestión de equipos contra incendios' },
-          { href: '/gestion-de-coshh/', label: 'Gestión de COSHH' },
-          { href: '/mantenimiento-de-flotas/', label: 'Mantenimiento de flotas' },
-          { href: '/gestion-tareas-de-limpieza/', label: 'Gestión de tareas de limpieza' },
-          { href: '/railway/', label: 'Mantenimiento ferroviario' },
+          { href: '/asset-passport/', label: 'Asset Passport', iconSrc: '/wp-content/uploads/2024/09/passport-01.png' },
+          { href: '/plataforma-para-la-identificacion-y-trazabilidad-de-activos-industria/', label: 'Mantenimiento industrial', iconSrc: '/wp-content/uploads/2024/09/factory.png' },
+          { href: '/stock/', label: 'Gestión de stock', iconSrc: '/wp-content/uploads/2025/12/Recurso-8.png' },
+          { href: '/gestion-de-tu-instalacion/', label: 'Gestión de instalaciones', iconSrc: '/wp-content/uploads/2024/09/instalations.png' },
+          { href: '/gestion-equipo-proteccion-personal/', label: 'Health and safety', iconSrc: '/wp-content/uploads/2024/09/toolbox.png' },
+          { href: '/mantenimiento-de-herramientas/', label: 'Gestión de herramientas y maquinaria', iconSrc: '/wp-content/uploads/2024/09/tool.png' },
+          { href: '/gestion-equipos-contra-incendios/', label: 'Gestión de equipos contra incendios', iconSrc: '/wp-content/uploads/2024/09/extinguisher.png' },
+          { href: '/gestion-de-coshh/', label: 'Gestión de COSHH', iconSrc: '/wp-content/uploads/2024/09/alert.png' },
+          { href: '/mantenimiento-de-flotas/', label: 'Mantenimiento de flotas', iconSrc: '/wp-content/uploads/2024/09/car.png' },
+          { href: '/gestion-tareas-de-limpieza/', label: 'Gestión de tareas de limpieza', iconSrc: '/wp-content/uploads/2024/09/cleaning.png' },
+          { href: '/railway/', label: 'Mantenimiento ferroviario', iconSrc: '/wp-content/uploads/2026/02/rail-icon.svg' },
         ],
       },
       resources: {
@@ -72,6 +72,7 @@ const nav = isEn
       pricing: { href: '/precios/', label: 'Precios' },
       contact: { href: '/contacto/', label: 'Contacto' },
     };
+
 ---
 
 <header class="tt-header" id="tt-header">
@@ -108,7 +109,7 @@ const nav = isEn
       <ul class="tt-nav__list">
 
         <!-- Soluciones -->
-        <li class="tt-nav__item tt-nav__item--has-dropdown">
+        <li class="tt-nav__item tt-nav__item--has-dropdown tt-nav__item--soluciones">
           <button class="tt-nav__link tt-nav__link--toggle" aria-expanded="false" aria-haspopup="true">
             {nav.solutions.label}
             <svg class="tt-nav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
@@ -118,14 +119,17 @@ const nav = isEn
           <ul class="tt-dropdown" role="menu">
             {nav.solutions.items.map(item => (
               <li role="none">
-                <a href={item.href} class="tt-dropdown__link" role="menuitem">{item.label}</a>
+                <a href={item.href} class="tt-dropdown__link" role="menuitem">
+                  {item.iconSrc && <img src={item.iconSrc} alt="" width="24" height="24" aria-hidden="true" />}
+                  {item.label}
+                </a>
               </li>
             ))}
           </ul>
         </li>
 
         <!-- Recursos -->
-        <li class="tt-nav__item tt-nav__item--has-dropdown">
+        <li class="tt-nav__item tt-nav__item--has-dropdown tt-nav__item--recursos">
           <button class="tt-nav__link tt-nav__link--toggle" aria-expanded="false" aria-haspopup="true">
             {nav.resources.label}
             <svg class="tt-nav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
@@ -283,8 +287,13 @@ const nav = isEn
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 0;
+  gap: 10px;
   height: 45px;
+}
+.tt-nav__list .tt-nav__link,
+.tt-nav__list .tt-dropdown__link {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 500;
 }
 .tt-nav__item {
   position: relative;
@@ -294,6 +303,10 @@ const nav = isEn
 }
 
 /* nav link — replicates .elementor-item style */
+.tt-nav__link--toggle {
+  border-radius: 0;
+  padding: 0;
+}
 .tt-nav__link {
   display: flex;
   align-items: center;
@@ -324,9 +337,9 @@ const nav = isEn
   content: "";
   position: absolute;
   bottom: 0;
-  left: 14px;
-  right: 14px;
-  height: 2px;
+  left: 0;
+  right: 0;
+  height: 3px;
   background: var(--tt-primary);
   transform: scaleX(0);
   transform-origin: left center;
@@ -373,6 +386,58 @@ const nav = isEn
   pointer-events: auto;
 }
 
+/* Dropdown Recursos */
+.tt-nav__item--recursos .tt-dropdown {
+  width: auto;
+  display: block;
+  left: 0;
+  margin-left: 0;
+  margin-top: 1px;
+  z-index: 3;
+  min-width: 10em;
+  max-width: 1000px;
+  box-shadow: 4px 0px 8px 0px rgba(39, 38, 38, 0.11);
+  background-color: #fff;
+  border-radius: 8px 8px 8px 8px;
+  top: 100% !important;
+  border-style: solid;
+  border-width: 0;
+  padding: 0;
+  position: absolute;
+}
+
+/* Dropdown Soluciones — 2 columnas */
+.tt-nav__item--soluciones .tt-dropdown {
+  display: block;
+  margin-left: 0;
+  margin-top: 0;
+  box-shadow: 4px 0px 8px 0px rgba(39, 38, 38, 0.11);
+  border-radius: 8px 8px 8px 8px;
+  position: absolute;
+  top: 100% !important;
+  left: 100% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min-content !important;
+  min-width: 10em;
+  max-width: 1000px;
+  column-count: 2;
+  column-gap: 20px;
+}
+
+/* Items del dropdown Soluciones */
+.tt-nav__item--soluciones .tt-dropdown li {
+  min-height: 46px;
+  width: 310px;
+  display: inline-flex;
+  align-items: center;
+}
+.tt-nav__item--soluciones .tt-dropdown .tt-dropdown__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 /* sub-items — replicates .elementor-sub-item */
 .tt-dropdown__link {
   display: block;
@@ -412,7 +477,7 @@ const nav = isEn
 .tt-header__lang:hover { color: var(--tt-primary); }
 .tt-header__lang svg { flex-shrink: 0; }
 
-/* Log in — replicates elementor-animation-shrink ghost style */
+/* Log in */
 .tt-header__login {
   display: inline-block;
   padding: 10px 20px;
@@ -422,9 +487,14 @@ const nav = isEn
   color: var(--tt-primary);
   text-decoration: none;
   letter-spacing: 0.5px;
-  transition: transform 0.3s;
+  border-radius: 50px;
+  border: 1px solid var(--tt-primary);
+  transition: background-color 0.2s, color 0.2s;
 }
-.tt-header__login:hover { transform: scale(0.9); }
+.tt-header__login:hover {
+  background-color: #fff;
+  color: var(--tt-primary);
+}
 
 /* Demo gratis — replicates .elementor-button.elementor-size-sm primary style */
 .tt-header__demo {
@@ -545,6 +615,12 @@ const nav = isEn
   (function () {
     var header = document.getElementById('tt-header');
     if (!header) return;
+
+    // Desktop nav toggles — blur on click so hover-only dropdowns don't stay open
+    var desktopToggles = header.querySelectorAll('.tt-nav__link--toggle');
+    desktopToggles.forEach(function (btn) {
+      btn.addEventListener('click', function () { this.blur(); });
+    });
 
     // Mobile toggle
     var burger = header.querySelector('.tt-header__burger');
