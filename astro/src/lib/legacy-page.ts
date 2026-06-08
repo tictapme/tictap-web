@@ -507,11 +507,30 @@ export function loadSourceStructuredPage(relativePath: string) {
   const normalized = rewriteToLocal(rawHtml);
   const headInner = mustMatch(normalized, /<head[^>]*>([\s\S]*?)<\/head>/i, 'head');
   const bodyClass = mustMatch(normalized, /<body[^>]+class=["']([^"']+)["']/i, 'body classes');
-  const contentHtml = mustMatch(normalized, /(<div id="content" class="site-content">[\s\S]*?)<footer data-elementor-type="footer"/i, 'content');
-  const afterFooterHtml = mustMatch(normalized, /<\/footer>([\s\S]*?)<\/body>/i, 'after footer');
   const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyItemTypeMatch = normalized.match(/<body[^>]+itemtype=["']([^"']+)["']/i);
+
+  // Support both <footer data-elementor-type="footer"> and <div data-elementor-type="footer">
+  const contentMatch = normalized.match(
+    /(<div id="content" class="site-content">[\s\S]*?)<(?:footer|div)\b[^>]+data-elementor-type=["']footer["']/i,
+  );
+  if (!contentMatch) throw new Error(`Could not extract content for ${relativePath}`);
+  const contentHtml = contentMatch[1];
+
+  let afterFooterHtml: string;
+  const afterFooterByTag = normalized.match(/<\/footer>([\s\S]*?)<\/body>/i);
+  if (afterFooterByTag) {
+    afterFooterHtml = afterFooterByTag[1];
+  } else {
+    // Footer uses <div> — extract the script block that follows the footer div
+    const footerDivPos = normalized.search(/elementor-location-footer/i);
+    const scriptsPos = footerDivPos !== -1 ? normalized.indexOf('<script', footerDivPos) : -1;
+    const bodyClosePos = normalized.lastIndexOf('</body>');
+    afterFooterHtml = scriptsPos !== -1 && scriptsPos < bodyClosePos
+      ? normalized.slice(scriptsPos, bodyClosePos)
+      : '';
+  }
 
   return {
     title,
