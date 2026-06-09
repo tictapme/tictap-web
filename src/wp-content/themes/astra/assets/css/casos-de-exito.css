@@ -636,7 +636,6 @@ img.placeholder, .placeholder img {
   padding: 32px;
   background: var(--c-paper);
   border: 1px solid var(--c-line);
-  border-top: 3px solid var(--c-brand);
   border-radius: var(--radius);
 }
 .metric__n {
