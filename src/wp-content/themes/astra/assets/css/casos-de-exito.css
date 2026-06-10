@@ -155,6 +155,13 @@
   color: #00b0ff !important;
   transform: scale(0.9);
 }
+.section--dark .btn {
+  border: 2px solid #fff;
+}
+.section--dark .btn--ghost-light {
+  background: #fff;
+  color: #00b0ff !important;
+}
 .btn--ghost {
   background: #fff;
   color: #00b0ff !important;
