@@ -121,8 +121,8 @@ export function loadGlobalInlineCss(lang: 'es' | 'en'): string {
 export function loadShellCss(lang: 'es' | 'en'): string {
   if (shellCssCache.has(lang)) return shellCssCache.get(lang)!;
 
-  const headerId = lang === 'es' ? '9642' : '10265';
-  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
+  const headerId = '9642';
+  const refPath = 'index.html';
 
   try {
     const rawHtml = readSourceFile(refPath);
@@ -148,8 +148,8 @@ export function loadShellCss(lang: 'es' | 'en'): string {
 export function loadShellCssMq(lang: 'es' | 'en'): string {
   if (shellCssMqCache.has(lang)) return shellCssMqCache.get(lang)!;
 
-  const headerId = lang === 'es' ? '9642' : '10265';
-  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
+  const headerId = '9642';
+  const refPath = 'index.html';
 
   try {
     const rawHtml = readSourceFile(refPath);
