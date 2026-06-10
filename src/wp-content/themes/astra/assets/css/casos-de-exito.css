@@ -102,7 +102,7 @@
 }
 .section--soft  { background: var(--c-paper-soft); }
 .section--alt   { background: var(--c-paper-alt); }
-.section--dark  { background: var(--c-ink); color: #fff; }
+.section--dark  { background: #00b0ff; color: #fff; }
 .section--top   { border-top:    1px solid var(--c-line); }
 .section--bot   { border-bottom: 1px solid var(--c-line); }
 .section--top-soft  { border-top:    1px solid var(--c-line-soft); }
@@ -654,10 +654,19 @@ img.placeholder, .placeholder img {
   color: var(--c-ink);
   margin-bottom: 12px;
 }
+.metric__n.t-brand {
+  text-align: center;
+  color: #00b0ff;
+  margin-bottom: 20px !important;
+}
 .metric__u {
   font-size: 15px;
   color: var(--c-ink-2);
   line-height: 1.4;
+  text-align: center;
+}
+.section--alt.section--top.section--bot .metric__u {
+  text-align: left;
 }
 
 /* Pull quote */
@@ -723,6 +732,12 @@ img.placeholder, .placeholder img {
   max-width: 580px;
   margin: 0 auto 32px;
   line-height: 1.5;
+}
+.section--dark .cta .cta__lead {
+  max-width: 100%;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  color: rgba(255,255,255,.1);
 }
 .cta__actions {
   display: flex;
