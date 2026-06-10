@@ -171,7 +171,11 @@
   color: #fff;
   border: 1.5px solid rgba(255,255,255,.6);
 }
-.btn--ghost-light:hover { background: rgba(255,255,255,.1); }
+.btn--ghost-light:hover {
+  background: #00b0ff;
+  color: #fff !important;
+  transform: scale(0.9);
+}
 
 /* ── Componente: Link de acción ────────────────────────────── */
 .link-action {
