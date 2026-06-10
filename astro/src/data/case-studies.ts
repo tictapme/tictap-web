@@ -50,7 +50,6 @@ export const caseStudies: CaseStudy[] = [
     image: '/wp-content/uploads/2023/07/dagartech-generador.webp',
     imageAlt: 'Generador Dagartech con etiqueta NFC',
     imageAltEn: 'Dagartech generator with NFC tag',
-    metric: { n: '+7.000', u: 'unidades de alquiler controladas', uEn: 'rental units tracked' },
     titleEs: 'Cómo Dagartech traza 7.000 grupos electrógenos con una etiqueta del tamaño de una moneda',
     titleEn: 'How Dagartech tracks 7,000 generators with a coin-sized tag',
     leadEs: 'Una compañía líder en fabricación, venta y alquiler de generadores pasó de gestionar su flota con documentación dispersa a controlar 2.500 familias de equipos y 7.000 unidades de alquiler desde una sola pantalla.',
