@@ -135,6 +135,9 @@
 .tag--blue    { background: var(--c-brand-soft); color: var(--c-brand-dark); }
 .tag--outline { background: transparent; border: 1px solid var(--c-line); color: var(--c-ink-2); }
 
+/* ── Tabla ──────────────────────────────────────────────────── */
+table { border: none; }
+
 /* ── Componente: Botón ─────────────────────────────────────── */
 .btn {
   display: inline-flex;
