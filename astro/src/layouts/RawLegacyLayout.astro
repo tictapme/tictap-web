@@ -2,7 +2,6 @@
 import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
 import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
 import SiteHeader from '../components/header/SiteHeader.astro';
-import FooterEn from '../components/footer/FooterEn.astro';
 
 type Props = {
   title: string;
@@ -28,7 +27,6 @@ const {
   jsBundles = [],
 } = Astro.props as Props;
 
-const isEn = lang.toLowerCase().startsWith('en');
 ---
 
 <!doctype html>
@@ -39,12 +37,11 @@ const isEn = lang.toLowerCase().startsWith('en');
     <title>{title}</title>
     {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
     <Fragment set:html={headExtraHtml} />
-    {isEn && <style>{`.elementor-location-header { display: none !important; }`}</style>}
+    <style>{`.elementor-location-header { display: none !important; }`}</style>
   </head>
   <body class={bodyClass} itemtype={bodyItemType || undefined} itemscope={bodyItemscope}>
-    {isEn && <SiteHeader lang={lang} />}
+    <SiteHeader lang={lang} />
     <Fragment set:html={bodyInnerHtml} />
-    {isEn && <FooterEn />}
     {jsBundles.length > 0 && <LegacyAssetBundle bundleNames={jsBundles} />}
   </body>
 </html>
