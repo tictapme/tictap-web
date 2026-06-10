@@ -682,6 +682,15 @@ img.placeholder, .placeholder img {
 .section--alt.section--top.section--bot .metric__u {
   text-align: left;
 }
+.section--alt.section--top.section--bot {
+  background: #e8f4ff;
+}
+.section--alt.section--top.section--bot .t-display.t-h3 {
+  color: #00b0ff;
+}
+.section--alt.section--top.section--bot .checklist {
+  background: #fff;
+}
 
 /* Pull quote */
 .pullquote {
