@@ -1,4 +1,7 @@
 ---
+import SiteHeader from '../components/header/SiteHeader.astro';
+import FooterEn from '../components/footer/FooterEn.astro';
+
 type Props = {
   title: string;
   lang?: string;
@@ -24,6 +27,8 @@ const {
   footerHtml,
   afterFooterHtml = '',
 } = Astro.props as Props;
+
+const isEn = lang.toLowerCase().startsWith('en');
 ---
 
 <!doctype html>
@@ -35,9 +40,9 @@ const {
     <Fragment set:html={headExtraHtml} />
   </head>
   <body class={bodyClass} itemtype={bodyItemType || undefined} itemscope={bodyItemscope}>
-    <Fragment set:html={headerHtml} />
+    {isEn ? <SiteHeader lang={lang} /> : <Fragment set:html={headerHtml} />}
     <Fragment set:html={contentHtml} />
-    <Fragment set:html={footerHtml} />
+    {isEn ? <FooterEn /> : <Fragment set:html={footerHtml} />}
     <Fragment set:html={afterFooterHtml} />
   </body>
 </html>

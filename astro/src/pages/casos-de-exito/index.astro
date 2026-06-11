@@ -1,0 +1,28 @@
+---
+import CaseStudyArchiveLayout from '../../layouts/CaseStudyArchiveLayout.astro';
+import { sanitizeAfterFooterHtml, sanitizeHeadExtraHtml } from '../../lib/legacy-page';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const legacyRoot = join(process.cwd(), 'astro/legacy-sources/casos-de-exito');
+const rawHead = readFileSync(join(legacyRoot, 'head-extra.html'), 'utf8');
+const rawAfterFooter = readFileSync(join(legacyRoot, 'after-footer.html'), 'utf8');
+
+const cleanedHead = sanitizeHeadExtraHtml(rawHead)
+  .replace(/<link[^>]+hreflang="en"[^>]*>\s*/gi, '');
+
+const archiveHreflang = [
+  '<link rel="alternate" hreflang="es" href="/casos-de-exito/">',
+  '<link rel="alternate" hreflang="en" href="/en/sucess-stories/">',
+  '<link rel="alternate" hreflang="x-default" href="/casos-de-exito/">',
+].join('\n');
+---
+
+<CaseStudyArchiveLayout
+  title="Casos de éxito · TicTAP"
+  lang="es-ES"
+  bodyClass="page-template-default page elementor-default elementor-kit-6185"
+  headExtraHtml={archiveHreflang + '\n' + cleanedHead}
+  afterBodyHtml={sanitizeAfterFooterHtml(rawAfterFooter)}
+  contentHtml=""
+/>

@@ -1,0 +1,6 @@
+UNIQUE case links (5):
+/casos-de-exito/trazabilidad-de-grupos-electrogenos-para-dagartech/  ->  /en/
+/casos-de-exito/control-y-mantenimiento-de-instalaciones-de-proteccion-contra-incendios-para-el-grupo-damm/  ->  /en/sucess-stories/damm-group/
+/casos-de-exito/unificacion-y-aumento-de-eficiencia-en-mantenimiento-para-delgado-instalaciones/  ->  /en/sucess-stories/delgado-instal%C2%B7lacions/
+/casos-de-exito/trazabilidad-del-material-rodante-de-trenes-tramvias-y-coches-para-alstom/  ->  NO-ALT
+/casos-de-exito/trazabilidad-y-gestion-eficiente-de-tag-carretillas-elevadoras/  ->  /en/sucess-stories/tag-carretillas-eng/

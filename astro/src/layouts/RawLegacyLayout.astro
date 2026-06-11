@@ -1,6 +1,7 @@
 ---
 import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
 import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
+import SiteHeader from '../components/header/SiteHeader.astro';
 
 type Props = {
   title: string;
@@ -25,6 +26,7 @@ const {
   cssBundles = [],
   jsBundles = [],
 } = Astro.props as Props;
+
 ---
 
 <!doctype html>
@@ -35,8 +37,10 @@ const {
     <title>{title}</title>
     {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
     <Fragment set:html={headExtraHtml} />
+    <style>.elementor-location-header { display: none !important; }</style>
   </head>
   <body class={bodyClass} itemtype={bodyItemType || undefined} itemscope={bodyItemscope}>
+    <SiteHeader lang={lang} />
     <Fragment set:html={bodyInnerHtml} />
     {jsBundles.length > 0 && <LegacyAssetBundle bundleNames={jsBundles} />}
   </body>

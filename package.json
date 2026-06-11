@@ -6,11 +6,12 @@
   "scripts": {
     "preview": "npm run astro:build && node bin/sync-astro-output.js && node bin/optimize-seo.js && node bin/preview.js src",
     "preview:src": "node bin/preview.js src",
-    "astro:build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "astro:build": "astro build",
     "static:prepare": "npm run astro:build && node bin/sync-astro-output.js && node bin/optimize-seo.js && node bin/validate-static-site.js",
     "static:verify-clean": "bash bin/verify-static-sync.sh",
     "hooks:install": "git config core.hooksPath .githooks",
     "analyze:astro-migration": "node bin/analyze-astro-migration.js",
+    "sync:ttps": "node bin/sync-ttps.js",
     "render:blog": "node bin/render-blog-article.js",
     "normalize:pages": "node bin/normalize-pages-config.js",
     "optimize:seo": "node bin/optimize-seo.js",

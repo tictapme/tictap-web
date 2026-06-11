@@ -1,7 +1,5 @@
 ---
-import { loadSourceShell } from '../../lib/legacy-page';
-
-const { headerHtml } = loadSourceShell('en/index.html');
+import SiteHeader from './SiteHeader.astro';
 ---
 
-<Fragment set:html={headerHtml} />
+<SiteHeader lang="en" />

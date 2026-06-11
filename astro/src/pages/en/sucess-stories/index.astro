@@ -1,0 +1,25 @@
+---
+import CaseStudyArchiveLayout from '../../../layouts/CaseStudyArchiveLayout.astro';
+import { loadLegacyPage, loadSourcePage } from '../../../lib/legacy-page';
+
+const shell = loadLegacyPage('en/index.html');
+const sibling = loadSourcePage('en/sucess-stories/dagartech/index.html');
+
+const cleanedHead = sibling.headExtraHtml
+  .replace(/<link[^>]+hreflang[^>]*>\s*/gi, '');
+
+const archiveHreflang = [
+  '<link rel="alternate" hreflang="es" href="/casos-de-exito/">',
+  '<link rel="alternate" hreflang="en" href="/en/sucess-stories/">',
+  '<link rel="alternate" hreflang="x-default" href="/casos-de-exito/">',
+].join('\n');
+---
+
+<CaseStudyArchiveLayout
+  title="Success Stories · TicTAP"
+  lang="en-GB"
+  bodyClass={sibling.bodyClass}
+  headExtraHtml={archiveHreflang + '\n' + cleanedHead}
+  afterBodyHtml={shell.afterFooterHtml}
+  contentHtml=""
+/>

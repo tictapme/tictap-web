@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Casos de éxito · TicTAP</title>
+  <meta name="description" content="Cómo compañías industriales reales usan TicTAP para trazar activos, gestionar mantenimientos y tomar decisiones con datos." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!--
+    NOTA PARA DEV:
+    · No incluye header ni footer (los pone el theme/template).
+    · Cada <section> es full-bleed (fondo a borde); el contenido va
+      dentro de <div class="container"> con max-width 1140px.
+    · Los <figure class="placeholder"> son cajas vacías estilizadas;
+      sustituir por <img src="..." alt="..." class="placeholder">.
+    · Border-radius global: --radius en :root (20px).
+  -->
+
+  <main>
+
+    <!-- ── Masthead ───────────────────────────────────────── -->
+    <section class="section section--bot">
+      <div class="container l-masthead">
+        <p class="t-eyebrow t-eyebrow--brand">· Casos de éxito ·</p>
+        <h1 class="t-display t-h1" style="margin-top:20px;margin-bottom:18px;max-width:900px;margin-left:auto;margin-right:auto;">
+          Historias reales de equipos que convirtieron <em>lo físico en digital</em>
+        </h1>
+        <p class="t-lead">
+          Cómo compañías industriales reales usan TicTAP para trazar activos, gestionar mantenimientos y tomar decisiones con datos.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ── Caso destacado ─────────────────────────────────── -->
+    <section class="section section--bot-soft">
+      <div class="container l-featured">
+
+        <figure class="l-featured__media">
+          <div class="placeholder" style="--ph-h: clamp(280px, 40vw, 500px);">
+            <span class="placeholder__label">foto editorial · generador con etiqueta NFC</span>
+          </div>
+          <span class="tag-float">Destacado · Energía</span>
+        </figure>
+
+        <div class="l-featured__body">
+          <p class="t-eyebrow">Dagartech</p>
+          <h2 class="t-display t-h3 l-featured__title">
+            Cómo Dagartech traza 7.000 grupos electrógenos con una etiqueta del tamaño de una moneda
+          </h2>
+          <p class="l-featured__lead">
+            Una compañía líder en fabricación, venta y alquiler de generadores pasó de gestionar su flota con documentación dispersa a controlar 2.500 familias de equipos y 7.000 unidades de alquiler desde una sola pantalla.
+          </p>
+
+          <div class="metric-callout">
+            <div class="metric-callout__n">+7.000</div>
+            <div class="metric-callout__u">unidades de alquiler controladas</div>
+          </div>
+
+          <a href="dagartech.html" class="link-action">
+            Leer historia completa →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ── Más historias (header + tabs) ──────────────────── -->
+    <section class="section" style="padding-bottom:0;">
+      <div class="container">
+        <div class="l-cases-head">
+          <div class="section-head" style="margin:0;">
+            <p class="t-eyebrow">Biblioteca</p>
+            <h3 class="t-display t-h4">Más historias</h3>
+          </div>
+
+          <nav class="tabs" aria-label="Filtrar por sector">
+            <a href="#" class="tabs__item tabs__item--active">Todos</a>
+            <a href="#" class="tabs__item">Energía</a>
+            <a href="#" class="tabs__item">Bebidas</a>
+            <a href="#" class="tabs__item">Logística</a>
+            <a href="#" class="tabs__item">Ferroviario</a>
+            <a href="#" class="tabs__item">Industria</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Grid de casos ──────────────────────────────────── -->
+    <section class="section" style="padding-top:32px;">
+      <div class="container l-cases">
+
+        <article class="case">
+          <figure class="placeholder" style="--ph-h: clamp(200px, 22vw, 260px);">
+            <span class="placeholder__label">foto del caso</span>
+          </figure>
+          <div class="case__body">
+            <div class="case__meta">
+              <span class="tag">Bebidas</span>
+              <span class="case__client">Damm Group</span>
+            </div>
+            <h4 class="t-display t-h5 case__title">
+              Control y mantenimiento de instalaciones de protección contra incendios
+            </h4>
+            <p class="case__quote">«Auditorías PCI pasadas a la primera, sin recopilar papeles a última hora.»</p>
+            <a href="#" class="link-action">Leer caso →</a>
+          </div>
+        </article>
+
+        <article class="case">
+          <figure class="placeholder" style="--ph-h: clamp(200px, 22vw, 260px);">
+            <span class="placeholder__label">foto del caso</span>
+          </figure>
+          <div class="case__body">
+            <div class="case__meta">
+              <span class="tag">Industria</span>
+              <span class="case__client">Cliente · Mantenimiento</span>
+            </div>
+            <h4 class="t-display t-h5 case__title">
+              Unificación y aumento de eficiencia en el mantenimiento de instalaciones
+            </h4>
+            <p class="case__quote">«Un solo sistema para todas las plantas, un solo flujo de órdenes de trabajo.»</p>
+            <a href="#" class="link-action">Leer caso →</a>
+          </div>
+        </article>
+
+        <article class="case">
+          <figure class="placeholder" style="--ph-h: clamp(200px, 22vw, 260px);">
+            <span class="placeholder__label">foto del caso</span>
+          </figure>
+          <div class="case__body">
+            <div class="case__meta">
+              <span class="tag">Logística</span>
+              <span class="case__client">Cliente · Alquiler</span>
+            </div>
+            <h4 class="t-display t-h5 case__title">
+              Trazabilidad y gestión eficiente del alquiler de carretillas elevadoras
+            </h4>
+            <p class="case__quote">«Cada cliente sabe qué equipo tiene, en qué estado y cuándo toca revisión.»</p>
+            <a href="#" class="link-action">Leer caso →</a>
+          </div>
+        </article>
+
+        <article class="case">
+          <figure class="placeholder" style="--ph-h: clamp(200px, 22vw, 260px);">
+            <span class="placeholder__label">foto del caso</span>
+          </figure>
+          <div class="case__body">
+            <div class="case__meta">
+              <span class="tag">Ferroviario</span>
+              <span class="case__client">Cliente · Transporte</span>
+            </div>
+            <h4 class="t-display t-h5 case__title">
+              Trazabilidad del material rodante de trenes, tranvías y coches
+            </h4>
+            <p class="case__quote">«Material distribuido en cuatro países, inventariado en un solo sitio.»</p>
+            <a href="#" class="link-action">Leer caso →</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ── CTA inferior ───────────────────────────────────── -->
+    <section class="section section--dark">
+      <div class="container cta-strip">
+        <div>
+          <h3 class="t-display t-h4" style="color:#fff;margin:0;">
+            ¿Quieres ver tu operación aquí en seis meses?
+          </h3>
+          <p style="margin-top:12px;font-size:16px;color:rgba(255,255,255,.75);max-width:520px;">
+            Cada caso empezó con una llamada de 30 minutos. Te enseñamos cómo lo haríamos en tu operación, sin compromiso.
+          </p>
+        </div>
+        <div class="cta-strip__actions">
+          <a href="#" class="btn">Reservar 30 min</a>
+          <a href="#" class="btn btn--ghost-light">Ver producto</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

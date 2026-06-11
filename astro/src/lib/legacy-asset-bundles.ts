@@ -14,6 +14,7 @@ export type LegacyBundleName =
   | 'home-css'
   | 'blog-single-css'
   | 'blog-archive-css'
+  | 'casos-de-exito-css'
   | 'cookie-js'
   | 'analytics-js';
 
@@ -65,8 +66,11 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
     css('/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css', 'elementor-fadein-css'),
     css('/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-shrink.min.css', 'elementor-shrink-css'),
     css('/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-grow.min.css', 'elementor-grow-css'),
+    css('/wp-content/themes/astra/assets/css/casos-de-exito-global.css', 'casos-de-exito-global-css'),
   ],
   'header-js': [
+    js('/wp-content/plugins/elementor-pro/assets/js/frontend.min.js', 'elementor-pro-frontend-js'),
+    js('/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js', 'pro-elements-handlers-js'),
     js('/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js', 'smartmenus-js'),
     js('/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js', 'e-sticky-js'),
   ],
@@ -81,6 +85,9 @@ export const legacyBundles: Record<LegacyBundleName, LegacyAsset[]> = {
   ],
   'blog-archive-css': [
     css('/wp-includes/css/dist/block-library/style.min.css', 'wp-block-library-css'),
+  ],
+  'casos-de-exito-css': [
+    css('/wp-content/themes/astra/assets/css/casos-de-exito.css', 'casos-de-exito-css'),
   ],
   'cookie-js': [
     js('/wp-content/plugins/cookie-law-info/lite/frontend/js/script.min.js', 'cookie-law-info-js'),

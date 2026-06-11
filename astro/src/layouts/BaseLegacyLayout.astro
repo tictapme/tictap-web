@@ -1,11 +1,13 @@
 ---
-import HeaderEs from '../components/header/HeaderEs.astro';
+import SiteHeader from '../components/header/SiteHeader.astro';
 import FooterEs from '../components/footer/FooterEs.astro';
 import LegacyAssetBundle from '../components/head/LegacyAssetBundle.astro';
 import type { LegacyBundleName } from '../lib/legacy-asset-bundles';
-import { loadShellCss } from '../lib/legacy-page';
+import { loadShellCss, loadShellCssMq, loadGlobalInlineCss } from '../lib/legacy-page';
 
 const shellCss = loadShellCss('es');
+const shellCssMq = loadShellCssMq('es');
+const globalInlineCss = loadGlobalInlineCss('es');
 
 type Props = {
   title: string;
@@ -37,36 +39,14 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
-    <style>
-      .elementor-location-header {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        position: relative;
-        z-index: 1000;
-      }
-
-      .elementor-location-header .elementor-element-6f0aaa9,
-      .elementor-location-header .elementor-element-9e15b9a,
-      .elementor-location-header .elementor-element-947f5f9 {
-        z-index: 1001;
-      }
-
-      #content,
-      .site-content,
-      .content-area,
-      .site-main {
-        position: relative;
-        z-index: 1;
-      }
-    </style>
-    <Fragment set:html={headExtraHtml} />
-    {!headExtraHtml.includes('.elementor-9642') && shellCss && <style set:html={shellCss} />}
+    {globalInlineCss && !headExtraHtml.includes('astra-theme-css-inline') && <style set:html={globalInlineCss} />}
+<Fragment set:html={headExtraHtml} />
+    {shellCss && <style set:html={shellCss} />}
   </head>
   <body itemtype={bodyItemType} itemscope="itemscope" class={bodyClass}>
     <a class="skip-link screen-reader-text" href="#content" title="Ir al contenido">Ir al contenido</a>
     <div class="hfeed site" id="page">
-      <HeaderEs />
+      <SiteHeader lang={lang} />
       <slot />
       <FooterEs />
     </div>

@@ -1,0 +1,218 @@
+---
+import BaseLegacyLayout from '../../layouts/BaseLegacyLayout.astro';
+---
+
+<BaseLegacyLayout title="Lab · TicTAP" bodyClass="lab-page">
+  <main class="lab">
+    <div class="lab__inner">
+      <h1 class="lab__title">Botones</h1>
+
+      <!-- Variantes principales -->
+      <section class="lab__section">
+        <h2 class="lab__section-title">Variantes</h2>
+        <div class="lab__row">
+          <a href="#" class="tbt tbt--primary">Primary</a>
+          <a href="#" class="tbt tbt--secondary">Secondary</a>
+          <a href="#" class="tbt tbt--ghost">Ghost</a>
+          <a href="#" class="tbt tbt--ghost-light">Ghost light</a>
+          <a href="#" class="tbt tbt--outline">Outline</a>
+          <a href="#" class="tbt tbt--link">Link</a>
+        </div>
+      </section>
+
+      <!-- Tamaños -->
+      <section class="lab__section">
+        <h2 class="lab__section-title">Tamaños</h2>
+        <div class="lab__row lab__row--align-center">
+          <a href="#" class="tbt tbt--primary tbt--sm">Small</a>
+          <a href="#" class="tbt tbt--primary">Medium (default)</a>
+          <a href="#" class="tbt tbt--primary tbt--lg">Large</a>
+        </div>
+      </section>
+
+      <!-- Sobre fondo oscuro -->
+      <section class="lab__section lab__section--dark">
+        <h2 class="lab__section-title lab__section-title--light">Sobre fondo oscuro</h2>
+        <div class="lab__row">
+          <a href="#" class="tbt tbt--primary">Primary</a>
+          <a href="#" class="tbt tbt--ghost">Ghost</a>
+          <a href="#" class="tbt tbt--ghost-light">Ghost light</a>
+          <a href="#" class="tbt tbt--outline">Outline</a>
+          <a href="#" class="tbt tbt--link tbt--link-light">Link light</a>
+        </div>
+      </section>
+
+      <!-- Estados -->
+      <section class="lab__section">
+        <h2 class="lab__section-title">Estados</h2>
+        <div class="lab__row">
+          <a href="#" class="tbt tbt--primary">Normal</a>
+          <a href="#" class="tbt tbt--primary tbt--disabled" aria-disabled="true">Disabled</a>
+          <a href="#" class="tbt tbt--primary tbt--loading" aria-busy="true">Loading…</a>
+        </div>
+      </section>
+
+      <!-- Con icono -->
+      <section class="lab__section">
+        <h2 class="lab__section-title">Con icono</h2>
+        <div class="lab__row">
+          <a href="#" class="tbt tbt--primary tbt--icon-right">
+            Ver más
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" class="tbt tbt--ghost tbt--icon-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Volver
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLegacyLayout>
+
+<style>
+  /* ── Layout del lab ─────────────────────────────────────── */
+  .lab {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+  }
+  .lab__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 48px;
+    color: #111;
+  }
+  .lab__section {
+    margin-bottom: 48px;
+    padding: 32px;
+    border-radius: 12px;
+    background: #f8f9fb;
+    border: 1px solid #e8eaed;
+  }
+  .lab__section--dark {
+    background: #0d1b2e;
+    border-color: #0d1b2e;
+  }
+  .lab__section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  .lab__section-title--light {
+    color: rgba(255,255,255,0.5);
+  }
+  .lab__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .lab__row--align-center {
+    align-items: center;
+  }
+
+  /* ── Sistema de botones TicTAP (tbt) ────────────────────── */
+  .tbt {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border-color 0.18s, opacity 0.18s, box-shadow 0.18s;
+    white-space: nowrap;
+  }
+
+  /* Tamaños */
+  .tbt--sm { padding: 8px 16px; font-size: 0.8125rem; border-radius: 6px; }
+  .tbt--lg { padding: 16px 32px; font-size: 1.0625rem; border-radius: 10px; }
+
+  /* Primary */
+  .tbt--primary {
+    background: #00b0ff;
+    color: #fff;
+    border-color: #00b0ff;
+  }
+  .tbt--primary:hover {
+    background: #0099e6;
+    border-color: #0099e6;
+    box-shadow: 0 4px 16px rgba(0,176,255,0.3);
+  }
+
+  /* Secondary */
+  .tbt--secondary {
+    background: #0d1b2e;
+    color: #fff;
+    border-color: #0d1b2e;
+  }
+  .tbt--secondary:hover {
+    background: #1a2d47;
+    border-color: #1a2d47;
+  }
+
+  /* Ghost (sobre fondo oscuro) */
+  .tbt--ghost {
+    background: transparent;
+    color: #00b0ff;
+    border-color: #00b0ff;
+  }
+  .tbt--ghost:hover {
+    background: rgba(0,176,255,0.08);
+  }
+
+  /* Ghost light (sobre fondo oscuro, texto blanco) */
+  .tbt--ghost-light {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255,255,255,0.5);
+  }
+  .tbt--ghost-light:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* Outline (sobre fondo claro) */
+  .tbt--outline {
+    background: transparent;
+    color: #0d1b2e;
+    border-color: #0d1b2e;
+  }
+  .tbt--outline:hover {
+    background: #0d1b2e;
+    color: #fff;
+  }
+
+  /* Link */
+  .tbt--link {
+    background: transparent;
+    color: #00b0ff;
+    border-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .tbt--link:hover { text-decoration: underline; }
+
+  .tbt--link-light {
+    color: rgba(255,255,255,0.8);
+  }
+  .tbt--link-light:hover { color: #fff; }
+
+  /* Estados */
+  .tbt--disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .tbt--loading {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: wait;
+  }
+</style>

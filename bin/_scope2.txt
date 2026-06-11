@@ -1,0 +1,8 @@
+src/casos-de-exito/index.html:
+  cs-card count: 0
+  cs-hero: false | cs-archive: false
+  first cs wrapper: none
+src/en/sucess-stories/index.html:
+  cs-card count: 0
+  cs-hero: false | cs-archive: false
+  first cs wrapper: none

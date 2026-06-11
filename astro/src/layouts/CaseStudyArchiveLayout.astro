@@ -1,6 +1,7 @@
 ---
 import BaseLegacyLayout from './BaseLegacyLayout.astro';
 import BaseLegacyLayoutEn from './BaseLegacyLayoutEn.astro';
+import { caseStudies, featuredCases } from '../data/case-studies';
 
 type Props = {
   title: string;
@@ -19,11 +20,53 @@ const {
   bodyItemType = 'https://schema.org/Blog',
   headExtraHtml = '',
   afterBodyHtml = '',
-  contentHtml,
 } = Astro.props as Props;
 
-const isEnglish = lang.toLowerCase().startsWith('en');
-const Layout = isEnglish ? BaseLegacyLayoutEn : BaseLegacyLayout;
+const isEn = lang.toLowerCase().startsWith('en');
+const Layout = isEn ? BaseLegacyLayoutEn : BaseLegacyLayout;
+
+const featured = featuredCases;
+const all = caseStudies;
+
+const sectors = isEn
+  ? [...new Set(all.map(c => ({ key: c.sectorEn, label: c.tagEn }))
+      .map(x => JSON.stringify(x)))].map(x => JSON.parse(x))
+  : [...new Set(all.map(c => ({ key: c.sector, label: c.tag }))
+      .map(x => JSON.stringify(x)))].map(x => JSON.parse(x));
+
+const labels = isEn
+  ? {
+      eyebrow: '· Success Stories ·',
+      h1a: 'Real stories from teams who turned',
+      h1em: 'the physical into digital',
+      lead: 'How real industrial companies use TicTAP to trace assets, manage maintenance and make data-driven decisions.',
+      library: 'Library',
+      more: 'More stories',
+      all: 'All',
+      read: 'Read full story →',
+      readMore: 'Read more →',
+      ctaTitle: 'Ready to be the next success story?',
+      ctaLead: "Let's talk about your assets, your team and what TicTAP could do for you.",
+      ctaBtn: 'Book a free demo',
+      ctaBtnGhost: 'See all solutions',
+      ctaBtnGhostHref: '/en/smart-asset-platform/',
+    }
+  : {
+      eyebrow: '· Casos de éxito ·',
+      h1a: 'Historias reales de equipos que convirtieron',
+      h1em: 'lo físico en digital',
+      lead: 'Cómo compañías industriales reales usan TicTAP para trazar activos, gestionar mantenimientos y tomar decisiones con datos.',
+      library: 'Biblioteca',
+      more: 'Más historias',
+      all: 'Todos',
+      read: 'Leer historia completa →',
+      readMore: 'Saber más →',
+      ctaTitle: '¿Listo para ser el próximo caso de éxito?',
+      ctaLead: 'Hablemos de tus activos, tu equipo y lo que TicTAP puede hacer por ti.',
+      ctaBtn: 'Solicitar demo gratuita',
+      ctaBtnGhost: 'Ver todas las soluciones',
+      ctaBtnGhostHref: '/smart-asset-platform/',
+    };
 ---
 
 <Layout
@@ -33,7 +76,205 @@ const Layout = isEnglish ? BaseLegacyLayoutEn : BaseLegacyLayout;
   bodyItemType={bodyItemType}
   headExtraHtml={headExtraHtml}
   afterBodyHtml={afterBodyHtml}
-  cssBundles={['base-css', 'header-css', 'blog-archive-css']}
+  cssBundles={['base-css', 'header-css', 'casos-de-exito-css']}
+  jsBundles={['base-js', 'header-js']}
 >
-  <Fragment set:html={contentHtml} />
+  <main>
+
+    <!-- ── Masthead ───────────────────────────────────────── -->
+    <section class="section section--bot">
+      <div class="container l-masthead">
+        <p class="t-eyebrow t-eyebrow--brand">{labels.eyebrow}</p>
+        <h1 class="t-display t-h1" style="margin-top:20px;margin-bottom:18px;max-width:900px;margin-left:auto;margin-right:auto;">
+          {labels.h1a} <em>{labels.h1em}</em>
+        </h1>
+        <p class="t-lead">{labels.lead}</p>
+      </div>
+    </section>
+
+
+    <!-- ── Casos destacados (carrusel) ────────────────────── -->
+    <div class="featured-carousel" aria-label={isEn ? 'Featured success stories' : 'Casos de éxito destacados'}>
+      <div class="featured-carousel__track">
+        {featured.map(c => (
+          <section class="section section--bot-soft featured-carousel__slide">
+            <div class="container l-featured">
+              <figure class="l-featured__media">
+                <div class="placeholder" style="--ph-h: clamp(280px, 40vw, 500px);">
+                  {c.image
+                    ? <img src={c.image} alt={isEn ? c.imageAltEn : c.imageAlt} loading="lazy" />
+                    : <span class="placeholder__label">{isEn ? c.imageAltEn : c.imageAlt}</span>
+                  }
+                </div>
+                <span class="tag-float">{isEn ? `Featured · ${c.tagEn}` : `Destacado · ${c.tag}`}</span>
+              </figure>
+              <div class="l-featured__body">
+                <p class="t-eyebrow">{c.client}</p>
+                <h2 class="t-display t-h3 l-featured__title">
+                  {isEn ? c.titleEn : c.titleEs}
+                </h2>
+                <p class="l-featured__lead">
+                  {isEn ? c.leadEn : c.leadEs}
+                </p>
+                {c.metric && (
+                  <div class="metric-callout">
+                    <div class="metric-callout__n">{c.metric.n}</div>
+                    <div class="metric-callout__u">{isEn ? c.metric.uEn : c.metric.u}</div>
+                  </div>
+                )}
+                <a href={isEn ? c.slugEn : c.slug} class="link-action">
+                  {labels.read}
+                </a>
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <button class="featured-carousel__btn featured-carousel__btn--prev" aria-label={isEn ? 'Previous' : 'Anterior'}>
+        <div class="featured-carousel__btn-icon">
+          <svg width="48" height="43" viewBox="0 0 48 43" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M28.9649 41.6538C27.7156 42.9029 25.6897 42.903 24.4405 41.6538C23.1913 40.4045 23.1913 38.3786 24.4405 37.1294L37.0762 24.4946L3.19925 24.4946C1.43254 24.4946 5.5113e-05 23.0621 3.6194e-05 21.2954C3.63484e-05 19.5286 1.43253 18.0961 3.19926 18.0961L37.0782 18.0961L24.4424 5.46138C23.1932 4.21218 23.1933 2.18625 24.4424 0.936968C25.6917 -0.3123 27.7175 -0.312292 28.9668 0.936968L47.0635 19.0327C48.3128 20.2819 48.3128 22.3078 47.0635 23.5571C47.0506 23.57 47.0375 23.5826 47.0245 23.5952L28.9649 41.6538Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </button>
+      <button class="featured-carousel__btn featured-carousel__btn--next" aria-label={isEn ? 'Next' : 'Siguiente'}>
+        <div class="featured-carousel__btn-icon">
+          <svg width="48" height="43" viewBox="0 0 48 43" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M28.9649 41.6538C27.7156 42.9029 25.6897 42.903 24.4405 41.6538C23.1913 40.4045 23.1913 38.3786 24.4405 37.1294L37.0762 24.4946L3.19925 24.4946C1.43254 24.4946 5.5113e-05 23.0621 3.6194e-05 21.2954C3.63484e-05 19.5286 1.43253 18.0961 3.19926 18.0961L37.0782 18.0961L24.4424 5.46138C23.1932 4.21218 23.1933 2.18625 24.4424 0.936968C25.6917 -0.3123 27.7175 -0.312292 28.9668 0.936968L47.0635 19.0327C48.3128 20.2819 48.3128 22.3078 47.0635 23.5571C47.0506 23.57 47.0375 23.5826 47.0245 23.5952L28.9649 41.6538Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </button>
+    </div>
+
+    <script>
+      (function () {
+        var carousel = document.querySelector('.featured-carousel');
+        if (!carousel) return;
+        var track = carousel.querySelector('.featured-carousel__track');
+        var realSlides = Array.from(track.querySelectorAll('.featured-carousel__slide'));
+        var total = realSlides.length;
+        var firstClone = realSlides[0].cloneNode(true);
+        var lastClone  = realSlides[total - 1].cloneNode(true);
+        firstClone.setAttribute('aria-hidden', 'true');
+        lastClone.setAttribute('aria-hidden', 'true');
+        track.appendChild(firstClone);
+        track.insertBefore(lastClone, realSlides[0]);
+        var current = 1;
+        var sliding = false;
+        var timer;
+        function allSlides() { return track.querySelectorAll('.featured-carousel__slide'); }
+        function setWidths() {
+          var w = carousel.offsetWidth;
+          var slides = allSlides();
+          track.style.width = (slides.length * w) + 'px';
+          slides.forEach(function (s) { s.style.width = w + 'px'; });
+        }
+        function moveTo(index, animate) {
+          track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none';
+          track.style.transform = 'translateX(' + (-index * carousel.offsetWidth) + 'px)';
+        }
+        function goTo(index) {
+          if (sliding) return;
+          sliding = true;
+          current = index;
+          moveTo(current, true);
+        }
+        track.addEventListener('transitionend', function () {
+          var last = allSlides().length - 1;
+          if (current === last) { current = 1; moveTo(current, false); }
+          else if (current === 0) { current = last - 1; moveTo(current, false); }
+          sliding = false;
+        });
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+        function startTimer() { clearInterval(timer); timer = setInterval(next, 5000); }
+        carousel.querySelector('.featured-carousel__btn--next').addEventListener('click', function () { next(); startTimer(); this.blur(); });
+        carousel.querySelector('.featured-carousel__btn--prev').addEventListener('click', function () { prev(); startTimer(); this.blur(); });
+        setWidths();
+        moveTo(current, false);
+        startTimer();
+        window.addEventListener('resize', function () { setWidths(); moveTo(current, false); });
+      })();
+    </script>
+
+
+    <!-- ── Más historias ──────────────────────────────────── -->
+    <section class="section" style="padding-bottom:0;">
+      <div class="container">
+        <div class="l-cases-head">
+          <div class="section-head" style="margin:0;">
+            <p class="t-eyebrow">{labels.library}</p>
+            <h3 class="t-display t-h4">{labels.more}</h3>
+          </div>
+          <nav class="tabs" aria-label={isEn ? 'Filter by sector' : 'Filtrar por sector'} id="casos-tabs">
+            <a href="#" class="tabs__item tabs__item--active" data-filter="todos">{labels.all}</a>
+            {sectors.map(s => (
+              <a href="#" class="tabs__item" data-filter={s.key}>{s.label}</a>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Grid de casos ─────────────────────────────────── -->
+    <section class="section" style="padding-top:32px;">
+      <div class="container l-cases">
+        {all.map(c => (
+          <article class="case" data-sector={isEn ? c.sectorEn : c.sector}>
+            <figure class="placeholder" style="--ph-h: clamp(200px, 22vw, 260px);">
+              {c.image
+                ? <img src={c.image} alt={isEn ? c.imageAltEn : c.imageAlt} loading="lazy" />
+                : <span class="placeholder__label">{isEn ? c.imageAltEn : c.imageAlt}</span>
+              }
+            </figure>
+            <div class="case__body">
+              <div class="case__meta">
+                <span class="tag">{isEn ? c.tagEn : c.tag}</span>
+                <span class="case__client">{c.client}</span>
+              </div>
+              <h4 class="t-display t-h5 case__title">
+                {isEn ? c.titleEn : c.titleEs}
+              </h4>
+              <p class="case__quote">{isEn ? c.quoteEn : c.quoteEs}</p>
+              <a href={isEn ? c.slugEn : c.slug} class="link-action">{labels.readMore}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        var tabs = document.querySelectorAll('#casos-tabs .tabs__item');
+        var cases = document.querySelectorAll('.l-cases .case');
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function (e) {
+            e.preventDefault();
+            tabs.forEach(function (t) { t.classList.remove('tabs__item--active'); });
+            tab.classList.add('tabs__item--active');
+            var filter = tab.getAttribute('data-filter');
+            cases.forEach(function (c) {
+              c.style.display = (filter === 'todos' || c.getAttribute('data-sector') === filter) ? '' : 'none';
+            });
+          });
+        });
+      })();
+    </script>
+
+
+    <!-- ── CTA inferior ──────────────────────────────────── -->
+    <section class="section section--dark" style="margin-top:64px;padding:clamp(48px,7vw,96px) 0;">
+      <div class="container" style="text-align:center;max-width:680px;">
+        <h2 class="t-display t-h3" style="color:#fff;margin-bottom:16px;">{labels.ctaTitle}</h2>
+        <p class="t-lead" style="color:rgba(255,255,255,0.75);margin-bottom:32px;">{labels.ctaLead}</p>
+        <div class="cta__actions" style="justify-content:center;">
+          <a href={isEn ? '/en/free-demo-tictap-industry/' : '/demo-gratuita-tictap-industry/'} class="btn" style="color:#fff">{labels.ctaBtn}</a>
+          <a href={labels.ctaBtnGhostHref} class="btn btn--ghost-light" style="color:#fff">{labels.ctaBtnGhost}</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </Layout>

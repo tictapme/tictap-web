@@ -67,27 +67,103 @@ function mustMatch(html: string, pattern: RegExp, label: string) {
   return match[1];
 }
 
+function ensureElementorBodyClasses(bodyClass: string, pageHtml: string): string {
+  if (!/data-elementor-type=["']header["']/i.test(pageHtml)) {
+    return bodyClass;
+  }
+
+  const classes = bodyClass.split(/\s+/).filter(Boolean);
+  for (const required of ['elementor-default', 'elementor-kit-6185']) {
+    if (!classes.includes(required)) {
+      classes.push(required);
+    }
+  }
+  return classes.join(' ');
+}
+
 const shellCssCache = new Map<string, string>();
+const shellCssMqCache = new Map<string, string>();
+const globalInlineCssCache = new Map<string, string>();
+
+/**
+ * Extracts the global inline CSS blocks that WordPress/Elementor inject on every page
+ * (astra-theme-css-inline-css and elementor-frontend-inline-css) from the reference
+ * index page. These blocks contain CSS custom properties (colors, spacing, kit vars)
+ * that the header and all Elementor widgets rely on, but that individual legacy-exported
+ * pages may not include in their own <head>.
+ */
+export function loadGlobalInlineCss(lang: 'es' | 'en'): string {
+  if (globalInlineCssCache.has(lang)) return globalInlineCssCache.get(lang)!;
+
+  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
+  const styleIds = ['astra-theme-css-inline-css', 'elementor-frontend-inline-css'];
+
+  try {
+    const rawHtml = readSourceFile(refPath);
+    const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+    const blocks = styleIds
+      .map((id) => {
+        const match = headInner.match(
+          new RegExp(`<style[^>]*id=["']${id}["'][^>]*>([\\s\\S]*?)<\\/style>`, 'i'),
+        );
+        return match ? match[1] : '';
+      })
+      .filter(Boolean);
+    const css = blocks.join('\n');
+    globalInlineCssCache.set(lang, css);
+    return css;
+  } catch {
+    globalInlineCssCache.set(lang, '');
+    return '';
+  }
+}
 
 export function loadShellCss(lang: 'es' | 'en'): string {
   if (shellCssCache.has(lang)) return shellCssCache.get(lang)!;
 
-  const headerId = lang === 'es' ? '9642' : '10265';
-  const refPath = lang === 'es' ? 'index.html' : 'en/index.html';
+  const headerId = '9642';
+  const refPath = 'index.html';
 
   try {
     const rawHtml = readSourceFile(refPath);
     const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
     const styleBlocks = [...headInner.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]);
     const block = styleBlocks.find((s) => s.includes(`.elementor-${headerId} `)) ?? '';
-    const rules = [...block.matchAll(new RegExp(`\\.elementor-${headerId}[^{}]*\\{[^{}]*\\}`, 'g'))].map(
+    const blockWithoutMedia = block.replace(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+    const rules = [...blockWithoutMedia.matchAll(new RegExp(`\\.elementor-${headerId}[^{}]*\\{[^{}]*\\}`, 'g'))].map(
       (m) => m[0],
     );
-    const css = rules.join('');
+    const mqRules = [...block.matchAll(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g)]
+      .map((m) => m[0])
+      .filter((mq) => mq.includes(`.elementor-${headerId}`));
+    const css = rules.join('') + mqRules.join('');
     shellCssCache.set(lang, css);
     return css;
   } catch {
     shellCssCache.set(lang, '');
+    return '';
+  }
+}
+
+export function loadShellCssMq(lang: 'es' | 'en'): string {
+  if (shellCssMqCache.has(lang)) return shellCssMqCache.get(lang)!;
+
+  const headerId = '9642';
+  const refPath = 'index.html';
+
+  try {
+    const rawHtml = readSourceFile(refPath);
+    const headInner = rawHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+    const styleBlocks = [...headInner.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]);
+    const block = styleBlocks.find((s) => s.includes(`.elementor-${headerId} `)) ?? '';
+    const mqRules = [...block.matchAll(/@media[^{]+\{(?:[^{}]|\{[^{}]*\})*\}/g)]
+      .map((m) => m[0])
+      .filter((mq) => mq.includes(`.elementor-${headerId}`));
+    const css = mqRules.join('');
+    shellCssMqCache.set(lang, css);
+    return css;
+  } catch {
+    shellCssMqCache.set(lang, '');
     return '';
   }
 }
@@ -188,11 +264,11 @@ function stripAstroInjectedHeadHtml(html: string) {
     .replace(/\sdata-astro-cid-[a-z0-9]+(?:=(?:"[^"]*"|'[^']*'))?/gi, '');
 }
 
-function sanitizeHeadExtraHtml(html: string) {
+export function sanitizeHeadExtraHtml(html: string) {
   return stripAstroInjectedHeadHtml(stripBaseHeadTags(stripCommonCssAssetTags(html))).trim();
 }
 
-function sanitizeAfterFooterHtml(html: string) {
+export function sanitizeAfterFooterHtml(html: string) {
   const seenScriptSrcs = new Set<string>();
 
   const dedupedHtml = html
@@ -397,6 +473,34 @@ export function listManagedLegacyRoutes() {
     .filter(({ route }) => !shouldSkipManagedRoute(route));
 }
 
+function stripElementorHeader(html: string): string {
+  const startMarker = '<header';
+  let i = 0;
+  while (i < html.length) {
+    const idx = html.indexOf(startMarker, i);
+    if (idx === -1) break;
+    if (!/data-elementor-type=["']header["']/i.test(html.slice(idx, idx + 200))) {
+      i = idx + startMarker.length;
+      continue;
+    }
+    let depth = 0;
+    let j = idx;
+    let endIdx = -1;
+    while (j < html.length) {
+      if (html.startsWith('<header', j) && /[\s>]/.test(html[j + 7] ?? '')) depth++;
+      else if (html.startsWith('</header>', j)) {
+        depth--;
+        if (depth === 0) { endIdx = j + '</header>'.length; break; }
+      }
+      j++;
+    }
+    if (endIdx === -1) break;
+    html = html.slice(0, idx) + html.slice(endIdx);
+    i = idx;
+  }
+  return html;
+}
+
 export function loadSourcePage(relativePath: string) {
   const rawHtml = readSourceFile(relativePath);
   const normalized = rewriteToLocal(rawHtml);
@@ -408,7 +512,7 @@ export function loadSourcePage(relativePath: string) {
   }
 
   const bodyAttributes = bodyMatch[1] || '';
-  const bodyInnerHtml = bodyMatch[2];
+  const bodyInnerHtml = stripElementorHeader(bodyMatch[2]);
   const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
@@ -418,7 +522,7 @@ export function loadSourcePage(relativePath: string) {
   return {
     title,
     lang: langMatch?.[1] || 'es-ES',
-    bodyClass: bodyClassMatch?.[1] || '',
+    bodyClass: ensureElementorBodyClasses(bodyClassMatch?.[1] || '', bodyInnerHtml),
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
     headExtraHtml: stripAstroInjectedHeadHtml(stripBaseHeadTags(headInner)).trim(),
@@ -431,16 +535,35 @@ export function loadSourceStructuredPage(relativePath: string) {
   const normalized = rewriteToLocal(rawHtml);
   const headInner = mustMatch(normalized, /<head[^>]*>([\s\S]*?)<\/head>/i, 'head');
   const bodyClass = mustMatch(normalized, /<body[^>]+class=["']([^"']+)["']/i, 'body classes');
-  const contentHtml = mustMatch(normalized, /(<div id="content" class="site-content">[\s\S]*?)<footer data-elementor-type="footer"/i, 'content');
-  const afterFooterHtml = mustMatch(normalized, /<\/footer>([\s\S]*?)<\/body>/i, 'after footer');
   const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyItemTypeMatch = normalized.match(/<body[^>]+itemtype=["']([^"']+)["']/i);
 
+  // Support both <footer data-elementor-type="footer"> and <div data-elementor-type="footer">
+  const contentMatch = normalized.match(
+    /(<div id="content" class="site-content">[\s\S]*?)<(?:footer|div)\b[^>]+data-elementor-type=["']footer["']/i,
+  );
+  if (!contentMatch) throw new Error(`Could not extract content for ${relativePath}`);
+  const contentHtml = contentMatch[1];
+
+  let afterFooterHtml: string;
+  const afterFooterByTag = normalized.match(/<\/footer>([\s\S]*?)<\/body>/i);
+  if (afterFooterByTag) {
+    afterFooterHtml = afterFooterByTag[1];
+  } else {
+    // Footer uses <div> — extract the script block that follows the footer div
+    const footerDivPos = normalized.search(/elementor-location-footer/i);
+    const scriptsPos = footerDivPos !== -1 ? normalized.indexOf('<script', footerDivPos) : -1;
+    const bodyClosePos = normalized.lastIndexOf('</body>');
+    afterFooterHtml = scriptsPos !== -1 && scriptsPos < bodyClosePos
+      ? normalized.slice(scriptsPos, bodyClosePos)
+      : '';
+  }
+
   return {
     title,
     lang: langMatch?.[1] || 'es-ES',
-    bodyClass,
+    bodyClass: ensureElementorBodyClasses(bodyClass, normalized),
     bodyItemType: bodyItemTypeMatch?.[1] || 'https://schema.org/WebPage',
     headExtraHtml: sanitizeHeadExtraHtml(headInner),
     contentHtml,
@@ -487,7 +610,7 @@ export function loadSourceStructuredElementorShellPage(relativePath: string) {
   return {
     title,
     lang: langMatch?.[1] || 'es-ES',
-    bodyClass: bodyClassMatch?.[1] || '',
+    bodyClass: ensureElementorBodyClasses(bodyClassMatch?.[1] || '', bodyInnerHtml),
     bodyItemType: bodyItemTypeMatch?.[1] || '',
     bodyItemscope: hasBodyItemscope,
     headExtraHtml: sanitizeHeadExtraHtml(headInner),
