@@ -240,7 +240,8 @@ const nav = isEn
 }
 
 /* spacer so content doesn't hide under fixed header */
-.tt-header + * { margin-top: 72px; }
+body { padding-top: 96px; }
+@media (max-width: 960px) { body { padding-top: 72px; } }
 
 .tt-header__inner {
   display: flex;

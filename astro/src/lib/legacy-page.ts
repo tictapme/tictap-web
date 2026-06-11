@@ -473,6 +473,34 @@ export function listManagedLegacyRoutes() {
     .filter(({ route }) => !shouldSkipManagedRoute(route));
 }
 
+function stripElementorHeader(html: string): string {
+  const startMarker = '<header';
+  let i = 0;
+  while (i < html.length) {
+    const idx = html.indexOf(startMarker, i);
+    if (idx === -1) break;
+    if (!/data-elementor-type=["']header["']/i.test(html.slice(idx, idx + 200))) {
+      i = idx + startMarker.length;
+      continue;
+    }
+    let depth = 0;
+    let j = idx;
+    let endIdx = -1;
+    while (j < html.length) {
+      if (html.startsWith('<header', j) && /[\s>]/.test(html[j + 7] ?? '')) depth++;
+      else if (html.startsWith('</header>', j)) {
+        depth--;
+        if (depth === 0) { endIdx = j + '</header>'.length; break; }
+      }
+      j++;
+    }
+    if (endIdx === -1) break;
+    html = html.slice(0, idx) + html.slice(endIdx);
+    i = idx;
+  }
+  return html;
+}
+
 export function loadSourcePage(relativePath: string) {
   const rawHtml = readSourceFile(relativePath);
   const normalized = rewriteToLocal(rawHtml);
@@ -484,7 +512,7 @@ export function loadSourcePage(relativePath: string) {
   }
 
   const bodyAttributes = bodyMatch[1] || '';
-  const bodyInnerHtml = bodyMatch[2];
+  const bodyInnerHtml = stripElementorHeader(bodyMatch[2]);
   const title = decodeHtmlEntities(mustMatch(normalized, /<title>([\s\S]*?)<\/title>/i, 'title').trim());
   const langMatch = normalized.match(/<html[^>]+lang=["']([^"']+)["']/i);
   const bodyClassMatch = bodyAttributes.match(/class=["']([^"']+)["']/i);
