@@ -37,7 +37,7 @@ const {
     <title>{title}</title>
     {cssBundles.length > 0 && <LegacyAssetBundle bundleNames={cssBundles} />}
     <Fragment set:html={headExtraHtml} />
-    <style>{`.elementor-location-header { display: none !important; }`}</style>
+    <style>.elementor-location-header { display: none !important; }</style>
   </head>
   <body class={bodyClass} itemtype={bodyItemType || undefined} itemscope={bodyItemscope}>
     <SiteHeader lang={lang} />
