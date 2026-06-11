@@ -14,6 +14,20 @@ import {
   loadSourceStructuredPage,
 } from '../lib/legacy-page';
 import { isSolutionPage } from '../lib/solution-pages';
+import { caseStudies } from '../data/case-studies';
+
+// Build EN→ES and ES→EN slug maps from the case-studies data
+const enToEs: Record<string, string> = {};
+const esToEn: Record<string, string> = {};
+for (const cs of caseStudies) {
+  if (cs.slug && cs.slugEn) {
+    enToEs[cs.slugEn] = cs.slug;
+    esToEn[cs.slug] = cs.slugEn;
+  }
+}
+// Additional non-case-study pages where slugs differ between languages
+enToEs['/en/stock/electrical-distributors/'] = '/stock/partners-distribuidores/';
+esToEn['/stock/partners-distribuidores/'] = '/en/stock/electrical-distributors/';
 
 export async function getStaticPaths() {
   return listManagedLegacyRoutes()
@@ -80,6 +94,29 @@ if (isRedirectPage) {
 }
 
 const canRenderStructuredCaseStudy = isCaseStudyArchive || (page !== rawPage && isStructuredCaseStudy);
+
+// Inject/replace hreflang alternate for case study pages where the slug differs between languages
+function withCaseStudyHreflang(headHtml: string, currentSlug: string): string {
+  const esSlug = enToEs[currentSlug];
+  if (!esSlug) return headHtml;
+  // Always replace: strip any existing hreflang="es" and prepend the correct one
+  const cleaned = headHtml.replace(/<link[^>]+hreflang="es"[^>]*>\s*/gi, '');
+  return `<link rel="alternate" hreflang="es" href="${esSlug}">\n` + cleaned;
+}
+
+function withCaseStudyHreflangEs(headHtml: string, currentSlug: string): string {
+  const enSlug = esToEn[currentSlug];
+  if (!enSlug) return headHtml;
+  // Always replace: strip any existing hreflang="en" and prepend the correct one
+  const cleaned = headHtml.replace(/<link[^>]+hreflang="en"[^>]*>\s*/gi, '');
+  return `<link rel="alternate" hreflang="en" href="${enSlug}">\n` + cleaned;
+}
+
+const pageRoute = '/' + relativePath.replace(/index\.html$/, '');
+const _baseHeadHtml = (legacyElementorPage ?? page).headExtraHtml;
+const resolvedHeadHtml = /^\/en\//.test(pageRoute)
+  ? withCaseStudyHreflang(_baseHeadHtml, pageRoute)
+  : withCaseStudyHreflangEs(_baseHeadHtml, pageRoute);
 ---
 
 {
@@ -99,7 +136,7 @@ const canRenderStructuredCaseStudy = isCaseStudyArchive || (page !== rawPage && 
       lang={page.lang}
       bodyClass={page.bodyClass}
       bodyItemType={page.bodyItemType}
-      headExtraHtml={page.headExtraHtml}
+      headExtraHtml={resolvedHeadHtml}
       afterBodyHtml={page.afterFooterHtml}
       contentHtml={page.contentHtml}
     />
@@ -107,7 +144,7 @@ const canRenderStructuredCaseStudy = isCaseStudyArchive || (page !== rawPage && 
     <LegacyCaseStudyElementorLayout
       title={legacyElementorPage.title}
       lang={legacyElementorPage.lang}
-      headExtraHtml={legacyElementorPage.headExtraHtml}
+      headExtraHtml={resolvedHeadHtml}
       bodyClass={legacyElementorPage.bodyClass}
       bodyItemType={legacyElementorPage.bodyItemType}
       bodyItemscope={legacyElementorPage.bodyItemscope}
@@ -130,7 +167,7 @@ const canRenderStructuredCaseStudy = isCaseStudyArchive || (page !== rawPage && 
       lang={page.lang}
       bodyClass={page.bodyClass}
       bodyItemType={page.bodyItemType}
-      headExtraHtml={page.headExtraHtml}
+      headExtraHtml={resolvedHeadHtml}
       afterBodyHtml={page.afterFooterHtml}
       contentHtml={page.contentHtml}
     />
@@ -148,7 +185,7 @@ const canRenderStructuredCaseStudy = isCaseStudyArchive || (page !== rawPage && 
     <RawLegacyLayout
       title={page.title}
       lang={page.lang}
-      headExtraHtml={page.headExtraHtml}
+      headExtraHtml={resolvedHeadHtml}
       bodyClass={page.bodyClass}
       bodyItemType={page.bodyItemType}
       bodyItemscope={page.bodyItemscope}

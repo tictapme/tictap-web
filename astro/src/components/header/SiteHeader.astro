@@ -94,7 +94,7 @@ const nav = isEn
 
     <!-- Actions -->
     <div class="tt-header__actions">
-      <a href={langHref} class="tt-header__lang" aria-label={isEn ? 'Switch to Spanish' : 'Switch to English'}>
+      <a href={langHref} class="tt-header__lang" id="tt-lang-switcher" aria-label={isEn ? 'Switch to Spanish' : 'Switch to English'}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
         </svg>
@@ -206,7 +206,7 @@ const nav = isEn
         </li>
 
         <li class="tt-mobile-nav__item tt-mobile-nav__item--actions">
-          <a href={langHref} class="tt-header__lang">{langLabel}</a>
+          <a href={langHref} class="tt-header__lang" id="tt-lang-switcher-mobile">{langLabel}</a>
           <a href={loginHref} class="tt-header__login" target="_blank" rel="noopener">Log in</a>
           <a href={demoHref} class="tt-header__demo">{demoLabel}</a>
         </li>
@@ -629,7 +629,7 @@ const nav = isEn
 }
 </style>
 
-<script>
+<script define:vars={{ isEn }}>
   (function () {
     var header = document.getElementById('tt-header');
     if (!header) return;
@@ -661,6 +661,27 @@ const nav = isEn
         var sub = this.nextElementSibling;
         if (sub) sub.classList.toggle('is-open', !open);
       });
+    });
+
+    // Language switcher — read hreflang alternates already in <head>
+    var targetLang = isEn ? 'es' : 'en';
+    var currentPath = window.location.pathname;
+    var altLink = document.querySelector('link[rel="alternate"][hreflang="' + targetLang + '"]');
+    var altPath = altLink ? altLink.getAttribute('href') : null;
+    // Ignore hreflang that points to the current page (bad data in some legacy pages)
+    if (altPath && (altPath === currentPath || altPath.replace(/\/$/, '') === currentPath.replace(/\/$/, ''))) {
+      altPath = null;
+    }
+    if (!altPath) {
+      // fallback: simple prefix swap
+      altPath = isEn
+        ? currentPath.replace(/^\/en(\/|$)/, '/') || '/'
+        : '/en' + currentPath;
+    }
+    var switchers = ['tt-lang-switcher', 'tt-lang-switcher-mobile'];
+    switchers.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.setAttribute('href', altPath);
     });
 
   })();
