@@ -9,10 +9,11 @@ npm run static:prepare
 
 if ! git diff --ignore-all-space --quiet -- src; then
   echo ""
-  echo "[pre-push] src/ updated by build — committing before push..."
+  echo "[pre-push] src/ updated by build — committing and pushing..."
   git add src/
   git commit -m "build: sync static export"
-  echo "[pre-push] Build commit created. Proceeding with push."
+  git push --no-verify
+  echo "[pre-push] Build commit pushed. Proceeding with original push."
 else
   echo "[pre-push] Static export is up to date. Proceeding with push."
 fi
