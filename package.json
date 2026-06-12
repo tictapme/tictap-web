@@ -8,6 +8,7 @@
     "preview": "npm run astro:build && node bin/preview.js dist src",
     "preview:src": "node bin/preview.js src",
     "astro:build": "astro build",
+    "publish": "bash bin/publish.sh",
     "static:prepare": "npm run astro:build && node bin/sync-astro-output.js && node bin/optimize-seo.js && node bin/validate-static-site.js",
     "static:verify-clean": "bash bin/verify-static-sync.sh",
     "hooks:install": "git config core.hooksPath .githooks",
