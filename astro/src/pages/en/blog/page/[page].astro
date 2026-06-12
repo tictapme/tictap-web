@@ -1,0 +1,23 @@
+---
+import BaseLegacyLayoutEn from '../../../../layouts/BaseLegacyLayoutEn.astro';
+import { loadSourcePage } from '../../../../lib/legacy-page';
+
+export function getStaticPaths() {
+  return [2].map((n) => ({ params: { page: String(n) } }));
+}
+
+const { page } = Astro.params;
+const src = loadSourcePage(`en/blog/page/${page}/index.html`);
+const headExtraHtml = `${src.headExtraHtml}
+<style>.elementor-posts-container .elementor-post__thumbnail { padding-bottom: 0 !important; }</style>`;
+---
+
+<BaseLegacyLayoutEn
+  title={src.title}
+  bodyClass={src.bodyClass}
+  headExtraHtml={headExtraHtml}
+  afterBodyHtml={src.afterFooterHtml ?? ''}
+  cssBundles={['base-css', 'header-css', 'blog-archive-css']}
+>
+  <Fragment set:html={src.bodyInnerHtml} />
+</BaseLegacyLayoutEn>
