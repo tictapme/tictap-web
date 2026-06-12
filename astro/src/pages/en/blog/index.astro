@@ -1,8 +1,89 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLegacyLayoutEn from '../../../layouts/BaseLegacyLayoutEn.astro';
 import { loadSourceStructuredPage } from '../../../lib/legacy-page';
 
 const page = loadSourceStructuredPage('en/blog/index.html');
+const generatedPosts = (await getCollection('blog-en')).sort(
+  (left, right) => new Date(right.data.publishedTime).getTime() - new Date(left.data.publishedTime).getTime(),
+);
+
+function normalizePath(value: string) {
+  try {
+    const url = new URL(value, 'https://www.tictap.me');
+    return url.pathname.replace(/\/+$/, '') || '/';
+  } catch {
+    return String(value || '').replace(/^https?:\/\/[^/]+/i, '').replace(/\/+$/, '') || '/';
+  }
+}
+
+function escapeHtml(value: string) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
+}
+
+function extractLegacyArticles(contentHtml: string, widgetId: string) {
+  const pattern = new RegExp(
+    `(<div class="elementor-element elementor-element-${widgetId}[\\s\\S]*?<div class="elementor-posts-container elementor-posts elementor-posts--skin-cards elementor-grid" role="list">)([\\s\\S]*?)(</div>\\s*<div class="e-load-more-anchor"|</div>\\s*</div>\\s*</div>\\s*<div class="elementor-element elementor-element-3eb33a95)`,
+  );
+  const match = contentHtml.match(pattern);
+  if (!match) throw new Error(`Could not extract archive widget ${widgetId}`);
+  const articles = match[2].match(/<article class="elementor-post[\s\S]*?<\/article>/g) ?? [];
+  return { pattern, prefix: match[1], suffix: match[3], articles };
+}
+
+function extractLegacyHref(articleHtml: string) {
+  const match = articleHtml.match(/<a class="elementor-post__thumbnail__link" href="([^"]+)"/i);
+  return match ? normalizePath(match[1]) : '';
+}
+
+function buildGeneratedArticleCard(post: (typeof generatedPosts)[0]) {
+  const href = normalizePath(post.data.publicUrl || `/en/blog/${post.slug}/`);
+  const title = escapeHtml(post.data.title);
+  const category = escapeHtml(post.data.category);
+  const image = escapeHtml(post.data.ogImage);
+  const imageWidth = String(post.data.ogImageWidth || 700);
+  const imageHeight = String(post.data.ogImageHeight || 391);
+
+  return `
+<article class="elementor-post elementor-grid-item post-generated post type-post status-publish format-standard has-post-thumbnail hentry category-blog ast-grid-common-col ast-full-width" role="listitem">
+  <div class="elementor-post__card">
+    <a class="elementor-post__thumbnail__link" href="${href}" tabindex="-1"><div class="elementor-post__thumbnail"><img fetchpriority="high" width="${imageWidth}" height="${imageHeight}" src="${image}" alt="${title}" decoding="async" sizes="(max-width: 700px) 100vw, 700px"></div></a>
+    <div class="elementor-post__badge">${category}</div>
+    <div class="elementor-post__text">
+      <h2 class="elementor-post__title">
+        <a href="${href}">
+          ${title}
+        </a>
+      </h2>
+      <div class="elementor-post__read-more-wrapper">
+        <a class="elementor-post__read-more" href="${href}" aria-label="Read more about ${title}" tabindex="-1">
+          Read More »
+        </a>
+      </div>
+    </div>
+  </div>
+</article>`.trim();
+}
+
+const mainArchive = extractLegacyArticles(page.contentHtml, '88896a4');
+const generatedPaths = new Set(
+  generatedPosts.map((post) => normalizePath(post.data.publicUrl || `/en/blog/${post.slug}/`)),
+);
+const legacyArticles = mainArchive.articles.filter((articleHtml) => !generatedPaths.has(extractLegacyHref(articleHtml)));
+const renderedArticles = [...generatedPosts.map(buildGeneratedArticleCard), ...legacyArticles].join('\n');
+const contentHtml = page.contentHtml.replace(mainArchive.pattern, `$1${renderedArticles}$3`);
 ---
 
 <BaseLegacyLayoutEn
@@ -13,5 +94,5 @@ const page = loadSourceStructuredPage('en/blog/index.html');
   afterBodyHtml={page.afterFooterHtml}
   cssBundles={['base-css', 'header-css', 'blog-archive-css']}
 >
-  <Fragment set:html={page.contentHtml} />
+  <Fragment set:html={contentHtml} />
 </BaseLegacyLayoutEn>
