@@ -261,7 +261,9 @@ function stripAstroInjectedHeadHtml(html: string) {
       '',
     )
     .replace(/<style>\s*<\/style>\s*/gis, '')
-    .replace(/\sdata-astro-cid-[a-z0-9]+(?:=(?:"[^"]*"|'[^']*'))?/gi, '');
+    .replace(/\sdata-astro-cid-[a-z0-9]+(?:=(?:"[^"]*"|'[^']*'))?/gi, '')
+    .replace(/<link\b[^>]+href=["'][^"']*\/_astro\/[^"']*["'][^>]*>\s*/gi, '')
+    .replace(/<script\b[^>]+src=["'][^"']*\/_astro\/[^"']*["'][^>]*><\/script>\s*/gi, '');
 }
 
 export function sanitizeHeadExtraHtml(html: string) {

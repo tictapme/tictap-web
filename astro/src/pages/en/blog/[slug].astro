@@ -1,33 +1,79 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BlogArticleLayoutEn from '../../../layouts/BlogArticleLayoutEn.astro';
 import BaseLegacyLayoutEn from '../../../layouts/BaseLegacyLayoutEn.astro';
 import { loadSourceStructuredPage, stripBundleJsAssets, extractInlineConfigScripts } from '../../../lib/legacy-page';
 
 export async function getStaticPaths() {
+  const generatedPosts = await getCollection('blog-en');
+  const generatedSlugs = new Set(generatedPosts.map((p) => p.slug));
+
   const blogDir = path.join(process.cwd(), 'src', 'en', 'blog');
   const entries = fs.readdirSync(blogDir, { withFileTypes: true });
-  return entries
-    .filter((e) => e.isDirectory() && e.name !== 'page')
-    .map((e) => ({ params: { slug: e.name } }));
+  const legacyPaths = entries
+    .filter((e) => e.isDirectory() && e.name !== 'page' && !generatedSlugs.has(e.name))
+    .map((e) => ({ params: { slug: e.name }, props: { post: null as CollectionEntry<'blog-en'> | null } }));
+
+  const generatedPaths = generatedPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+
+  return [...generatedPaths, ...legacyPaths];
 }
 
 const { slug } = Astro.params;
-const page = loadSourceStructuredPage(`en/blog/${slug}/index.html`);
-const strippedAfterBody = stripBundleJsAssets(page.afterFooterHtml);
-const { configHtml, remainingHtml: afterBodyHtml } = extractInlineConfigScripts(strippedAfterBody);
-const headExtraHtml = page.headExtraHtml + configHtml;
+const { post } = Astro.props as { post: CollectionEntry<'blog-en'> | null };
+
+let Content: any = null;
+if (post) {
+  ({ Content } = await render(post));
+}
+
+const canonical = post
+  ? (post.data.publicUrl || `https://www.tictap.me/en/blog/${slug}/`)
+  : `https://www.tictap.me/en/blog/${slug}/`;
+
+let legacyTitle = '';
+let legacyLang = 'en-US';
+let legacyBodyClass = '';
+let legacyBodyItemType = '';
+let legacyHeadExtraHtml = '';
+let legacyAfterBodyHtml = '';
+let legacyContentHtml = '';
+
+if (!post) {
+  const page = loadSourceStructuredPage(`en/blog/${slug}/index.html`);
+  const strippedAfterBody = stripBundleJsAssets(page.afterFooterHtml);
+  const { configHtml, remainingHtml: afterBodyHtml } = extractInlineConfigScripts(strippedAfterBody);
+  legacyTitle = page.title;
+  legacyLang = page.lang ?? 'en-US';
+  legacyBodyClass = page.bodyClass;
+  legacyBodyItemType = page.bodyItemType;
+  legacyHeadExtraHtml = page.headExtraHtml + configHtml;
+  legacyAfterBodyHtml = afterBodyHtml;
+  legacyContentHtml = page.contentHtml;
+}
 ---
 
-<BaseLegacyLayoutEn
-  title={page.title}
-  lang={page.lang}
-  bodyClass={page.bodyClass}
-  bodyItemType={page.bodyItemType}
-  headExtraHtml={headExtraHtml}
-  afterBodyHtml={afterBodyHtml}
-  cssBundles={['base-css', 'header-css', 'blog-single-css']}
-  jsBundles={['base-js', 'header-js']}
->
-  <Fragment set:html={page.contentHtml} />
-</BaseLegacyLayoutEn>
+{post ? (
+  <BlogArticleLayoutEn post={post} canonical={canonical}>
+    <Content />
+  </BlogArticleLayoutEn>
+) : (
+  <BaseLegacyLayoutEn
+    title={legacyTitle}
+    lang={legacyLang}
+    bodyClass={legacyBodyClass}
+    bodyItemType={legacyBodyItemType}
+    headExtraHtml={legacyHeadExtraHtml}
+    afterBodyHtml={legacyAfterBodyHtml}
+    cssBundles={['base-css', 'header-css', 'blog-single-css']}
+    jsBundles={['base-js', 'header-js']}
+  >
+    <Fragment set:html={legacyContentHtml} />
+  </BaseLegacyLayoutEn>
+)}

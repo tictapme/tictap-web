@@ -1,0 +1,29 @@
+---
+import BaseLegacyLayout from '../../../layouts/BaseLegacyLayout.astro';
+import { loadSourcePage } from '../../../lib/legacy-page';
+
+export function getStaticPaths() {
+  return [2, 3, 4].map((n) => ({ params: { page: String(n) } }));
+}
+
+const { page } = Astro.params;
+const src = loadSourcePage(`blog/page/${page}/index.html`);
+const headExtraHtml = `${src.headExtraHtml}
+<style>
+.elementor-posts-container .elementor-post__card { position: relative; }
+.elementor-posts-container .elementor-post__thumbnail { padding-bottom: 0 !important; height: 220px; overflow: hidden; }
+.elementor-posts-container .elementor-post__thumbnail__link { display: block; height: 100%; }
+.elementor-posts-container .elementor-post__thumbnail__link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.elementor-posts-container .elementor-post__thumbnail img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+</style>`;
+---
+
+<BaseLegacyLayout
+  title={src.title}
+  bodyClass={src.bodyClass}
+  headExtraHtml={headExtraHtml}
+  afterBodyHtml={src.afterFooterHtml ?? ''}
+  cssBundles={['base-css', 'header-css', 'blog-archive-css']}
+>
+  <Fragment set:html={src.bodyInnerHtml} />
+</BaseLegacyLayout>

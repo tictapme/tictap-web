@@ -118,6 +118,11 @@ const headExtraHtml = `${page.headExtraHtml}
   padding: 0 13px;
   margin-top: 20px;
 }
+.elementor-posts-container .elementor-post__card { position: relative; }
+.elementor-posts-container .elementor-post__thumbnail { padding-bottom: 0 !important; height: 220px; overflow: hidden; }
+.elementor-posts-container .elementor-post__thumbnail__link { display: block; height: 100%; }
+.elementor-posts-container .elementor-post__thumbnail__link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.elementor-posts-container .elementor-post__thumbnail img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 </style>`;
 ---
 

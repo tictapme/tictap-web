@@ -27,7 +27,6 @@ const prunedRouteDirs = ['author', 'tag', path.join('en', 'author'), path.join('
 
 // Rutas protegidas: editadas manualmente en src/, el sync no las sobreescribe.
 const protectedPaths = new Set([
-  path.join('casos-de-exito', 'trazabilidad-de-grupos-electrogenos-para-dagartech', 'index.html'),
   path.join('stock', 'partners-distribuidores', 'index.html'),
 ]);
 
