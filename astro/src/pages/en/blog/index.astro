@@ -85,7 +85,13 @@ const legacyArticles = mainArchive.articles.filter((articleHtml) => !generatedPa
 const renderedArticles = [...generatedPosts.map(buildGeneratedArticleCard), ...legacyArticles].join('\n');
 const contentHtml = page.contentHtml.replace(mainArchive.pattern, `$1${renderedArticles}$3`);
 const headExtraHtml = `${page.headExtraHtml}
-<style>.elementor-posts-container .elementor-post__thumbnail { padding-bottom: 0 !important; }</style>`;
+<style>
+.elementor-posts-container .elementor-post__card { position: relative; }
+.elementor-posts-container .elementor-post__thumbnail { padding-bottom: 0 !important; height: 220px; overflow: hidden; }
+.elementor-posts-container .elementor-post__thumbnail__link { display: block; height: 100%; }
+.elementor-posts-container .elementor-post__thumbnail__link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.elementor-posts-container .elementor-post__thumbnail img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+</style>`;
 ---
 
 <BaseLegacyLayoutEn
