@@ -1555,6 +1555,34 @@ a:focus {
   margin: 2rem 0;
 }
 
+.blog-two-col {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2.5rem;
+  align-items: start;
+  margin: 1.5rem 0 2rem;
+}
+
+.blog-two-col-img {
+  width: 260px;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 32, 46, 0.12);
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .blog-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-two-col-img {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
 .boton-blog {
   display: inline-flex;
   align-items: center;
@@ -1857,6 +1885,8 @@ window.ElementorProFrontendConfig = ElementorProFrontendConfig;
 <p>El problema más grave, y el menos visible, es la facturación. Muchos instaladores consumen material en casa del cliente y ese material nunca aparece en la factura. No por mala fe, sino porque el flujo de información entre el campo y la oficina tiene demasiados pasos y demasiado retraso.</p>
 <p>Ese material no facturado es una pérdida directa. Y también es una señal de descontrol que, con el tiempo, erosiona la rentabilidad y la reputación de la empresa.</p>
 <h2 id="cómo-funciona-voice-search">Cómo funciona Voice Search</h2>
+<div class="blog-two-col">
+<div>
 <p>Voice Search es la funcionalidad de TicTAP que permite registrar operaciones de stock usando únicamente la voz.</p>
 <p>El operario habla: describe qué quiere hacer y con qué material. El sistema transcribe el mensaje, identifica automáticamente los artículos en el catálogo del almacén y propone la operación correspondiente. El usuario confirma y el movimiento queda registrado.</p>
 <p>Las operaciones disponibles por voz son:</p>
@@ -1867,6 +1897,11 @@ window.ElementorProFrontendConfig = ElementorProFrontendConfig;
 <li><strong>stock adjust</strong>: ajuste de inventario cuando hay diferencias entre lo esperado y lo real</li>
 </ul>
 <p>Todo sin buscar referencias manualmente, sin navegar por menús, sin interrumpir el flujo físico del trabajo.</p>
+</div>
+<div>
+<img class="blog-two-col-img" src="/wp-content/uploads/2026/06/voice-search-app-screenshot.webp" alt="Voice Search en TicTAP — interfaz de stock out por voz" width="541" height="710" loading="lazy">
+</div>
+</div>
 <h2 id="lo-que-cambia-en-el-día-a-día">Lo que cambia en el día a día</h2>
 <p>La diferencia no es solo de velocidad. Es de posibilidad.</p>
 <p>Antes de Voice Search, registrar el stock de una furgoneta al principio del día era una tarea que requería voluntad, tiempo y contexto administrativo. Con esta funcionalidad puede hacerse en el propio almacén, en el momento exacto en que se carga, con el teléfono en la mano.</p>

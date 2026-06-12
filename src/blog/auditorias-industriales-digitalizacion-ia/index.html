@@ -1555,6 +1555,34 @@ a:focus {
   margin: 2rem 0;
 }
 
+.blog-two-col {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2.5rem;
+  align-items: start;
+  margin: 1.5rem 0 2rem;
+}
+
+.blog-two-col-img {
+  width: 260px;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 32, 46, 0.12);
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .blog-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-two-col-img {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
 .boton-blog {
   display: inline-flex;
   align-items: center;
