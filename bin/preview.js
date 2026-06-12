@@ -21,8 +21,9 @@ function normalizeHost(value) {
   return '127.0.0.1';
 }
 
-const rootArg = process.argv[2] || 'src';
-const rootDir = path.resolve(process.cwd(), rootArg);
+const rootArgs = process.argv.slice(2).length ? process.argv.slice(2) : ['src'];
+const rootDirs = rootArgs.map(a => path.resolve(process.cwd(), a));
+const rootDir = rootDirs[0];
 const port = Number(process.env.PORT || 4321);
 const host = normalizeHost(process.env.PREVIEW_HOST || process.env.HOST);
 const rewriteProductionUrls = process.env.PREVIEW_REWRITE_PROD !== '0';
@@ -59,9 +60,11 @@ const TEXT_FILE_EXTENSIONS = new Set([
   '.xml',
 ]);
 
-if (!fs.existsSync(rootDir) || !fs.statSync(rootDir).isDirectory()) {
-  console.error(`Static root not found: ${rootDir}`);
-  process.exit(1);
+for (const dir of rootDirs) {
+  if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+    console.error(`Static root not found: ${dir}`);
+    process.exit(1);
+  }
 }
 
 function send(res, statusCode, body, contentType) {
@@ -80,27 +83,30 @@ function safePathname(urlPathname) {
 
 function resolveFile(urlPathname) {
   const pathname = safePathname(urlPathname || '/');
-  const directPath = path.join(rootDir, pathname);
-  const candidates = [];
 
-  if (pathname === '') {
-    candidates.push(path.join(rootDir, 'index.html'));
-  } else {
-    candidates.push(directPath);
+  for (const root of rootDirs) {
+    const directPath = path.join(root, pathname);
+    const candidates = [];
 
-    if (!path.extname(directPath)) {
-      candidates.push(path.join(directPath, 'index.html'));
-      candidates.push(`${directPath}.html`);
-    }
-  }
+    if (pathname === '') {
+      candidates.push(path.join(root, 'index.html'));
+    } else {
+      candidates.push(directPath);
 
-  for (const candidate of candidates) {
-    if (!candidate.startsWith(rootDir)) {
-      continue;
+      if (!path.extname(directPath)) {
+        candidates.push(path.join(directPath, 'index.html'));
+        candidates.push(`${directPath}.html`);
+      }
     }
 
-    if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
-      return candidate;
+    for (const candidate of candidates) {
+      if (!candidate.startsWith(root)) {
+        continue;
+      }
+
+      if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+        return candidate;
+      }
     }
   }
 
@@ -215,7 +221,9 @@ server.on('error', (error) => {
 
 server.listen(port, host, () => {
   console.log(`Static preview running at http://${host}:${port}`);
-  console.log(`Serving: ${rootDir}`);
+  for (const dir of rootDirs) {
+    console.log(`Serving: ${dir}`);
+  }
   if (rewriteProductionUrls) {
     console.log('Production URLs are rewritten to the local preview origin.');
   }

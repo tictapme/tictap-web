@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "preview": "npm run astro:build && node bin/sync-astro-output.js && node bin/optimize-seo.js && node bin/preview.js src",
+    "start": "npm run astro:build && node bin/preview.js dist src",
+    "preview": "npm run astro:build && node bin/preview.js dist src",
     "preview:src": "node bin/preview.js src",
     "astro:build": "astro build",
     "static:prepare": "npm run astro:build && node bin/sync-astro-output.js && node bin/optimize-seo.js && node bin/validate-static-site.js",
