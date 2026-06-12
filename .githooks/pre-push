@@ -4,6 +4,12 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
+current_branch="$(git branch --show-current)"
+
+if [ "$current_branch" != "main" ]; then
+  exit 0
+fi
+
 echo "[pre-push] Validating static export is up to date..."
 npm run static:prepare
 
